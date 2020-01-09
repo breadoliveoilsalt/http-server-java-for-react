@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.palantir.git-version' version '0.12.2'
+}
+
+mainClassName = 'App'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    archiveBaseName = "chatServer"
+    archiveVersion = versionDetails().lastTag + "-" + versionDetails().gitHash
+    manifest {
+        attributes(
+                'Main-Class': 'App'
+        )
+    }
+}
+
+// Uncomment to compile with warnings
+//allprojects {
+//    gradle.projectsEvaluated {
+//        tasks.withType(JavaCompile) {
+//            options.encoding = 'UTF-8'
+//            options.compilerArgs << "-Xlint:unchecked"
+//        }
+//    }
+//}
