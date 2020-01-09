@@ -51,9 +51,9 @@ To run a full build of the app without starting the server, run `./gradlew build
 
 ## Running the App's Tests
 
-To run the tests for the app, after completing step 4 above, run the command `./gradlew test` from the app's root directory. 
+To run the unitTests.tests for the app, after completing step 4 above, run the command `./gradlew test` from the app's root directory. 
 
-Running `./gradlew build` will also run the tests.
+Running `./gradlew build` will also run the unitTests.tests.
 
 ## Contributions and License
 

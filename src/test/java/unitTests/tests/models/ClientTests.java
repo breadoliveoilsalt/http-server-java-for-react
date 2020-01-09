@@ -1,8 +1,8 @@
-package tests.models;
+package unitTests.tests.models;
 
-import factoryForTests.MockAppFactory;
-import mocks.*;
-import testableObjects.TestableClient;
+import unitTests.factoryForTests.MockAppFactory;
+import unitTests.mocks.*;
+import unitTests.testableObjects.TestableClient;
 import org.junit.Before;
 import org.junit.Test;
 

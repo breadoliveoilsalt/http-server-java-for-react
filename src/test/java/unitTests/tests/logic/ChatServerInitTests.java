@@ -1,10 +1,10 @@
-package tests.logic;
+package unitTests.tests.logic;
 
 import chatServer.logic.ChatServerInit;
-import factoryForTests.MockAppFactory;
-import mocks.MockChatRoom;
-import mocks.MockChatServerListeningLoop;
-import mocks.MockServerSokket;
+import unitTests.factoryForTests.MockAppFactory;
+import unitTests.mocks.MockChatRoom;
+import unitTests.mocks.MockChatServerListeningLoop;
+import unitTests.mocks.MockServerSokket;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

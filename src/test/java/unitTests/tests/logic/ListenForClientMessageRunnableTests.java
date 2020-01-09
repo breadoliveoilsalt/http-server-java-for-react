@@ -1,8 +1,8 @@
-package tests.logic;
+package unitTests.tests.logic;
 
 import chatServer.logic.ListenForClientMessageRunnable;
-import factoryForTests.MockAppFactory;
-import mocks.*;
+import unitTests.factoryForTests.MockAppFactory;
+import unitTests.mocks.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package mocks;
+package unitTests.mocks;
 
 import chatServer.factory.AppFactory;
 import chatServer.models.ChatRoom;

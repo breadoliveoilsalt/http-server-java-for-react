@@ -1,4 +1,4 @@
-package factoryForTests;
+package unitTests.factoryForTests;
 
 import chatServer.factory.AppFactory;
 import chatServer.logic.ChatServerListeningLoop;
@@ -8,7 +8,7 @@ import chatServer.wrappers.Reader;
 import chatServer.wrappers.ServerSokket;
 import chatServer.wrappers.Sokket;
 import chatServer.wrappers.Writer;
-import testableObjects.TestableThread;
+import unitTests.testableObjects.TestableThread;
 
 import java.io.InputStream;
 import java.io.OutputStream;

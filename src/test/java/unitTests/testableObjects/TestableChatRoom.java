@@ -1,4 +1,4 @@
-package testableObjects;
+package unitTests.testableObjects;
 
 import chatServer.factory.AppFactory;
 import chatServer.models.ChatRoom;

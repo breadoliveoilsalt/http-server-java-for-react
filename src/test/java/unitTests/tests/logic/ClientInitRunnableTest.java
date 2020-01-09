@@ -1,11 +1,11 @@
-package tests.logic;
+package unitTests.tests.logic;
 
 import chatServer.logic.ClientInitRunnable;
 import chatServer.models.Client;
-import factoryForTests.MockAppFactory;
-import mocks.MockChatRoom;
-import mocks.MockClient;
-import mocks.MockSokket;
+import unitTests.factoryForTests.MockAppFactory;
+import unitTests.mocks.MockChatRoom;
+import unitTests.mocks.MockClient;
+import unitTests.mocks.MockSokket;
 
 import static org.junit.Assert.*;
 

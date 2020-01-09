@@ -1,11 +1,11 @@
-package tests.models;
+package unitTests.tests.models;
 
 import chatServer.models.Client;
-import factoryForTests.MockAppFactory;
-import mocks.MockClient;
-import mocks.MockListenForClientMessageRunnable;
-import testableObjects.TestableChatRoom;
-import testableObjects.TestableThread;
+import unitTests.factoryForTests.MockAppFactory;
+import unitTests.mocks.MockClient;
+import unitTests.mocks.MockListenForClientMessageRunnable;
+import unitTests.testableObjects.TestableChatRoom;
+import unitTests.testableObjects.TestableThread;
 
 import org.junit.Before;
 import org.junit.Test;

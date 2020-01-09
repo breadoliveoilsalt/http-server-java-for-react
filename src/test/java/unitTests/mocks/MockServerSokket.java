@@ -1,4 +1,4 @@
-package mocks;
+package unitTests.mocks;
 
 import chatServer.wrappers.ServerSokket;
 import chatServer.wrappers.Sokket;

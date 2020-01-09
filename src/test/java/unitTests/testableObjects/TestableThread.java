@@ -1,4 +1,4 @@
-package testableObjects;
+package unitTests.testableObjects;
 
 public class TestableThread extends Thread {
 
