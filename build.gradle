@@ -26,6 +26,10 @@ jar {
     }
 }
 
+task runAcceptanceTests(type:Exec) {
+    commandLine = "./acceptance_tests.sh"
+}
+
 // Uncomment to compile with warnings
 //allprojects {
 //    gradle.projectsEvaluated {

@@ -6,24 +6,14 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-
-
-jobs:
-  include:
-    - stage: build
-      name: "Build and unit test"
-      script: ./gradlew build
-    - stage: deploy
-      name: "Deploy"
-      script: ./gradlew build
-      deploy:
-        provider: releases
-        api_key:
-          secure: UIbOs+XClD/vYZKcssekQkIrcJuJaLSR7XioM+B8IawtXmIwEb78F1VkATwD52VnYQ38D9efe26TvQ7GfrvykZO9iGhQ0ML1VgzXVf2xs7v57PBIY+Y+Dx0bn5ko6WNWrtqRWHgdBxydP//WdMoS5v7bF9mYSM57djdZDEm6NoWcV2DogR4ReQ1HDG+yjdmthu3rLvBIQbqHUbcLGovnmNTXA69EcVbiSGrToO1gkgIK8xdR239i8t03/qTOrW7CDmsHELd5rcNwFL2RAjtd1a6K0W7dA8Tr7ai+o3HnczjylDA93XtMDDmcbE6jfFnY4q/NQJM+LAJNGfE2uIsc2zuF/AnF+TK8n7XqQ5A97M0Azt7P/sT5Q9YGRh4M5T1j1lxS4430+lYVKLqu84H8ctgPVfCKbDDBR59wC/WIhQvSF8cK3t9ScESAYfktb6MpJuMI0VITalqgXACpoeyVGdTzSAYkE44mUgbOylXfzvyCZbUDN/qaNHqXbLeFhZFAjNjTPn1PjdvaxhDCTBc0Ulzko+eQ49FbEhG4Q6H0q8f0ff2yMLqj/t6c6PaC9zaLlxXdOYrOdgAunL6gqFmC1AmRI966HLO0HuH/v/x+jvDfCEg+JQ+SNXgqeC+uWFuGYjC/HPlzimkmreniIzEfufAyUdpKp5V6IO5M3ncue3c=
-        skip_cleanup: true
-        file_glob: true
-        file: build/libs/*
-        on:
-          repo: breadoliveoilsalt/chat-server
-          all_branches: true
-          tags: true
+deploy:
+  provider: releases
+  api_key:
+    secure: UIbOs+XClD/vYZKcssekQkIrcJuJaLSR7XioM+B8IawtXmIwEb78F1VkATwD52VnYQ38D9efe26TvQ7GfrvykZO9iGhQ0ML1VgzXVf2xs7v57PBIY+Y+Dx0bn5ko6WNWrtqRWHgdBxydP//WdMoS5v7bF9mYSM57djdZDEm6NoWcV2DogR4ReQ1HDG+yjdmthu3rLvBIQbqHUbcLGovnmNTXA69EcVbiSGrToO1gkgIK8xdR239i8t03/qTOrW7CDmsHELd5rcNwFL2RAjtd1a6K0W7dA8Tr7ai+o3HnczjylDA93XtMDDmcbE6jfFnY4q/NQJM+LAJNGfE2uIsc2zuF/AnF+TK8n7XqQ5A97M0Azt7P/sT5Q9YGRh4M5T1j1lxS4430+lYVKLqu84H8ctgPVfCKbDDBR59wC/WIhQvSF8cK3t9ScESAYfktb6MpJuMI0VITalqgXACpoeyVGdTzSAYkE44mUgbOylXfzvyCZbUDN/qaNHqXbLeFhZFAjNjTPn1PjdvaxhDCTBc0Ulzko+eQ49FbEhG4Q6H0q8f0ff2yMLqj/t6c6PaC9zaLlxXdOYrOdgAunL6gqFmC1AmRI966HLO0HuH/v/x+jvDfCEg+JQ+SNXgqeC+uWFuGYjC/HPlzimkmreniIzEfufAyUdpKp5V6IO5M3ncue3c=
+  skip_cleanup: true
+  file_glob: true
+  file: build/libs/*
+  on:
+    repo: breadoliveoilsalt/chat-server
+    all_branches: true
+    tags: true
