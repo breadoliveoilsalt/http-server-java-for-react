@@ -8,6 +8,7 @@ function finish {
 }
 trap finish EXIT
 
+./gradlew jar
 cd http_server_spec
 bundle install
 java -jar "../build/libs/$(ls ../build/libs)" &

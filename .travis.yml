@@ -1,19 +1,28 @@
 language: java
+
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-deploy:
-  provider: releases
-  api_key:
-    secure: UIbOs+XClD/vYZKcssekQkIrcJuJaLSR7XioM+B8IawtXmIwEb78F1VkATwD52VnYQ38D9efe26TvQ7GfrvykZO9iGhQ0ML1VgzXVf2xs7v57PBIY+Y+Dx0bn5ko6WNWrtqRWHgdBxydP//WdMoS5v7bF9mYSM57djdZDEm6NoWcV2DogR4ReQ1HDG+yjdmthu3rLvBIQbqHUbcLGovnmNTXA69EcVbiSGrToO1gkgIK8xdR239i8t03/qTOrW7CDmsHELd5rcNwFL2RAjtd1a6K0W7dA8Tr7ai+o3HnczjylDA93XtMDDmcbE6jfFnY4q/NQJM+LAJNGfE2uIsc2zuF/AnF+TK8n7XqQ5A97M0Azt7P/sT5Q9YGRh4M5T1j1lxS4430+lYVKLqu84H8ctgPVfCKbDDBR59wC/WIhQvSF8cK3t9ScESAYfktb6MpJuMI0VITalqgXACpoeyVGdTzSAYkE44mUgbOylXfzvyCZbUDN/qaNHqXbLeFhZFAjNjTPn1PjdvaxhDCTBc0Ulzko+eQ49FbEhG4Q6H0q8f0ff2yMLqj/t6c6PaC9zaLlxXdOYrOdgAunL6gqFmC1AmRI966HLO0HuH/v/x+jvDfCEg+JQ+SNXgqeC+uWFuGYjC/HPlzimkmreniIzEfufAyUdpKp5V6IO5M3ncue3c=
-  skip_cleanup: true
-  file_glob: true
-  file: build/libs/*
-  on:
-    repo: breadoliveoilsalt/chat-server
-    all_branches: true
-    tags: true
+
+jobs:
+  include:
+    - name: Unit Test and Deploy If Pushing a Tag
+      script: ./gradlew build
+      deploy:
+        provider: releases
+        api_key:
+          secure: ZZTei505SVPqwjy174Mjl+d597k2uKtCz2YUMzy7paApyRxFfSBBXtUyzwgiHPzlX4i9g2+o6F0xkCqcGDQb3TEbbklp8QRW+ccXFJ1iusH7KtjKgnGlf0CPuHFauD0bcFZSsfOxGeFieUKY6X3rCpUFMwR5asllgaKoH20MEMvlMlMYBpV1Demxgz22j9Hckb5PfXK46K7Vsf3QZqeJj6i+jon05o5ziNTlPFZ9700Nx0voeNnCRuTENeDJk5PCHj3WyH3CUc13a/lhVZqPAarAviiVTrqAgXxjxs3ijYoK8YWbi64BP3KKJxLRuashna74U/2/tqFYRs0xS0RSntwdSeqUMwWsVPqBE/2SlRBcFBIZeQ5Og+QWb7e4R12EU4Nqgz4l7B2apsGRCnw2iyFnJQPRCY9nL9opdpk1L06LEDQ2VkbhfGc+gg4/wm2PWXoZX4fFgvtv5Q54qbsBaa2Ia7KEWsz5pOzugLo/RKWtu9Hy6pH1oz0RBsgIo6jhQoAmQHAaQdc3WldLC8bepJW4kRerTzhZ6NqCOV5JlbtqjyUkEOBjdZ45/Y88TIZyYtAKqBwqW89SNVHxqw6uqYbqCRNdj1sVxCzWOojP/n2BxpwXLnOfODe5MfeUK6uoeDv0QQHGlOXjuPoYcW9yuimgrBO+BPSkkP3dE/7ir8o=
+        skip_cleanup: true
+        file_glob: true
+        file: build/libs/*
+        on:
+          repo: breadoliveoilsalt/http-server-java
+          all_branches: true
+          tags: true
+    - name: Run Acceptance Tests
+      script: ./acceptance_tests.sh
