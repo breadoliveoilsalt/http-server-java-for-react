@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.com/breadoliveoilsalt/chat-server.svg?branch=master)](https://travis-ci.com/breadoliveoilsalt/chat-server)
+[![Build Status](https://travis-ci.com/breadoliveoilsalt/http-server-java.svg?branch=master)](https://travis-ci.com/breadoliveoilsalt/http-server-java)
 
-# Chat Server
+# HTTP Server Server
 
 Welcome!
 
-This chat server is written in Java 11.  Its build is handled by Gradle; the Gradle wrapper runs Gradle v5.6.2.  Tests are written with JUnit v4.12.
+This chat server is written in Java 8.  Its build is handled by Gradle; the Gradle wrapper runs Gradle v5.6.2.  Tests are written with JUnit v4.12.
 
 ## Running the App Locally 
 
@@ -14,12 +14,13 @@ To run the chat server locally:
 
 Note: you will need to have Java installed to use this option.  You might run into problems if you do not have Java 11 installed. 
 
-1. Go to the repository's releases page [here](https://github.com/breadoliveoilsalt/chat-server/releases) and download the `.jar` file of the latest release.
+1. Go to the repository's releases page [here](https://github.com/breadoliveoilsalt/http-server-java/releases) and download the `.jar` file of the latest release.
 
 2. To start the app's server, from your terminal, `cd` into the directory with the `.jar` file.  Run `java -jar <download-file-name>.jar` (replacing `<download-file-name>` with the name of the `.jar` file).
 
+[TO BE UPDATED]
 3. To connect to the server and join the chat room, open a new terminal window.  From this new window, you can then:
-    - run `nc localhost 8000` OR
+    - run `nc localhost 5000` OR
     - if your terminal can run bash scrips, from the app's root directory, run `./serverConnect`. 
     
 To disconnect from the server and leave the chat room, type `exit!` and hit return.
@@ -41,6 +42,7 @@ Note: you will need to have Gradle installed to use this option.
     
 5. To start the app's server, run: `./gradlew run`.
 
+[TO BE UPDATED]
 6. To connect to the server and join the chat room, open a new terminal window.  From this new window, you can then:
        - run `nc localhost 8000` OR
        - if your terminal can run bash scrips, `cd` into the app's root directory and run `./serverConnect`. 
@@ -59,7 +61,7 @@ Running `./gradlew build` will also run the unitTests.tests.
 
 ### Contributing:
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/breadoliveoilsalt/chat-server. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant (http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/breadoliveoilsalt/http-server-java. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant (http://contributor-covenant.org) code of conduct.
 
 ### License:
 
