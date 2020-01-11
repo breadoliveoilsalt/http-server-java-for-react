@@ -1,7 +1,6 @@
 package httpServer.factory;
 
 import httpServer.logic.*;
-import httpServer.models.*;
 import httpServer.wrappers.*;
 
 import java.io.IOException;
@@ -26,24 +25,11 @@ public class HTTPServerAppFactory implements AppFactory {
         return new Thread(runnable);
     }
 
-    public ChatServerLogicObject createChatServerListeningLoop(ServerSokket serverSokket, ChatRoom chatRoom, AppFactory factory) { return new HTTPServerListeningLoop(serverSokket, chatRoom, factory);
+    public HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) { return new HTTPServerListeningLoop(serverSokket, factory);
     }
 
-    public ChatRoom createChatRoom(AppFactory factory) {
-        return new ChatRoom(factory);
+    public Runnable createClientInitRunnable(Sokket sokket, AppFactory factory) {
+        return new ClientInitRunnable(sokket, factory);
     }
-
-    public Runnable createClientInitRunnable(Sokket sokket, ChatRoom chatRoom, AppFactory factory) {
-        return new ClientInitRunnable(sokket, chatRoom, factory);
-    }
-
-    public Client createClient(Sokket sokket, AppFactory factory) throws IOException {
-        return new Client(sokket, factory);
-    }
-
-    public Runnable createListenForClientMessageRunnable(Client client, ChatRoom chatRoom) {
-        return new ListenForClientMessageRunnable(client, chatRoom);
-    }
-
 
 }

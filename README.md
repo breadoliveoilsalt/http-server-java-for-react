@@ -4,11 +4,11 @@
 
 Welcome!
 
-This chat server is written in Java 8.  Its build is handled by Gradle; the Gradle wrapper runs Gradle v5.6.2.  Tests are written with JUnit v4.12.
+This HTTP server is written in Java 8.  Its build is handled by Gradle; the Gradle wrapper runs Gradle v5.6.2.  Tests are written with JUnit v4.12.
 
 ## Running the App Locally 
 
-To run the chat server locally:
+To run the HTTP server locally:
 
 ### Option A: Download the Latest Release and Run the Jar File
 

@@ -18,7 +18,6 @@ public class HTTPServerListeningLoopTests {
     private MockServerSokket serverSokket;
     private MockAppFactory factory;
     private MockSokket sokket;
-    private MockChatRoom chatRoom;
     private MockClientInitRunnable clientInitRunnable;
     private TestableThread thread;
     private HTTPServerListeningLoop HTTPServerListeningLoop;
@@ -38,8 +37,7 @@ public class HTTPServerListeningLoopTests {
     }
 
     private void initFactory() {
-        chatRoom = new MockChatRoom(factory);
-        clientInitRunnable = new MockClientInitRunnable(sokket, chatRoom, factory);
+        clientInitRunnable = new MockClientInitRunnable(sokket, factory);
         thread = new TestableThread();
         factory = new MockAppFactory()
             .setTestableThreadToReturn(thread)
@@ -47,7 +45,7 @@ public class HTTPServerListeningLoopTests {
     }
 
     private void initChatServerListeningLoop() {
-        HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, chatRoom, factory);
+        HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, factory);
     }
 
     private void setLoopToRunOnce() {

@@ -2,7 +2,7 @@ package httpServer.logic;
 
 import java.io.IOException;
 
-public interface ChatServerLogicObject {
+public interface HTTPServerLogicObject {
 
     void run() throws IOException;
 

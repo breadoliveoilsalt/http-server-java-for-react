@@ -2,16 +2,14 @@ package httpServer.logic;
 
 import httpServer.factory.AppFactory;
 import httpServer.wrappers.ServerSokket;
-import httpServer.models.ChatRoom;
 
 import java.io.IOException;
 
-public class HTTPServerInit implements ChatServerLogicObject {
+public class HTTPServerInit implements HTTPServerLogicObject {
 
     private final int port;
-    private ChatServerLogicObject chatServerListeningLoop;
+    private HTTPServerLogicObject httpServerListeningLoop;
     private final AppFactory factory;
-    private ChatRoom chatRoom;
     private ServerSokket serverSokket;
 
     public HTTPServerInit(int port, AppFactory factory) {
@@ -23,7 +21,6 @@ public class HTTPServerInit implements ChatServerLogicObject {
 
         try {
             instantiateServerSokket();
-            instantiateChatRoom();
             instantiateChatServerListeningLoop();
             runChatServerListeningLoop();
         } catch (IOException e) {
@@ -38,16 +35,12 @@ public class HTTPServerInit implements ChatServerLogicObject {
         serverSokket = factory.createServerSokketListeningAtPort(port);
     }
 
-    private void instantiateChatRoom() {
-        chatRoom = factory.createChatRoom(factory);
-    }
-    
     private void instantiateChatServerListeningLoop() {
-        chatServerListeningLoop = factory.createChatServerListeningLoop(serverSokket, chatRoom, factory);
+        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, factory);
     }
 
     private void runChatServerListeningLoop() throws IOException {
-        chatServerListeningLoop.run();
+        httpServerListeningLoop.run();
     }
 
     private void closeServerSokket() throws IOException {

@@ -2,7 +2,6 @@ package unitTests.tests.logic;
 
 import httpServer.logic.HTTPServerInit;
 import unitTests.factoryForTests.MockAppFactory;
-import unitTests.mocks.MockChatRoom;
 import unitTests.mocks.MockHTTPServerListeningLoop;
 import unitTests.mocks.MockServerSokket;
 import org.junit.Before;
@@ -15,45 +14,34 @@ public class HTTPServerInitTests {
 
     private MockHTTPServerListeningLoop serverListeningLoop;
     private MockServerSokket serverSokket;
-    private MockChatRoom chatRoom;
     private MockAppFactory factory;
-    private HTTPServerInit chatServer;
+    private HTTPServerInit httpServerInit;
 
     @Before
     public void testInit() {
         serverSokket = new MockServerSokket();
-        chatRoom = new MockChatRoom(factory);
-        serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, chatRoom, factory);
+        serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, factory);
         factory = new MockAppFactory()
             .setServerSokketToReturn(serverSokket)
             .setChatServerListeningLoopToReturn(serverListeningLoop);
         int samplePort = 8000;
-        chatServer = new HTTPServerInit(samplePort, factory);
+        httpServerInit = new HTTPServerInit(samplePort, factory);
     }
 
     @Test
     public void testStartInstantiatesAListeningServerSokket() throws IOException {
         assertEquals(0, factory.callCountForCreateServerSokket);
 
-        chatServer.run();
+        httpServerInit.run();
 
         assertEquals(1, factory.callCountForCreateServerSokket);
-    }
-
-    @Test
-    public void testStartInstantiatesAChatRoom() throws IOException {
-        assertEquals(0, factory.callCountForCreateChatRoom);
-
-        chatServer.run();
-
-        assertEquals(1, factory.callCountForCreateChatRoom);
     }
 
     @Test
     public void testStartInstantiatesAChatServerListeningLoop() throws IOException {
         assertEquals(0, factory.callCountForCreateChatServerListeningLoop);
 
-        chatServer.run();
+        httpServerInit.run();
 
         assertEquals(1, factory.callCountForCreateChatServerListeningLoop);
 
@@ -62,14 +50,14 @@ public class HTTPServerInitTests {
     public void testStartRunsTheChatServerListeningLoop() throws IOException {
         assertEquals(0, serverListeningLoop.getCallCountForRun());
 
-        chatServer.run();
+        httpServerInit.run();
 
         assertEquals(1, serverListeningLoop.getCallCountForRun());
     }
 
     @Test
     public void testStartClosesTheServerSokketAfterTheServerListeningLoopHasBeenRun() throws IOException {
-        chatServer.run();
+        httpServerInit.run();
 
         assertEquals(1, serverListeningLoop.getCallCountForRun());
         assertTrue(serverSokket.isClosed());

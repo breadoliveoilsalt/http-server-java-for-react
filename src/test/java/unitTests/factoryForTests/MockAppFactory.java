@@ -2,8 +2,6 @@ package unitTests.factoryForTests;
 
 import httpServer.factory.AppFactory;
 import httpServer.logic.HTTPServerListeningLoop;
-import httpServer.models.ChatRoom;
-import httpServer.models.Client;
 import httpServer.wrappers.Reader;
 import httpServer.wrappers.ServerSokket;
 import httpServer.wrappers.Sokket;
@@ -41,13 +39,6 @@ public class MockAppFactory implements AppFactory {
     }
     public int callCountForCreateChatServerListeningLoop = 0;
 
-    private ChatRoom chatRoom;
-    public MockAppFactory setChatRoomToReturn(ChatRoom chatRoom) {
-        this.chatRoom = chatRoom;
-        return this;
-    }
-    public int callCountForCreateChatRoom = 0;
-
     private Runnable clientInitRunnable;
     public MockAppFactory setClientInitRunnableToReturn(Runnable clientInitRunnable) {
         this.clientInitRunnable = clientInitRunnable;
@@ -55,12 +46,6 @@ public class MockAppFactory implements AppFactory {
     }
     public int callCountForCreateClientInitRunnable = 0;
 
-    private Client client;
-    public MockAppFactory setClientToReturn(Client client) {
-        this.client = client;
-        return this;
-    }
-    public int callCountForCreateClient = 0;
 
     private Runnable listenForClientMessageRunnableToReturn;
     public MockAppFactory setListenForClientMessageRunnableToReturn(Runnable listenForClientMessageRunnableToReturn) {
@@ -99,31 +84,15 @@ public class MockAppFactory implements AppFactory {
     }
 
     @Override
-    public HTTPServerListeningLoop createChatServerListeningLoop(ServerSokket serverSokket, ChatRoom chatRoom, AppFactory factory) {
+    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) {
         callCountForCreateChatServerListeningLoop += 1;
         return HTTPServerListeningLoop;
     }
 
     @Override
-    public ChatRoom createChatRoom(AppFactory factory) {
-        callCountForCreateChatRoom += 1;
-        return chatRoom;
-    }
-
-    @Override
-    public Runnable createClientInitRunnable(Sokket sokket, ChatRoom chatRoom, AppFactory factory) {
+    public Runnable createClientInitRunnable(Sokket sokket, AppFactory factory) {
         callCountForCreateClientInitRunnable += 1;
         return clientInitRunnable;
     }
 
-    @Override
-    public Client createClient(Sokket sokket, AppFactory factory) {
-        callCountForCreateClient += 1;
-        return client;
-    }
-
-    @Override
-    public Runnable createListenForClientMessageRunnable(Client client, ChatRoom chatRoom) {
-        return listenForClientMessageRunnableToReturn;
-    }
 }

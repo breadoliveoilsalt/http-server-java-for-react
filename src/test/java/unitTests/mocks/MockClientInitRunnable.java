@@ -3,7 +3,6 @@ package unitTests.mocks;
 import httpServer.factory.AppFactory;
 import httpServer.wrappers.Sokket;
 import httpServer.logic.ClientInitRunnable;
-import httpServer.models.ChatRoom;
 
 public class MockClientInitRunnable extends ClientInitRunnable {
 
@@ -13,8 +12,8 @@ public class MockClientInitRunnable extends ClientInitRunnable {
         return callCountForRun;
     }
 
-    public MockClientInitRunnable(Sokket sokket, ChatRoom chatRoom, AppFactory factory) {
-        super(sokket, chatRoom, factory);
+    public MockClientInitRunnable(Sokket sokket, AppFactory factory) {
+        super(sokket, factory);
     }
 
     public void run() {
