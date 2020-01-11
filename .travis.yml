@@ -25,4 +25,4 @@ jobs:
           all_branches: true
           tags: true
     - name: Run Acceptance Tests
-      script: ./acceptance_tests.sh
+      script: ./scripts/acceptance_tests.sh
