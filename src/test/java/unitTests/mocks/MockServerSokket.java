@@ -1,7 +1,7 @@
 package unitTests.mocks;
 
-import chatServer.wrappers.ServerSokket;
-import chatServer.wrappers.Sokket;
+import httpServer.wrappers.ServerSokket;
+import httpServer.wrappers.Sokket;
 
 import java.util.ArrayList;
 import java.util.List;

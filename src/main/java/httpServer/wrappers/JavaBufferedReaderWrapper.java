@@ -1,4 +1,4 @@
-package chatServer.wrappers;
+package httpServer.wrappers;
 
 import java.io.BufferedReader;
 import java.io.IOException;

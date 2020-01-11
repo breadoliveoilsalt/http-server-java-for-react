@@ -1,9 +1,9 @@
 package unitTests.tests.logic;
 
-import chatServer.logic.ChatServerInit;
+import httpServer.logic.HTTPServerInit;
 import unitTests.factoryForTests.MockAppFactory;
 import unitTests.mocks.MockChatRoom;
-import unitTests.mocks.MockChatServerListeningLoop;
+import unitTests.mocks.MockHTTPServerListeningLoop;
 import unitTests.mocks.MockServerSokket;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,24 +11,24 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-public class ChatServerInitTests {
+public class HTTPServerInitTests {
 
-    private MockChatServerListeningLoop serverListeningLoop;
+    private MockHTTPServerListeningLoop serverListeningLoop;
     private MockServerSokket serverSokket;
     private MockChatRoom chatRoom;
     private MockAppFactory factory;
-    private ChatServerInit chatServer;
+    private HTTPServerInit chatServer;
 
     @Before
     public void testInit() {
         serverSokket = new MockServerSokket();
         chatRoom = new MockChatRoom(factory);
-        serverListeningLoop = new MockChatServerListeningLoop(serverSokket, chatRoom, factory);
+        serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, chatRoom, factory);
         factory = new MockAppFactory()
             .setServerSokketToReturn(serverSokket)
             .setChatServerListeningLoopToReturn(serverListeningLoop);
         int samplePort = 8000;
-        chatServer = new ChatServerInit(samplePort, factory);
+        chatServer = new HTTPServerInit(samplePort, factory);
     }
 
     @Test

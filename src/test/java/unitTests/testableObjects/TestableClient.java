@@ -1,10 +1,10 @@
 package unitTests.testableObjects;
 
-import chatServer.factory.AppFactory;
-import chatServer.wrappers.Reader;
-import chatServer.wrappers.Sokket;
-import chatServer.wrappers.Writer;
-import chatServer.models.Client;
+import httpServer.factory.AppFactory;
+import httpServer.wrappers.Reader;
+import httpServer.wrappers.Sokket;
+import httpServer.wrappers.Writer;
+import httpServer.models.Client;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package chatServer.logic;
+package httpServer.logic;
 
-import chatServer.models.*;
+import httpServer.models.*;
 
 import java.io.IOException;
 

@@ -1,14 +1,14 @@
-package chatServer.factory;
+package httpServer.factory;
 
-import chatServer.logic.*;
-import chatServer.models.*;
-import chatServer.wrappers.*;
+import httpServer.logic.*;
+import httpServer.models.*;
+import httpServer.wrappers.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class ChatServerAppFactory implements AppFactory {
+public class HTTPServerAppFactory implements AppFactory {
 
     public JavaServerSocketWrapper createServerSokketListeningAtPort(int port) throws IOException {
         return new JavaServerSocketWrapper(port);
@@ -26,7 +26,7 @@ public class ChatServerAppFactory implements AppFactory {
         return new Thread(runnable);
     }
 
-    public ChatServerLogicObject createChatServerListeningLoop(ServerSokket serverSokket, ChatRoom chatRoom, AppFactory factory) { return new ChatServerListeningLoop(serverSokket, chatRoom, factory);
+    public ChatServerLogicObject createChatServerListeningLoop(ServerSokket serverSokket, ChatRoom chatRoom, AppFactory factory) { return new HTTPServerListeningLoop(serverSokket, chatRoom, factory);
     }
 
     public ChatRoom createChatRoom(AppFactory factory) {

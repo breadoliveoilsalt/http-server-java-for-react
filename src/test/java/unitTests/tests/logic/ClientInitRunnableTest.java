@@ -1,7 +1,7 @@
 package unitTests.tests.logic;
 
-import chatServer.logic.ClientInitRunnable;
-import chatServer.models.Client;
+import httpServer.logic.ClientInitRunnable;
+import httpServer.models.Client;
 import unitTests.factoryForTests.MockAppFactory;
 import unitTests.mocks.MockChatRoom;
 import unitTests.mocks.MockClient;

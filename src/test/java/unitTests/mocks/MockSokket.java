@@ -1,6 +1,6 @@
 package unitTests.mocks;
 
-import chatServer.wrappers.Sokket;
+import httpServer.wrappers.Sokket;
 
 import java.io.InputStream;
 import java.io.OutputStream;

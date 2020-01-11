@@ -1,6 +1,6 @@
 package unitTests.mocks;
 
-import chatServer.models.Client;
+import httpServer.models.Client;
 
 import java.util.ArrayList;
 

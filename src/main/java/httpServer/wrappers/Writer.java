@@ -1,4 +1,4 @@
-package chatServer.wrappers;
+package httpServer.wrappers;
 
 public interface Writer {
 

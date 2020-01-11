@@ -1,6 +1,6 @@
-package chatServer.models;
+package httpServer.models;
 
-import chatServer.factory.AppFactory;
+import httpServer.factory.AppFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;

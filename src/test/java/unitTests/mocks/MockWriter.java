@@ -1,6 +1,6 @@
 package unitTests.mocks;
 
-import chatServer.wrappers.Writer;
+import httpServer.wrappers.Writer;
 
 import java.util.ArrayList;
 import java.util.List;

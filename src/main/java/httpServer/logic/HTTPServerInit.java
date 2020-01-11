@@ -1,12 +1,12 @@
-package chatServer.logic;
+package httpServer.logic;
 
-import chatServer.factory.AppFactory;
-import chatServer.wrappers.ServerSokket;
-import chatServer.models.ChatRoom;
+import httpServer.factory.AppFactory;
+import httpServer.wrappers.ServerSokket;
+import httpServer.models.ChatRoom;
 
 import java.io.IOException;
 
-public class ChatServerInit implements ChatServerLogicObject {
+public class HTTPServerInit implements ChatServerLogicObject {
 
     private final int port;
     private ChatServerLogicObject chatServerListeningLoop;
@@ -14,7 +14,7 @@ public class ChatServerInit implements ChatServerLogicObject {
     private ChatRoom chatRoom;
     private ServerSokket serverSokket;
 
-    public ChatServerInit(int port, AppFactory factory) {
+    public HTTPServerInit(int port, AppFactory factory) {
         this.port = port;
         this.factory = factory;
     }

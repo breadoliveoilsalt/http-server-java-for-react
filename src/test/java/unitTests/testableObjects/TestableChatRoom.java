@@ -1,8 +1,8 @@
 package unitTests.testableObjects;
 
-import chatServer.factory.AppFactory;
-import chatServer.models.ChatRoom;
-import chatServer.models.Client;
+import httpServer.factory.AppFactory;
+import httpServer.models.ChatRoom;
+import httpServer.models.Client;
 
 import java.util.ArrayList;
 

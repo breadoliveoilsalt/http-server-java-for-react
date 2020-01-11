@@ -1,4 +1,4 @@
-package chatServer.wrappers;
+package httpServer.wrappers;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;

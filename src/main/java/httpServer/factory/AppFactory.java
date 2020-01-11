@@ -1,11 +1,11 @@
-package chatServer.factory;
+package httpServer.factory;
 
-import chatServer.logic.ChatServerLogicObject;
-import chatServer.wrappers.Reader;
-import chatServer.wrappers.ServerSokket;
-import chatServer.wrappers.Sokket;
-import chatServer.wrappers.Writer;
-import chatServer.models.*;
+import httpServer.logic.ChatServerLogicObject;
+import httpServer.wrappers.Reader;
+import httpServer.wrappers.ServerSokket;
+import httpServer.wrappers.Sokket;
+import httpServer.wrappers.Writer;
+import httpServer.models.*;
 
 import java.io.IOException;
 import java.io.InputStream;

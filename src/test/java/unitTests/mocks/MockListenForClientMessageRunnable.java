@@ -1,7 +1,7 @@
 package unitTests.mocks;
 
-import chatServer.models.ChatRoom;
-import chatServer.models.Client;
+import httpServer.models.ChatRoom;
+import httpServer.models.Client;
 
 public class MockListenForClientMessageRunnable implements Runnable {
 

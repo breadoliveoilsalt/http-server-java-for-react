@@ -1,4 +1,4 @@
-package chatServer.logic;
+package httpServer.logic;
 
 import java.io.IOException;
 

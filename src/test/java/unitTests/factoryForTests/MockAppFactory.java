@@ -1,13 +1,13 @@
 package unitTests.factoryForTests;
 
-import chatServer.factory.AppFactory;
-import chatServer.logic.ChatServerListeningLoop;
-import chatServer.models.ChatRoom;
-import chatServer.models.Client;
-import chatServer.wrappers.Reader;
-import chatServer.wrappers.ServerSokket;
-import chatServer.wrappers.Sokket;
-import chatServer.wrappers.Writer;
+import httpServer.factory.AppFactory;
+import httpServer.logic.HTTPServerListeningLoop;
+import httpServer.models.ChatRoom;
+import httpServer.models.Client;
+import httpServer.wrappers.Reader;
+import httpServer.wrappers.ServerSokket;
+import httpServer.wrappers.Sokket;
+import httpServer.wrappers.Writer;
 import unitTests.testableObjects.TestableThread;
 
 import java.io.InputStream;
@@ -34,9 +34,9 @@ public class MockAppFactory implements AppFactory {
         return this;
     }
 
-    private ChatServerListeningLoop chatServerListeningLoop;
-    public MockAppFactory setChatServerListeningLoopToReturn(ChatServerListeningLoop chatServerListeningLoop) {
-        this.chatServerListeningLoop = chatServerListeningLoop;
+    private HTTPServerListeningLoop HTTPServerListeningLoop;
+    public MockAppFactory setChatServerListeningLoopToReturn(HTTPServerListeningLoop HTTPServerListeningLoop) {
+        this.HTTPServerListeningLoop = HTTPServerListeningLoop;
         return this;
     }
     public int callCountForCreateChatServerListeningLoop = 0;
@@ -99,9 +99,9 @@ public class MockAppFactory implements AppFactory {
     }
 
     @Override
-    public ChatServerListeningLoop createChatServerListeningLoop(ServerSokket serverSokket, ChatRoom chatRoom, AppFactory factory) {
+    public HTTPServerListeningLoop createChatServerListeningLoop(ServerSokket serverSokket, ChatRoom chatRoom, AppFactory factory) {
         callCountForCreateChatServerListeningLoop += 1;
-        return chatServerListeningLoop;
+        return HTTPServerListeningLoop;
     }
 
     @Override

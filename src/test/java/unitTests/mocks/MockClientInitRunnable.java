@@ -1,9 +1,9 @@
 package unitTests.mocks;
 
-import chatServer.factory.AppFactory;
-import chatServer.wrappers.Sokket;
-import chatServer.logic.ClientInitRunnable;
-import chatServer.models.ChatRoom;
+import httpServer.factory.AppFactory;
+import httpServer.wrappers.Sokket;
+import httpServer.logic.ClientInitRunnable;
+import httpServer.models.ChatRoom;
 
 public class MockClientInitRunnable extends ClientInitRunnable {
 

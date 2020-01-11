@@ -1,6 +1,6 @@
 package unitTests.tests.models;
 
-import chatServer.models.Client;
+import httpServer.models.Client;
 import unitTests.factoryForTests.MockAppFactory;
 import unitTests.mocks.MockClient;
 import unitTests.mocks.MockListenForClientMessageRunnable;
