@@ -6,4 +6,5 @@ gem "rspec"
 group :development, :test do
   gem "httparty"
   gem "sinatra"
+  gem "pry"
 end

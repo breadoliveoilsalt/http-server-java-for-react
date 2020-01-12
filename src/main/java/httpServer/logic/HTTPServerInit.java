@@ -21,8 +21,8 @@ public class HTTPServerInit implements HTTPServerLogicObject {
 
         try {
             instantiateServerSokket();
-            instantiateChatServerListeningLoop();
-            runChatServerListeningLoop();
+            instantiateHTTPServerListeningLoop();
+            runHTTPServerListeningLoop();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -35,11 +35,11 @@ public class HTTPServerInit implements HTTPServerLogicObject {
         serverSokket = factory.createServerSokketListeningAtPort(port);
     }
 
-    private void instantiateChatServerListeningLoop() {
+    private void instantiateHTTPServerListeningLoop() {
         httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, factory);
     }
 
-    private void runChatServerListeningLoop() throws IOException {
+    private void runHTTPServerListeningLoop() throws IOException {
         httpServerListeningLoop.run();
     }
 

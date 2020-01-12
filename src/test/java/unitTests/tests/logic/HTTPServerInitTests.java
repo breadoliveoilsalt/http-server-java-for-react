@@ -23,7 +23,7 @@ public class HTTPServerInitTests {
         serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, factory);
         factory = new MockAppFactory()
             .setServerSokketToReturn(serverSokket)
-            .setChatServerListeningLoopToReturn(serverListeningLoop);
+            .setHTTPServerListeningLoopToReturn(serverListeningLoop);
         int samplePort = 8000;
         httpServerInit = new HTTPServerInit(samplePort, factory);
     }
@@ -38,16 +38,16 @@ public class HTTPServerInitTests {
     }
 
     @Test
-    public void testStartInstantiatesAChatServerListeningLoop() throws IOException {
-        assertEquals(0, factory.callCountForCreateChatServerListeningLoop);
+    public void testStartInstantiatesAHTTPServerListeningLoop() throws IOException {
+        assertEquals(0, factory.callCountForCreateHTTPServerListeningLoop);
 
         httpServerInit.run();
 
-        assertEquals(1, factory.callCountForCreateChatServerListeningLoop);
+        assertEquals(1, factory.callCountForCreateHTTPServerListeningLoop);
 
     }
     @Test
-    public void testStartRunsTheChatServerListeningLoop() throws IOException {
+    public void testStartRunsTheHTTPServerListeningLoop() throws IOException {
         assertEquals(0, serverListeningLoop.getCallCountForRun());
 
         httpServerInit.run();

@@ -1,7 +1,11 @@
 package httpServer.logic;
 
 import httpServer.factory.AppFactory;
+import httpServer.wrappers.JavaPrintWriterWrapper;
 import httpServer.wrappers.Sokket;
+import httpServer.wrappers.Writer;
+
+import java.io.IOException;
 
 public class ClientInitRunnable implements Runnable, HTTPServerLogicObject {
 
@@ -12,8 +16,19 @@ public class ClientInitRunnable implements Runnable, HTTPServerLogicObject {
         this.sokket = sokket;
         this.factory = factory;
     }
+
     public void run() {
-        System.out.println("Running");
+        try {
+            printMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printMessage() throws IOException {
+        Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
+        writer.printLine("Hey! You connected");
+        sokket.close();
     }
 
 }

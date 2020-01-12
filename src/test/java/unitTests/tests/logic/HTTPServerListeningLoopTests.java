@@ -26,7 +26,7 @@ public class HTTPServerListeningLoopTests {
     public void testInit() {
         initServerSokket();
         initFactory();
-        initChatServerListeningLoop();
+        initHTTPServerListeningLoop();
         setLoopToRunOnce();
     }
 
@@ -44,7 +44,7 @@ public class HTTPServerListeningLoopTests {
             .setClientInitRunnableToReturn(clientInitRunnable);
     }
 
-    private void initChatServerListeningLoop() {
+    private void initHTTPServerListeningLoop() {
         HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, factory);
     }
 

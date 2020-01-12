@@ -33,11 +33,11 @@ public class MockAppFactory implements AppFactory {
     }
 
     private HTTPServerListeningLoop HTTPServerListeningLoop;
-    public MockAppFactory setChatServerListeningLoopToReturn(HTTPServerListeningLoop HTTPServerListeningLoop) {
+    public MockAppFactory setHTTPServerListeningLoopToReturn(HTTPServerListeningLoop HTTPServerListeningLoop) {
         this.HTTPServerListeningLoop = HTTPServerListeningLoop;
         return this;
     }
-    public int callCountForCreateChatServerListeningLoop = 0;
+    public int callCountForCreateHTTPServerListeningLoop = 0;
 
     private Runnable clientInitRunnable;
     public MockAppFactory setClientInitRunnableToReturn(Runnable clientInitRunnable) {
@@ -85,7 +85,7 @@ public class MockAppFactory implements AppFactory {
 
     @Override
     public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) {
-        callCountForCreateChatServerListeningLoop += 1;
+        callCountForCreateHTTPServerListeningLoop += 1;
         return HTTPServerListeningLoop;
     }
 
