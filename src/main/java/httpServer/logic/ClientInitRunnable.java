@@ -1,9 +1,7 @@
 package httpServer.logic;
 
 import httpServer.factory.AppFactory;
-import httpServer.wrappers.JavaPrintWriterWrapper;
-import httpServer.wrappers.Sokket;
-import httpServer.wrappers.Writer;
+import httpServer.wrappers.*;
 
 import java.io.IOException;
 
@@ -26,8 +24,10 @@ public class ClientInitRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void printMessage() throws IOException {
+        Reader reader = new JavaBufferedReaderWrapper(sokket.getInputStream());
+        reader.readLine();
         Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
-        writer.printLine("Hey! You connected");
+        writer.printLine("HTTP/1.1 200 OK\r\n");
         sokket.close();
     }
 
