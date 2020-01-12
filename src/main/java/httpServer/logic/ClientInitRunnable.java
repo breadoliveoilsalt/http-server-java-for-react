@@ -25,7 +25,9 @@ public class ClientInitRunnable implements Runnable, HTTPServerLogicObject {
 
     private void printMessage() throws IOException {
         Reader reader = new JavaBufferedReaderWrapper(sokket.getInputStream());
-        reader.readLine();
+        String clientRequest = reader.readLine();
+        System.out.println(clientRequest);
+
         Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
         writer.printLine("HTTP/1.1 200 OK\r\n");
         sokket.close();
