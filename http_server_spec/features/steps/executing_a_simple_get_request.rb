@@ -1,5 +1,8 @@
 class Spinach::Features::ExecutingASimpleGetRequest < Spinach::FeatureSteps
   step 'I make a GET request to "/simple_get"' do
+    # putting pry here works, but not after response
+    # require 'pry'
+    # binding.pry
     @response = Requests.get("/simple_get")
   end
 
