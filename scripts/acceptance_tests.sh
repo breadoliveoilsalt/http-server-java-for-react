@@ -13,4 +13,4 @@ cd http_server_spec
 bundle install
 java -jar "../build/libs/$(ls ../build/libs)" &
 SERVER_PID=$!
-bundle exec spinach || true
+bundle exec spinach
