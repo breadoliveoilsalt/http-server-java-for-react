@@ -25,8 +25,11 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void printMessage() throws IOException {
-        Reader reader = new JavaBufferedReaderWrapper(sokket.getInputStream());
-        String clientRequest = reader.readLine();
+//        Reader reader = new JavaBufferedReaderWrapper(sokket.getInputStream());
+//        String clientRequest = reader.readLine();
+//        System.out.println(clientRequest);
+
+        String clientRequest = ClientRequestReader.readInputStream(sokket);
         System.out.println(clientRequest);
 
         Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
