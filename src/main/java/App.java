@@ -1,16 +1,16 @@
-import chatServer.factory.ChatServerAppFactory;
-import chatServer.factory.AppFactory;
-import chatServer.logic.ChatServerInit;
+import httpServer.factory.HTTPServerAppFactory;
+import httpServer.factory.AppFactory;
+import httpServer.logic.HTTPServerInit;
 
 import java.io.IOException;
 
 class App {
 
     public static void main(String[] args) throws IOException {
-        int port = 8000;
-        AppFactory factory = new ChatServerAppFactory();
+        int port = 5000;
+        AppFactory factory = new HTTPServerAppFactory();
 
-        new ChatServerInit(port, factory).run();
+        new HTTPServerInit(port, factory).run();
     }
 
 }

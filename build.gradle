@@ -17,13 +17,17 @@ dependencies {
 }
 
 jar {
-    archiveBaseName = "chatServer"
+    archiveBaseName = "httpServerJava"
     archiveVersion = versionDetails().lastTag + "-" + versionDetails().gitHash
     manifest {
         attributes(
                 'Main-Class': 'App'
         )
     }
+}
+
+task runAcceptanceTests(type:Exec) {
+    commandLine = "./acceptance_tests.sh"
 }
 
 // Uncomment to compile with warnings
