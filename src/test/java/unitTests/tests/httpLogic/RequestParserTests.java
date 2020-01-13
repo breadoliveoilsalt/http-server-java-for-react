@@ -1,5 +1,7 @@
 package unitTests.tests.httpLogic;
 
+import httpServer.httpLogic.Request;
+import httpServer.httpLogic.RequestParser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,26 +22,26 @@ public class RequestParserTests {
 
         Object request = RequestParser.parse(rawClientRequest);
 
-        assertTrue(request.getClass() == RequestParser.class);
+        assertTrue(request.getClass() == Request.class);
     }
 
-    @Test
-    public void theParsedRequestObjectKnowsTheMethodRequested() {
-
-    }
-
-    @Test
-    public void theParsedRequestObjectKnowsThePathRequested() {
-
-    }
-
-    @Test
-    public void theParsedRequestObjectKnowsTheHeadersOfTheRequest() {
-
-    }
-
-    @Test
-    public void theParsedRequestObjectKnowsTheBodyOfTheRequest() {
-
-    }
+//    @Test
+//    public void theParsedRequestObjectKnowsTheMethodRequested() {
+//
+//    }
+//
+//    @Test
+//    public void theParsedRequestObjectKnowsThePathRequested() {
+//
+//    }
+//
+//    @Test
+//    public void theParsedRequestObjectKnowsTheHeadersOfTheRequest() {
+//
+//    }
+//
+//    @Test
+//    public void theParsedRequestObjectKnowsTheBodyOfTheRequest() {
+//
+//    }
 }
