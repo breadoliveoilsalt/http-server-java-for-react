@@ -1,6 +1,6 @@
 package httpServer.factory;
 
-import httpServer.logic.HTTPServerLogicObject;
+import httpServer.serverSocketLogic.HTTPServerLogicObject;
 import httpServer.wrappers.Reader;
 import httpServer.wrappers.ServerSokket;
 import httpServer.wrappers.Sokket;

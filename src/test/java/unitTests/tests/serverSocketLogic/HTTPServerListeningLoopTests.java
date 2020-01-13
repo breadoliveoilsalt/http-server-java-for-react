@@ -1,6 +1,6 @@
-package unitTests.tests.logic;
+package unitTests.tests.serverSocketLogic;
 
-import httpServer.logic.HTTPServerListeningLoop;
+import httpServer.serverSocketLogic.HTTPServerListeningLoop;
 import unitTests.factoryForTests.MockAppFactory;
 import unitTests.mocks.*;
 

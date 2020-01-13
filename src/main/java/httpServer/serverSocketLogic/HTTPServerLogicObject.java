@@ -1,4 +1,4 @@
-package httpServer.logic;
+package httpServer.serverSocketLogic;
 
 import java.io.IOException;
 

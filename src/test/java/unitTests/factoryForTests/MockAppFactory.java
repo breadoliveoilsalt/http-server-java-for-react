@@ -1,7 +1,7 @@
 package unitTests.factoryForTests;
 
 import httpServer.factory.AppFactory;
-import httpServer.logic.HTTPServerListeningLoop;
+import httpServer.serverSocketLogic.HTTPServerListeningLoop;
 import httpServer.wrappers.Reader;
 import httpServer.wrappers.ServerSokket;
 import httpServer.wrappers.Sokket;

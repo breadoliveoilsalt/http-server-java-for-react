@@ -1,6 +1,7 @@
-package httpServer.logic;
+package httpServer.httpLogic;
 
 import httpServer.factory.AppFactory;
+import httpServer.serverSocketLogic.HTTPServerLogicObject;
 import httpServer.wrappers.*;
 
 import java.io.IOException;
