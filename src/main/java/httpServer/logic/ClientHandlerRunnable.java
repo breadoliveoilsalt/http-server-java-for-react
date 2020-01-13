@@ -5,12 +5,12 @@ import httpServer.wrappers.*;
 
 import java.io.IOException;
 
-public class ClientInitRunnable implements Runnable, HTTPServerLogicObject {
+public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     private final Sokket sokket;
     private final AppFactory factory;
 
-    public ClientInitRunnable(Sokket sokket, AppFactory factory) {
+    public ClientHandlerRunnable(Sokket sokket, AppFactory factory) {
         this.sokket = sokket;
         this.factory = factory;
     }

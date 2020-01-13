@@ -29,7 +29,7 @@ public class HTTPServerAppFactory implements AppFactory {
     }
 
     public Runnable createClientInitRunnable(Sokket sokket, AppFactory factory) {
-        return new ClientInitRunnable(sokket, factory);
+        return new ClientHandlerRunnable(sokket, factory);
     }
 
 }

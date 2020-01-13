@@ -1,22 +1,21 @@
 package unitTests.tests.logic;
 
-import httpServer.logic.ClientInitRunnable;
+import httpServer.logic.ClientHandlerRunnable;
 import unitTests.factoryForTests.MockAppFactory;
 import unitTests.mocks.MockSokket;
 
 import org.junit.Before;
-import org.junit.Test;
 
-public class ClientInitRunnableTest {
+public class ClientHandlerRunnableTest {
 
     private MockSokket sokket;
     private MockAppFactory factory;
-    private ClientInitRunnable clientInitRunnable;
+    private ClientHandlerRunnable clientHandlerRunnable;
 
     @Before
     public void initTests() {
         sokket = new MockSokket();
-        clientInitRunnable = new ClientInitRunnable(sokket, factory);
+        clientHandlerRunnable = new ClientHandlerRunnable(sokket, factory);
     }
 
 //    @Test
