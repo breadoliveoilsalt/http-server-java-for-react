@@ -13,7 +13,8 @@ import static org.junit.Assert.*;
 
 public class ClientRequestReaderTests {
 
-    MockSokket sokket;
+    private MockSokket sokket;
+    private final String crlf = "\r\n";
 
     @Before
     public void testInit() {
@@ -23,6 +24,28 @@ public class ClientRequestReaderTests {
     @Test
     public void readInputStreamReturnsAStringFromReadingTheSokketsInputStream() throws IOException {
         String requestSentFromClient = "GET /simple_get HTTP/1.1";
+        InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
+        sokket.setInputStream(inputStreamFromClient);
+
+        String requestReadFromClient = ClientRequestReader.readInputStream(sokket);
+
+        assertEquals(requestSentFromClient, requestReadFromClient);
+    }
+
+    @Test
+    public void readInputStreamRemovesTheLastCRLF() throws IOException {
+        String requestSentFromClient = "GET /simple_get HTTP/1.1" + crlf;
+        InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
+        sokket.setInputStream(inputStreamFromClient);
+
+        String requestReadFromClient = ClientRequestReader.readInputStream(sokket);
+
+        assertEquals("GET /simple_get HTTP/1.1", requestReadFromClient);
+    }
+
+    @Test
+    public void readInputStreamDoesNotRemoveIntermediaryCRLF() throws IOException {
+        String requestSentFromClient = "GET /simple_get HTTP/1.1" + crlf + "Body of request";
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
