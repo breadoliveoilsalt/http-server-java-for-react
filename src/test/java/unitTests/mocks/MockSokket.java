@@ -12,9 +12,15 @@ public class MockSokket implements Sokket {
         return closed;
     }
 
+    private InputStream inputStream;
+
     @Override
     public InputStream getInputStream() {
-        return new MockInputStream();
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     @Override

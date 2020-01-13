@@ -6,7 +6,7 @@ import unitTests.mocks.MockSokket;
 
 import org.junit.Before;
 
-public class ClientHandlerRunnableTest {
+public class ClientHandlerRunnableTests {
 
     private MockSokket sokket;
     private MockAppFactory factory;
