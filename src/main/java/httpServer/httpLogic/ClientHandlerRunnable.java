@@ -29,8 +29,8 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 //        String clientRequest = reader.readLine();
 //        System.out.println(clientRequest);
 
-        String clientRequest = ClientRequestReader.readInputStream(sokket);
-        System.out.println(clientRequest);
+        String rawClientRequest = ClientRequestReader.readInputStream(sokket);
+        System.out.println(rawClientRequest);
 
         Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
         writer.printLine("HTTP/1.1 200 OK\r\n");

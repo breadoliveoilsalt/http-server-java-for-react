@@ -1,9 +1,10 @@
 package unitTests.tests.httpLogic;
 
-import httpServer.httpLogic.ClientRequestReader;
 import org.junit.Before;
 import org.junit.Test;
+
 import unitTests.mocks.MockSokket;
+import httpServer.httpLogic.ClientRequestReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
