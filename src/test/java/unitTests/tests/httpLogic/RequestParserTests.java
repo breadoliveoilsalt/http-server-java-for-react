@@ -5,6 +5,7 @@ import httpServer.httpLogic.RequestParser;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RequestParserTests {
@@ -25,10 +26,14 @@ public class RequestParserTests {
         assertTrue(request.getClass() == Request.class);
     }
 
-//    @Test
-//    public void theParsedRequestObjectKnowsTheMethodRequested() {
-//
-//    }
+    @Test
+    public void theParsedRequestObjectKnowsTheMethodRequested() {
+        rawClientRequest = "GET /simple_get HTTP/1.1";
+
+        Request request = RequestParser.parse(rawClientRequest);
+
+        assertEquals("GET", request.getMethod());
+    }
 //
 //    @Test
 //    public void theParsedRequestObjectKnowsThePathRequested() {
