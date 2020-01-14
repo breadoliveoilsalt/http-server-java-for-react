@@ -17,6 +17,7 @@ public class RequestParser {
         request.setMethod(method);
         String path = parsedRequestLine[1];
         request.setPath(path);
+        request.setHTTPVersion(parsedRequestLine[2]);
         // add html version
         return request;
     }
