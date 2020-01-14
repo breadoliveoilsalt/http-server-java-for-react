@@ -43,6 +43,15 @@ public class RequestParserTests {
 
         assertEquals("/simple_get", request.getPath());
     }
+
+    @Test
+    public void theParsedRequestObjectKnowsTheHTTPVersionSpecifiedInTheRequest() {
+        rawClientRequest = "GET /simple_get HTTP/1.1";
+
+        Request request = RequestParser.parse(rawClientRequest);
+
+        assertEquals("HTTP/1.1", request.getHTTPVersion());
+    }
 //
 //    @Test
 //    public void theParsedRequestObjectKnowsTheHeadersOfTheRequest() {
