@@ -34,11 +34,15 @@ public class RequestParserTests {
 
         assertEquals("GET", request.getMethod());
     }
-//
-//    @Test
-//    public void theParsedRequestObjectKnowsThePathRequested() {
-//
-//    }
+
+    @Test
+    public void theParsedRequestObjectKnowsThePathRequested() {
+        rawClientRequest = "GET /simple_get HTTP/1.1";
+
+        Request request = RequestParser.parse(rawClientRequest);
+
+        assertEquals("/simple_get", request.getPath());
+    }
 //
 //    @Test
 //    public void theParsedRequestObjectKnowsTheHeadersOfTheRequest() {
