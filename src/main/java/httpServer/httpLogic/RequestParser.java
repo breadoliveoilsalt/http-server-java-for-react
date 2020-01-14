@@ -15,18 +15,12 @@ public class RequestParser {
         request = new Request();
     }
 
-// this should throw something, no? Request not understood?
     public Request parse(String rawClientRequest) {
         this.rawClientRequest = rawClientRequest;
         parseRawRequestIntoSections();
         extractRequestLineForRequest();
         extractHeadersForRequest();
-
-        // add html version
-        // have version number return a float
-//        parseHeaders(parsedMetaData);
-//        String rawHeaders = parsedMetaData[1];
-//        request.setHTTPVersion(rawHeaders}jk);
+        extractBodyForRequest();
         return request;
     }
 
@@ -41,7 +35,6 @@ public class RequestParser {
         request.setPath(parsedRequestLine[1]);
         float httpVersion = Float.valueOf(parsedRequestLine[2].split("/")[1]);
         request.setHTTPVersion(httpVersion);
-
     }
 
     private void extractHeadersForRequest() {
@@ -52,6 +45,12 @@ public class RequestParser {
                 headers.put(parsedKeyAndValue[0], parsedKeyAndValue[1].trim());
             }
             request.setHeaders(headers);
+        }
+    }
+
+    private void extractBodyForRequest() {
+        if (parsedMetaDataAndBody.length > 1){
+            request.setBody(parsedMetaDataAndBody[1]);
         }
     }
 
