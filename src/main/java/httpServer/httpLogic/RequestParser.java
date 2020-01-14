@@ -39,12 +39,16 @@ public class RequestParser {
 
     private void extractHeadersForRequest() {
         if (parsedRequestLineAndHeaders.length > 1) {
-            Map<String, String> headers = new HashMap<>();
-            for (int i = 1; i < parsedRequestLineAndHeaders.length; i++) {
-                String[] parsedKeyAndValue = parsedRequestLineAndHeaders[i].split(":");
-                headers.put(parsedKeyAndValue[0], parsedKeyAndValue[1].trim());
-            }
-            request.setHeaders(headers);
+            Map<String, String> headersMap = new HashMap<>();
+            loopThroughAndExtractRawHeaders(headersMap);
+            request.setHeaders(headersMap);
+        }
+    }
+
+    private void loopThroughAndExtractRawHeaders(Map<String, String> headers) {
+        for (int i = 1; i < parsedRequestLineAndHeaders.length; i++) {
+            String[] parsedKeyAndValue = parsedRequestLineAndHeaders[i].split(":");
+            headers.put(parsedKeyAndValue[0], parsedKeyAndValue[1].trim());
         }
     }
 
