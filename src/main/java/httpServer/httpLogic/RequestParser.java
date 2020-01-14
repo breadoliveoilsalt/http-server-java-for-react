@@ -2,24 +2,43 @@ package httpServer.httpLogic;
 
 public class RequestParser {
 
-//    private Request request;
-//
-//    RequestParser() {
-//        this.request = new Request();
-//    }
+    private Request request;
+    private String rawClientRequest;
+    private String[] parsedMetaDataAndBody;
+    private String[] parsedRequestLineAndHeaders;
+    private String[] parsedRequestLine;
 
-    public static Request parse(String rawClientRequest) {
-        Request request = new Request();
-        String[] metaDataAndBody = rawClientRequest.split("\r\n");
-        String[] parsedRequestLine = metaDataAndBody[0].split("\n")[0].split(" ");
-//        String method = requestLine[0].split(" ")[0];
-        String method = parsedRequestLine[0];
-        request.setMethod(method);
-        String path = parsedRequestLine[1];
-        request.setPath(path);
-        request.setHTTPVersion(parsedRequestLine[2]);
+    public RequestParser() {
+        request = new Request();
+    }
+
+// this should throw something, no? Request not understood?
+    public Request parse(String rawClientRequest) {
+        this.rawClientRequest = rawClientRequest;
+        parseRawRequestIntoSections();
+        extractRequestLineForRequest();
+
         // add html version
         // have version number return a float
+//        parseHeaders(parsedMetaData);
+//        String rawHeaders = parsedMetaData[1];
+//        request.setHTTPVersion(rawHeaders);
         return request;
+    }
+
+    private void parseRawRequestIntoSections() {
+        parsedMetaDataAndBody = rawClientRequest.split("\r\n");
+        parsedRequestLineAndHeaders = parsedMetaDataAndBody[0].split("\n");
+        parsedRequestLine = parsedRequestLineAndHeaders[0].split(" ");
+    }
+    private void extractRequestLineForRequest() {
+        request.setMethod(parsedRequestLine[0]);
+        request.setPath(parsedRequestLine[1]);
+        float httpVersion = Float.valueOf(parsedRequestLine[2].split("/")[1]);
+        request.setHTTPVersion(httpVersion);
+
+    }
+    private static void parseHeaders(String[] parsedMetaDataAndBody) {
+
     }
 }

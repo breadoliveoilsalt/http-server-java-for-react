@@ -24,16 +24,15 @@ public class Request {
         this.path = path;
     }
 
-    public String getHTTPVersion() {
+    private float httpVersion;
+
+    public float getHTTPVersion() {
         return httpVersion;
     }
 
-    public void setHTTPVersion(String httpVersion) {
+    public void setHTTPVersion(float httpVersion) {
         this.httpVersion = httpVersion;
     }
-
-    private String httpVersion;
-
 
     private Map<String,String> headers;
 

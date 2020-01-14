@@ -8,23 +8,23 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class RequestParserTests {
 
     private String rawClientRequest;
+    private RequestParser requestParser;
 
     @Before
     public void testInit() {
-        rawClientRequest = "";
+        requestParser = new RequestParser();
     }
 
     @Test
     public void parseReturnsARequestObject() {
         rawClientRequest = "GET /simple_get HTTP/1.1";
 
-        Object request = RequestParser.parse(rawClientRequest);
+        Object request = requestParser.parse(rawClientRequest);
 
         assertTrue(request.getClass() == Request.class);
     }
@@ -33,7 +33,7 @@ public class RequestParserTests {
     public void theParsedRequestObjectKnowsTheMethodRequested() {
         rawClientRequest = "GET /simple_get HTTP/1.1";
 
-        Request request = RequestParser.parse(rawClientRequest);
+        Request request = requestParser.parse(rawClientRequest);
 
         assertEquals("GET", request.getMethod());
     }
@@ -42,7 +42,7 @@ public class RequestParserTests {
     public void theParsedRequestObjectKnowsThePathRequested() {
         rawClientRequest = "GET /simple_get HTTP/1.1";
 
-        Request request = RequestParser.parse(rawClientRequest);
+        Request request = requestParser.parse(rawClientRequest);
 
         assertEquals("/simple_get", request.getPath());
     }
@@ -51,9 +51,9 @@ public class RequestParserTests {
     public void theParsedRequestObjectKnowsTheHTTPVersionSpecifiedInTheRequest() {
         rawClientRequest = "GET /simple_get HTTP/1.1";
 
-        Request request = RequestParser.parse(rawClientRequest);
+        Request request = requestParser.parse(rawClientRequest);
 
-        assertEquals("HTTP/1.1", request.getHTTPVersion());
+        assertEquals(1.1, request.getHTTPVersion(), 0.002);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class RequestParserTests {
         expectedHeaders.put("Content-Type:", "text/html");
         expectedHeaders.put("Content-Length:", "1354");
 
-        Request request = RequestParser.parse(rawClientRequest);
+        Request request = requestParser.parse(rawClientRequest);
 
         assertEquals(expectedHeaders, request.getHeaders());
     }
