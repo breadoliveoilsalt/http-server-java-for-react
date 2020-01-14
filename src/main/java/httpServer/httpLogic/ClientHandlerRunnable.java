@@ -1,6 +1,8 @@
 package httpServer.httpLogic;
 
 import httpServer.factory.AppFactory;
+import httpServer.httpLogic.routes.RouteMap;
+import httpServer.httpLogic.routes.RouteMapFactory;
 import httpServer.serverSocketLogic.HTTPServerLogicObject;
 import httpServer.wrappers.*;
 
@@ -21,20 +23,29 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
             printMessage();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                sokket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void printMessage() throws IOException {
-//        Reader reader = new JavaBufferedReaderWrapper(sokket.getInputStream());
-//        String clientRequest = reader.readLine();
-//        System.out.println(clientRequest);
+    private void printMessage() throws Exception {
+        RouteMap routes = new RouteMapFactory().buildHTTPServerRoutes();
 
         String rawClientRequest = ClientRequestReader.readInputStream(sokket);
-        System.out.println(rawClientRequest);
 
+        Request clientRequest = new RequestParser().parse(rawClientRequest);
+        Response serverResponse = RequestHandler.handle(clientRequest, routes);
+        String writableResponse = new ResponseConverter().stringify(serverResponse);
         Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
-        writer.printLine("HTTP/1.1 200 OK\r\n");
-        sokket.close();
+        // UPTO: CREATE something where you pass sokket and stringified response;
+
+        writer.printLine(writableResponse);
     }
 
 }
