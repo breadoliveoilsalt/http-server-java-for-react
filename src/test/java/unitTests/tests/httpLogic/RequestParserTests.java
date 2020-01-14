@@ -63,16 +63,25 @@ public class RequestParserTests {
                             "Content-Length: 1354";
 
         Map<String, String> expectedHeaders = new HashMap<>();
-        expectedHeaders.put("Content-Type:", "text/html");
-        expectedHeaders.put("Content-Length:", "1354");
+        expectedHeaders.put("Content-Type", "text/html");
+        expectedHeaders.put("Content-Length", "1354");
 
         Request request = requestParser.parse(rawClientRequest);
 
         assertEquals(expectedHeaders, request.getHeaders());
     }
-//
-//    @Test
-//    public void theParsedRequestObjectKnowsTheBodyOfTheRequest() {
-//
-//    }
+
+    @Test
+    public void theParsedRequestObjectKnowsTheBodyOfTheRequest() {
+        rawClientRequest =  "GET /simple_get HTTP/1.1\n" +
+                            "Content-Type: text/html\n" +
+                            "Content-Length: 1354" +
+                            "\r\n" +
+                            "Request Body";
+
+        Request request = requestParser.parse(rawClientRequest);
+
+        assertEquals("Request Body", request.getBody());
+    }
+
 }

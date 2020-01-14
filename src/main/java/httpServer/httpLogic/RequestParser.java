@@ -47,8 +47,8 @@ public class RequestParser {
         if (parsedRequestLineAndHeaders.length > 1) {
             Map<String, String> headers = new HashMap<>();
             for (int i = 1; i < parsedRequestLineAndHeaders.length; i++) {
-                String[] parsedKeyAndValue = parsedRequestLineAndHeaders[i].split(" ");
-                headers.put(parsedKeyAndValue[0], parsedKeyAndValue[1]);
+                String[] parsedKeyAndValue = parsedRequestLineAndHeaders[i].split(":");
+                headers.put(parsedKeyAndValue[0], parsedKeyAndValue[1].trim());
             }
             request.setHeaders(headers);
         }
