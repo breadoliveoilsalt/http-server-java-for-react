@@ -19,6 +19,7 @@ public class RequestParser {
         request.setPath(path);
         request.setHTTPVersion(parsedRequestLine[2]);
         // add html version
+        // have version number return a float
         return request;
     }
 }
