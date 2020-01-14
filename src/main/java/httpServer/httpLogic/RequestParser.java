@@ -1,5 +1,8 @@
 package httpServer.httpLogic;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RequestParser {
 
     private Request request;
@@ -17,12 +20,13 @@ public class RequestParser {
         this.rawClientRequest = rawClientRequest;
         parseRawRequestIntoSections();
         extractRequestLineForRequest();
+        extractHeadersForRequest();
 
         // add html version
         // have version number return a float
 //        parseHeaders(parsedMetaData);
 //        String rawHeaders = parsedMetaData[1];
-//        request.setHTTPVersion(rawHeaders);
+//        request.setHTTPVersion(rawHeaders}jk);
         return request;
     }
 
@@ -38,7 +42,16 @@ public class RequestParser {
         request.setHTTPVersion(httpVersion);
 
     }
-    private static void parseHeaders(String[] parsedMetaDataAndBody) {
 
+    private void extractHeadersForRequest() {
+        if (parsedRequestLineAndHeaders.length > 1) {
+            Map<String, String> headers = new HashMap<>();
+            for (int i = 1; i < parsedRequestLineAndHeaders.length; i++) {
+                String[] parsedKeyAndValue = parsedRequestLineAndHeaders[i].split(" ");
+                headers.put(parsedKeyAndValue[0], parsedKeyAndValue[1]);
+            }
+            request.setHeaders(headers);
+        }
     }
+
 }
