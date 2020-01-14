@@ -35,6 +35,7 @@ public class RequestParser {
         parsedRequestLineAndHeaders = parsedMetaDataAndBody[0].split("\n");
         parsedRequestLine = parsedRequestLineAndHeaders[0].split(" ");
     }
+
     private void extractRequestLineForRequest() {
         request.setMethod(parsedRequestLine[0]);
         request.setPath(parsedRequestLine[1]);
