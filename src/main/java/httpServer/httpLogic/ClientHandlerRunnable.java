@@ -1,8 +1,8 @@
 package httpServer.httpLogic;
 
 import httpServer.factory.AppFactory;
-import httpServer.httpLogic.routes.RouteMap;
-import httpServer.httpLogic.routes.RouteMapFactory;
+import httpServer.httpLogic.controllerLogic.Controller;
+import httpServer.httpLogic.controllerLogic.ControllerFactory;
 import httpServer.serverSocketLogic.HTTPServerLogicObject;
 import httpServer.wrappers.*;
 
@@ -35,12 +35,12 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void printMessage() throws Exception {
-        RouteMap routes = new RouteMapFactory().buildHTTPServerRoutes();
+        Controller controller = new ControllerFactory().buildHTTPServerController();
 
-        String rawClientRequest = ClientRequestReader.readInputStream(sokket);
+        String rawClientRequest = new ClientRequestReader().readInputStream(sokket);
 
         Request clientRequest = new RequestParser().parse(rawClientRequest);
-        Response serverResponse = RequestHandler.handle(clientRequest, routes);
+        Response serverResponse = controller.handle(clientRequest);
         String writableResponse = new ResponseConverter().stringify(serverResponse);
         Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
         // UPTO: CREATE something where you pass sokket and stringified response;

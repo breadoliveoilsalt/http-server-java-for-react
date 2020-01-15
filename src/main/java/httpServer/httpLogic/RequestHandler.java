@@ -1,13 +1,15 @@
 package httpServer.httpLogic;
 
-import httpServer.httpLogic.routes.RouteMap;
+import httpServer.httpLogic.controllerLogic.Controller;
+
+import java.util.concurrent.Callable;
 
 public class RequestHandler {
 
-    // consider adding router as parameter!
-
-    public Response handle(Request request, RouteMap routes) throws Exception {
-
-        return RouteMap.routes.get(request.getPath()).get(request.getMethod()).call();
-    }
+//    public Object handle(Request request, Controller routes) throws Exception {
+//        String pathRequested = request.getPath();
+//        String methodRequested = request.getMethod();
+//        Callable action = routes.get(pathRequested, methodRequested);
+//        return action.call();
+//    }
 }

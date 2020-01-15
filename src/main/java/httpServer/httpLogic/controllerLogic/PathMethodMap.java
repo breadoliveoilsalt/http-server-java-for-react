@@ -1,4 +1,6 @@
-package httpServer.httpLogic.routes;
+package httpServer.httpLogic.controllerLogic;
+
+import httpServer.httpLogic.Response;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -6,7 +8,7 @@ import java.util.concurrent.Callable;
 public class PathMethodMap {
 
     private String pathName;
-    private Map<String, Callable> methodActionMap;
+    private Map<String, Callable<Response>> methodActionMap;
 
     public PathMethodMap(String pathName) {
         this.pathName = pathName;
@@ -21,7 +23,7 @@ public class PathMethodMap {
         return pathName;
     }
 
-    public Map<String, Callable> getMethodActionMap() {
+    public Map<String, Callable<Response>> getMethodActionMap() {
         return methodActionMap;
     }
 

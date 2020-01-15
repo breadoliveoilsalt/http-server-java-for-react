@@ -15,11 +15,13 @@ import static org.junit.Assert.*;
 public class ClientRequestReaderTests {
 
     private MockSokket sokket;
+    private ClientRequestReader clientRequestReader;
     private final String crlf = "\r\n";
 
     @Before
     public void testInit() {
         this.sokket = new MockSokket();
+        this.clientRequestReader = new ClientRequestReader();
     }
 
     @Test
@@ -28,7 +30,7 @@ public class ClientRequestReaderTests {
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
-        String requestReadFromClient = ClientRequestReader.readInputStream(sokket);
+        String requestReadFromClient = clientRequestReader.readInputStream(sokket);
 
         assertEquals(requestSentFromClient, requestReadFromClient);
     }
@@ -39,7 +41,7 @@ public class ClientRequestReaderTests {
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
-        String requestReadFromClient = ClientRequestReader.readInputStream(sokket);
+        String requestReadFromClient = clientRequestReader.readInputStream(sokket);
 
         assertEquals("GET /simple_get HTTP/1.1", requestReadFromClient);
     }
@@ -50,7 +52,7 @@ public class ClientRequestReaderTests {
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
-        String requestReadFromClient = ClientRequestReader.readInputStream(sokket);
+        String requestReadFromClient = clientRequestReader.readInputStream(sokket);
 
         assertEquals(requestSentFromClient, requestReadFromClient);
     }

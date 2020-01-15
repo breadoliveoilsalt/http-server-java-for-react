@@ -1,11 +1,11 @@
-package httpServer.httpLogic.routes;
+package httpServer.httpLogic.controllerLogic;
 
 import httpServer.httpLogic.ResponseFactory;
 
-public class RouteMapFactory {
+public class ControllerFactory {
 
-    public RouteMap buildHTTPServerRoutes() {
-        RouteMapBuilder builder = new RouteMapBuilder();
+    public Controller buildHTTPServerController() {
+        ControllerBuilder builder = new ControllerBuilder();
 
         PathMethodMap simpleGetPath = builder.createPath("/simple_get");
         simpleGetPath.addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponse());
