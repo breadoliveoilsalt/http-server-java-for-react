@@ -35,6 +35,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void printMessage() throws Exception {
+        System.out.println("Someone tried to connect!");
         Controller controller = new ControllerFactory().buildHTTPServerController();
 
         String rawClientRequest = new ClientRequestReader().readInputStream(sokket);

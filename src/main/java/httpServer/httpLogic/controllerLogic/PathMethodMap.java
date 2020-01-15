@@ -2,6 +2,7 @@ package httpServer.httpLogic.controllerLogic;
 
 import httpServer.httpLogic.Response;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -12,9 +13,10 @@ public class PathMethodMap {
 
     public PathMethodMap(String pathName) {
         this.pathName = pathName;
+        this.methodActionMap = new HashMap<>();
     }
 
-    public PathMethodMap addMethodAndAction(String method, Callable action) {
+    public PathMethodMap addMethodAndAction(String method, Callable<Response> action) {
         methodActionMap.put(method, action);
         return this;
     }
