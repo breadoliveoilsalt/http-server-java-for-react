@@ -19,14 +19,8 @@ public class Controller {
     }
 
     public Response handle(Request request) throws Exception {
-        String pathRequested = request.getPath();
-        String methodRequested = request.getMethod();
-        Callable<Response> action = get(pathRequested, methodRequested);
+        Callable<Response> action = getActionFor(request.getPath(), request.getMethod());
         return action.call();
-    }
-
-    private Callable<Response> get(String path, String method) {
-        return routeMap.get(path).get(method);
     }
 
     public Set<String> getPaths() {
