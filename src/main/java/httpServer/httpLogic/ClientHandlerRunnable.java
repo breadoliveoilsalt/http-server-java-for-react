@@ -20,7 +20,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     public void run() {
         try {
-            printMessage();
+            handleClientRequest();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -34,8 +34,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         }
     }
 
-    private void printMessage() throws Exception {
-        System.out.println("Someone tried to connect!");
+    private void handleClientRequest() throws Exception {
         Controller controller = new ControllerFactory().buildHTTPServerController();
 
         String rawClientRequest = new ClientRequestReader().readInputStream(sokket);
@@ -43,10 +42,12 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Request clientRequest = new RequestParser().parse(rawClientRequest);
         Response serverResponse = controller.handle(clientRequest);
         String writableResponse = new ResponseConverter().stringify(serverResponse);
-        Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
+        System.out.println(writableResponse);
+        new ResponseWriter().writeToOutputStream(sokket, writableResponse);
+//        Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
         // UPTO: CREATE something where you pass sokket and stringified response;
 
-        writer.printLine(writableResponse);
+//        writer.printLine(writableResponse);
     }
 
 }
