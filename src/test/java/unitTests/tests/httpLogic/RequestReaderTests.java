@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import unitTests.mocks.MockSokket;
-import httpServer.httpLogic.ClientRequestReader;
+import httpServer.httpLogic.RequestReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -12,16 +12,16 @@ import java.io.InputStream;
 
 import static org.junit.Assert.*;
 
-public class ClientRequestReaderTests {
+public class RequestReaderTests {
 
     private MockSokket sokket;
-    private ClientRequestReader clientRequestReader;
+    private RequestReader requestReader;
     private final String crlf = "\r\n";
 
     @Before
     public void testInit() {
         this.sokket = new MockSokket();
-        this.clientRequestReader = new ClientRequestReader();
+        this.requestReader = new RequestReader();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class ClientRequestReaderTests {
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
-        String requestReadFromClient = clientRequestReader.readInputStream(sokket);
+        String requestReadFromClient = requestReader.readInputStream(sokket);
 
         assertEquals(requestSentFromClient, requestReadFromClient);
     }
@@ -41,7 +41,7 @@ public class ClientRequestReaderTests {
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
-        String requestReadFromClient = clientRequestReader.readInputStream(sokket);
+        String requestReadFromClient = requestReader.readInputStream(sokket);
 
         assertEquals("GET /simple_get HTTP/1.1", requestReadFromClient);
     }
@@ -52,7 +52,7 @@ public class ClientRequestReaderTests {
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
-        String requestReadFromClient = clientRequestReader.readInputStream(sokket);
+        String requestReadFromClient = requestReader.readInputStream(sokket);
 
         assertEquals(requestSentFromClient, requestReadFromClient);
     }

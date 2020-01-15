@@ -36,18 +36,11 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     private void handleClientRequest() throws Exception {
         Controller controller = new ControllerFactory().buildHTTPServerController();
-
-        String rawClientRequest = new ClientRequestReader().readInputStream(sokket);
-
+        String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request clientRequest = new RequestParser().parse(rawClientRequest);
         Response serverResponse = controller.handle(clientRequest);
-        String writableResponse = new ResponseConverter().stringify(serverResponse);
-        System.out.println(writableResponse);
+        String writableResponse = new ResponseParser().stringify(serverResponse);
         new ResponseWriter().writeToOutputStream(sokket, writableResponse);
-//        Writer writer = new JavaPrintWriterWrapper(sokket.getOutputStream());
-        // UPTO: CREATE something where you pass sokket and stringified response;
-
-//        writer.printLine(writableResponse);
     }
 
 }

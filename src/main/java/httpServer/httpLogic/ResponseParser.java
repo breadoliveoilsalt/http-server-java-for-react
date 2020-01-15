@@ -1,6 +1,6 @@
 package httpServer.httpLogic;
 
-public class ResponseConverter {
+public class ResponseParser {
 
     private Response response;
     private String stringifiedReponse;

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class ClientRequestReader {
+public class RequestReader {
 
     final static int defaultBufferSize = 8192;
 
