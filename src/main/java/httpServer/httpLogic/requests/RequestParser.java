@@ -1,4 +1,4 @@
-package httpServer.httpLogic;
+package httpServer.httpLogic.requests;
 
 import java.util.HashMap;
 import java.util.Map;

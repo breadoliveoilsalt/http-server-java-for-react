@@ -1,6 +1,6 @@
 package unitTests.tests.httpLogic;
 
-import httpServer.httpLogic.ClientHandlerRunnable;
+import httpServer.httpLogic.runnable.ClientHandlerRunnable;
 import unitTests.factoryForTests.MockAppFactory;
 import unitTests.mocks.MockSokket;
 

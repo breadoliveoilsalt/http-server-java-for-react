@@ -1,6 +1,6 @@
 package httpServer.httpLogic.controllerLogic;
 
-import httpServer.httpLogic.Response;
+import httpServer.httpLogic.responses.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class ControllerBuilder {
         return pathMethodMap;
     }
 
-    public Controller buildRouteMap() {
+    public Controller buildController() {
         Map<String, Map<String, Callable<Response>>> tempMap = new HashMap<>();
         pathMethodMapList.forEach(pathMethodMap -> {
             tempMap.put(pathMethodMap.getPathName(), pathMethodMap.getMethodActionMap());

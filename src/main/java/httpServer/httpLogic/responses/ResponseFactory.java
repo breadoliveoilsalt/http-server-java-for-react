@@ -1,4 +1,4 @@
-package httpServer.httpLogic;
+package httpServer.httpLogic.responses;
 
 public class ResponseFactory {
 

@@ -1,6 +1,6 @@
 package httpServer.httpLogic.controllerLogic;
 
-import httpServer.httpLogic.Response;
+import httpServer.httpLogic.responses.Response;
 
 import java.util.HashMap;
 import java.util.Map;

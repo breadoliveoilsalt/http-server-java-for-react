@@ -1,7 +1,7 @@
 package unitTests.tests.httpLogic;
 
-import httpServer.httpLogic.Request;
-import httpServer.httpLogic.RequestParser;
+import httpServer.httpLogic.requests.Request;
+import httpServer.httpLogic.requests.RequestParser;
 import org.junit.Before;
 import org.junit.Test;
 

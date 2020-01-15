@@ -1,4 +1,6 @@
-package httpServer.httpLogic;
+package httpServer.httpLogic.responses;
+
+import httpServer.httpLogic.responses.Response;
 
 public class ResponseParser {
 

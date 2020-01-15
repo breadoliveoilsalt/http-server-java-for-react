@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import unitTests.mocks.MockSokket;
-import httpServer.httpLogic.RequestReader;
+import httpServer.httpLogic.io.RequestReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

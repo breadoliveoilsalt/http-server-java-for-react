@@ -1,6 +1,6 @@
 package httpServer.httpLogic.controllerLogic;
 
-import httpServer.httpLogic.ResponseFactory;
+import httpServer.httpLogic.responses.ResponseFactory;
 
 public class ControllerFactory {
 
@@ -10,7 +10,7 @@ public class ControllerFactory {
         PathMethodMap simpleGetPath = builder.createPath("/simple_get");
         simpleGetPath.addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponse());
 
-        return builder.buildRouteMap();
+        return builder.buildController();
     }
 
 }

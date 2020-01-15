@@ -2,7 +2,7 @@ package unitTests.mocks;
 
 import httpServer.factory.AppFactory;
 import httpServer.wrappers.Sokket;
-import httpServer.httpLogic.ClientHandlerRunnable;
+import httpServer.httpLogic.runnable.ClientHandlerRunnable;
 
 public class MockClientHandlerRunnable extends ClientHandlerRunnable {
 
