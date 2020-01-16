@@ -1,6 +1,5 @@
 package unitTests.mocks;
 
-import com.sun.tools.internal.ws.wsdl.document.Output;
 import httpServer.wrappers.Sokket;
 
 import java.io.InputStream;
