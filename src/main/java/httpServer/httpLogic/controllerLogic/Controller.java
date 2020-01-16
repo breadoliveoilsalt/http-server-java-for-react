@@ -3,7 +3,6 @@ package httpServer.httpLogic.controllerLogic;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.concurrent.Callable;
 public class Controller {
 
     private Map<String, Map<String, Callable<Response>>> routeMap;
-    private ArrayList<String> validPaths;
 
     public Controller(Map<String, Map<String, Callable<Response>>> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);

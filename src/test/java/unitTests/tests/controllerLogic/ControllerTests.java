@@ -81,7 +81,7 @@ public class ControllerTests {
         String path = "/simple_get";
         String method1 = "GET";
         String method2 = "POST";
-        setControllerForGetMethodsTest(path, method1, method2);
+        setControllerForGetMethodsForTest(path, method1, method2);
 
         String[] listOfExpectedMethods = {method1, method2};
         Set<String> expectedMethods = new HashSet<>(Arrays.asList(listOfExpectedMethods));
@@ -89,7 +89,7 @@ public class ControllerTests {
         assertEquals(expectedMethods, controller.getMethodsFor(path));
     }
 
-    private void setControllerForGetMethodsTest(String path, String method1, String method2) {
+    private void setControllerForGetMethodsForTest(String path, String method1, String method2) {
         Callable<Response> randomBuildAction = () -> returnTestResponse();
         ControllerBuilder builder = new ControllerBuilder();
         builder.createPath(path)
@@ -99,4 +99,17 @@ public class ControllerTests {
         controller = builder.buildController();
     }
 
+    @Test
+    public void getActionForReturnsTheActionAssociatedWithAPathAndMethod() {
+        String path = "/some_path";
+        String method = "GET";
+        Callable<Response> buildAction = () -> returnTestResponse();
+        setControllerForGetActionForTest(path, method, buildAction);
+
+        assertEquals(buildAction, controller.getActionFor(path, method));
+    }
+
+    private void setControllerForGetActionForTest(String path, String method, Callable<Response> buildAction) {
+        setControllerForHandleTest(path, method, buildAction);
+    };
 }
