@@ -1,4 +1,4 @@
-package unitTests.tests.httpLogic;
+package unitTests.tests.httpLogic.requestsTests;
 
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestParser;

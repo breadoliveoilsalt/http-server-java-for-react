@@ -21,4 +21,7 @@ public class Response {
         this.body = body;
     }
 
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
 }

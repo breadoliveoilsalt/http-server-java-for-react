@@ -1,5 +1,6 @@
 package httpServer.httpLogic.responses;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ResponseBuilder {
@@ -13,6 +14,22 @@ public class ResponseBuilder {
     public ResponseBuilder addOKStatusLine() {
         statusCode = "200";
         statusMessage = "OK";
+        return this;
+    }
+
+    public ResponseBuilder addHeader(String key, String value) {
+        if (headers == null) {
+            headers = new HashMap<>();
+        }
+        headers.put(key, value);
+        return this;
+    }
+
+    public ResponseBuilder addBody(String body) {
+        if (this.body == null) {
+            this.body = "";
+        }
+        this.body += body;
         return this;
     }
 

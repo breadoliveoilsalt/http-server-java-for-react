@@ -1,27 +1,46 @@
 package httpServer.httpLogic.responses;
 
-import httpServer.httpLogic.responses.Response;
+import httpServer.httpLogic.Constants;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class ResponseParser {
 
     private Response response;
     private String stringifiedReponse;
-    private final String SPACE = " ";
-    private final String NEW_LINE = "\n";
-    private final String CRLF = "\r\n";
 
     public String stringify(Response response) {
         this.response = response;
         stringifyStatusLine();
-        addEndOfResponse();
+        addHeaders();
+        addEndOfMetaData();
+        addBody();
         return stringifiedReponse;
     }
 
     private void stringifyStatusLine() {
-        stringifiedReponse = response.httpVersion + SPACE + response.statusCode + SPACE + response.statusMessage;
+        stringifiedReponse = response.httpVersion + Constants.SPACE + response.statusCode + Constants.SPACE + response.statusMessage + Constants.CRLF;
     }
 
-    private void addEndOfResponse() {
-        stringifiedReponse += CRLF;
+    private void addHeaders() {
+        if (response.getHeaders() != null) {
+            Iterator it = response.getHeaders().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                stringifiedReponse += pair.getKey() + ": " + pair.getValue() + Constants.CRLF;
+                it.remove();
+            }
+        }
+    }
+
+    private void addEndOfMetaData() {
+        stringifiedReponse += Constants.CRLF;
+    }
+
+    private void addBody() {
+       if (response.body != null) {
+           stringifiedReponse += response.body;
+       }
     }
 }
