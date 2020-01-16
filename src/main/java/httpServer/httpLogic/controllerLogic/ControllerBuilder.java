@@ -21,7 +21,7 @@ public class ControllerBuilder {
         return pathMethodMap;
     }
 
-    public Controller buildController() {
+    public Controller build() {
         Map<String, Map<String, Callable<Response>>> tempMap = new HashMap<>();
         pathMethodMapList.forEach(pathMethodMap -> {
             tempMap.put(pathMethodMap.getPathName(), pathMethodMap.getMethodActionMap());

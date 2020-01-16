@@ -11,6 +11,16 @@ public class ResponseBuilder {
     private Map<String, String> headers;
     private String body;
 
+    public ResponseBuilder addStatusCode(String code) {
+        statusCode = code;
+        return this;
+    }
+
+    public ResponseBuilder addStatusMessage(String message) {
+        statusMessage = message;
+        return this;
+    }
+
     public ResponseBuilder addOKStatusLine() {
         statusCode = "200";
         statusMessage = "OK";

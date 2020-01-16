@@ -21,7 +21,24 @@ public class Response {
         this.body = body;
     }
 
+    public String getHttpVersion() {
+        return httpVersion;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
     public Map<String, String> getHeaders() {
         return headers;
     }
+
+    public String getBody() {
+        return body;
+    }
+
 }

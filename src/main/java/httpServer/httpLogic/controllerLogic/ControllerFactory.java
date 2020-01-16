@@ -10,7 +10,7 @@ public class ControllerFactory {
         PathMethodMap simpleGetPath = builder.createPath("/simple_get");
         simpleGetPath.addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponse());
 
-        return builder.buildController();
+        return builder.build();
     }
 
 }

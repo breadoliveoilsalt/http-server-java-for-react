@@ -45,7 +45,7 @@ public class ControllerTests {
     private void setControllerForHandleTest(String path, String method, Callable<Response> action) {
         ControllerBuilder builder = new ControllerBuilder();
         builder.createPath(path).addMethodAndAction(method, action);
-        controller = builder.buildController();
+        controller = builder.build();
     }
 
     private void setClientRequestForHandleTest(String path, String method) {
@@ -73,7 +73,7 @@ public class ControllerTests {
         builder.createPath(path2);
         builder.createPath(path3);
 
-        controller = builder.buildController();
+        controller = builder.build();
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ControllerTests {
                 .addMethodAndAction(method1, randomBuildAction)
                 .addMethodAndAction(method2, randomBuildAction);
 
-        controller = builder.buildController();
+        controller = builder.build();
     }
 
     @Test

@@ -25,7 +25,7 @@ public class ControllerBuilderTests {
         String path = "/some_path";
         builder.createPath(path);
 
-        Controller controller = builder.buildController();
+        Controller controller = builder.build();
 
         assertTrue(controller.getPaths().contains(path));
     }
@@ -40,7 +40,7 @@ public class ControllerBuilderTests {
             .addMethodAndAction("GET", actionGET)
             .addMethodAndAction("POST", actionPOST);
 
-        Controller controller = builder.buildController();
+        Controller controller = builder.build();
 
         assertTrue(controller.getMethodsFor(path).contains("GET"));
         assertEquals(controller.getActionFor(path, "GET"), actionGET);
