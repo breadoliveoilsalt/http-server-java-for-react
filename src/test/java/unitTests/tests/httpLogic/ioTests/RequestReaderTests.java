@@ -1,4 +1,4 @@
-package unitTests.tests.httpLogic;
+package unitTests.tests.httpLogic.ioTests;
 
 import org.junit.Before;
 import org.junit.Test;

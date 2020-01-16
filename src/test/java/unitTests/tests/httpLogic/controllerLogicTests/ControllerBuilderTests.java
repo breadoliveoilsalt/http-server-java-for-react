@@ -1,4 +1,4 @@
-package unitTests.tests.controllerLogic;
+package unitTests.tests.httpLogic.controllerLogicTests;
 
 import httpServer.httpLogic.controllerLogic.Controller;
 import httpServer.httpLogic.controllerLogic.ControllerBuilder;
