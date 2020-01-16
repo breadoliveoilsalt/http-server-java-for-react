@@ -7,6 +7,9 @@ import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +30,7 @@ public class ControllerTests {
         String path = "/some_path";
         String method = "GET";
         Callable<Response> buildAction = () -> returnTestResponse();
-        setController(path, method, buildAction);
+        setControllerAction(path, method, buildAction);
         setClientRequest(path, method);
 
         Response result = controller.handle(clientRequest);
@@ -35,7 +38,25 @@ public class ControllerTests {
         assertEquals(testResponse, result);
     }
 
-    private void setController(String path, String method, Callable<Response> action) {
+
+    private Response returnTestResponse() {
+        return testResponse;
+    }
+
+    @Test
+    public void getPathsReturnsASetListingValidPaths() {
+        String path1 = "/simple_get";
+        String path2 = "/simple_post";
+        String path3 = "/simple_delete";
+        setControllerPaths(path1, path2, path3);
+
+        String[] listOfExpectedPaths = {path1, path2, path3};
+        Set<String> expectedPaths = new HashSet<>(Arrays.asList(listOfExpectedPaths));
+
+        assertEquals(expectedPaths, controller.getPaths());
+    }
+
+    private void setControllerAction(String path, String method, Callable<Response> action) {
         ControllerBuilder builder = new ControllerBuilder();
         builder.createPath(path).addMethodAndAction(method, action);
         controller = builder.buildController();
@@ -45,10 +66,14 @@ public class ControllerTests {
         clientRequest = new Request();
         clientRequest.setPath(path);
         clientRequest.setMethod(method);
-
     }
 
-    private Response returnTestResponse() {
-        return testResponse;
+    private void setControllerPaths(String path1, String path2, String path3) {
+        ControllerBuilder builder = new ControllerBuilder();
+        builder.createPath(path1);
+        builder.createPath(path2);
+        builder.createPath(path3);
+
+        controller = builder.buildController();
     }
 }
