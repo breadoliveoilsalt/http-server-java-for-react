@@ -1,5 +1,6 @@
 package unitTests.mocks;
 
+import com.sun.tools.internal.ws.wsdl.document.Output;
 import httpServer.wrappers.Sokket;
 
 import java.io.InputStream;
@@ -13,6 +14,7 @@ public class MockSokket implements Sokket {
     }
 
     private InputStream inputStream;
+    private OutputStream outputStream;
 
     @Override
     public InputStream getInputStream() {
@@ -25,7 +27,11 @@ public class MockSokket implements Sokket {
 
     @Override
     public OutputStream getOutputStream() {
-        return new MockOutputStream();
+        return outputStream;
+    }
+
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
     }
 
     @Override
