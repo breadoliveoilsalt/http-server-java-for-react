@@ -30,17 +30,28 @@ public class ControllerTests {
         String path = "/some_path";
         String method = "GET";
         Callable<Response> buildAction = () -> returnTestResponse();
-        setControllerAction(path, method, buildAction);
-        setClientRequest(path, method);
+        setControllerForHandleTest(path, method, buildAction);
+        setClientRequestForHandleTest(path, method);
 
         Response result = controller.handle(clientRequest);
 
         assertEquals(testResponse, result);
     }
 
-
     private Response returnTestResponse() {
         return testResponse;
+    }
+
+    private void setControllerForHandleTest(String path, String method, Callable<Response> action) {
+        ControllerBuilder builder = new ControllerBuilder();
+        builder.createPath(path).addMethodAndAction(method, action);
+        controller = builder.buildController();
+    }
+
+    private void setClientRequestForHandleTest(String path, String method) {
+        clientRequest = new Request();
+        clientRequest.setPath(path);
+        clientRequest.setMethod(method);
     }
 
     @Test
@@ -48,7 +59,7 @@ public class ControllerTests {
         String path1 = "/simple_get";
         String path2 = "/simple_post";
         String path3 = "/simple_delete";
-        setControllerPaths(path1, path2, path3);
+        setControllerForGetPathsTest(path1, path2, path3);
 
         String[] listOfExpectedPaths = {path1, path2, path3};
         Set<String> expectedPaths = new HashSet<>(Arrays.asList(listOfExpectedPaths));
@@ -56,19 +67,7 @@ public class ControllerTests {
         assertEquals(expectedPaths, controller.getPaths());
     }
 
-    private void setControllerAction(String path, String method, Callable<Response> action) {
-        ControllerBuilder builder = new ControllerBuilder();
-        builder.createPath(path).addMethodAndAction(method, action);
-        controller = builder.buildController();
-    }
-
-    private void setClientRequest(String path, String method) {
-        clientRequest = new Request();
-        clientRequest.setPath(path);
-        clientRequest.setMethod(method);
-    }
-
-    private void setControllerPaths(String path1, String path2, String path3) {
+    private void setControllerForGetPathsTest(String path1, String path2, String path3) {
         ControllerBuilder builder = new ControllerBuilder();
         builder.createPath(path1);
         builder.createPath(path2);
@@ -76,4 +75,28 @@ public class ControllerTests {
 
         controller = builder.buildController();
     }
+
+    @Test
+    public void getMethodsForReturnsASetListingValidMethodsForAPath() {
+        String path = "/simple_get";
+        String method1 = "GET";
+        String method2 = "POST";
+        setControllerForGetMethodsTest(path, method1, method2);
+
+        String[] listOfExpectedMethods = {method1, method2};
+        Set<String> expectedMethods = new HashSet<>(Arrays.asList(listOfExpectedMethods));
+
+        assertEquals(expectedMethods, controller.getMethodsFor(path));
+    }
+
+    private void setControllerForGetMethodsTest(String path, String method1, String method2) {
+        Callable<Response> randomBuildAction = () -> returnTestResponse();
+        ControllerBuilder builder = new ControllerBuilder();
+        builder.createPath(path)
+                .addMethodAndAction(method1, randomBuildAction)
+                .addMethodAndAction(method2, randomBuildAction);
+
+        controller = builder.buildController();
+    }
+
 }
