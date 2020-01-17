@@ -84,7 +84,19 @@ public class ControllerTests {
         Response result = controller.handle(clientRequest);
 
         assertEquals("501", result.getStatusCode());
+        assertEquals("Not Implemented", result.getStatusMessage());
         assertEquals("501 Error: Method Not Implemented", result.getBody());
+    }
+
+    @Test
+    public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsInvalid() throws Exception {
+        Request request = new Request();
+        request.flagAsInvalid();
+
+        Response result = controller.handle(clientRequest);
+
+        assertEquals("400", result.getStatusCode());
+        assertEquals("Bad Request", result.getStatusMessage());
     }
 
     @Test
