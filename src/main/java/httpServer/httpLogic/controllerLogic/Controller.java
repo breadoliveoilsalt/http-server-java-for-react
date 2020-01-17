@@ -18,19 +18,20 @@ public class Controller {
     }
 
     public Response handle(Request request) throws Exception {
+        Response responseToReturn;
         if (validHEADRequest(request)) {
             Callable<Response> action = getActionFor(request.getPath(), "GET");
             Response fullResponse = action.call();
-            return ResponseFactory.buildHEADResponseFor(fullResponse);
+            responseToReturn = ResponseFactory.buildHEADResponseFor(fullResponse);
         } else {
             Callable<Response> action = getActionFor(request.getPath(), request.getMethod());
-            Response response = action.call();
-            return response;
+            responseToReturn = action.call();
         }
+        return responseToReturn;
     }
 
     private boolean validHEADRequest(Request request) {
-        return request.getMethod() == "HEAD" && getMethodsFor(request.getPath()).contains("GET");
+        return request.getMethod().equals("HEAD") && getMethodsFor(request.getPath()).contains("GET");
     }
 
     public Set<String> getPaths() {
