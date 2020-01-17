@@ -90,13 +90,15 @@ public class ControllerTests {
 
     @Test
     public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsInvalid() throws Exception {
-        Request request = new Request();
-        request.flagAsInvalid();
+        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
+        clientRequest = new Request();
+        clientRequest.flagAsInvalid();
 
         Response result = controller.handle(clientRequest);
 
         assertEquals("400", result.getStatusCode());
         assertEquals("Bad Request", result.getStatusMessage());
+        assertEquals("400 Error: Bad Request Submitted", result.getBody());
     }
 
     @Test

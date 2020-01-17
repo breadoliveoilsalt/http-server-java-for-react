@@ -28,7 +28,9 @@ public class Controller {
 
     public Response handle(Request request) throws Exception {
         Response responseToReturn;
-        if (invalidMethod(request)) {
+        if (request.isInvalid()) {
+            responseToReturn = ResponseFactory.build400Response();
+        } else if (invalidMethod(request)) {
             responseToReturn = ResponseFactory.build501Response();
         } else if (validHEADRequest(request)) {
             Callable<Response> action = getActionFor(request.getPath(), "GET");

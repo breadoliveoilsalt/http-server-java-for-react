@@ -23,4 +23,12 @@ public class ResponseFactory {
                 .build();
     }
 
+    public static Response build400Response() {
+        return new ResponseBuilder()
+                .addStatusCode("400")
+                .addStatusMessage("Bad Request")
+                .addBody("400 Error: Bad Request Submitted")
+                .build();
+    }
+
 }
