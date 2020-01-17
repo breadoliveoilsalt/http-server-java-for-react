@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 
 public class Controller {
 
-    private Map<String, Map<String, Callable<Response>>> routeMap;
+    private final Map<String, Map<String, Callable<Response>>> routeMap;
 
     public Controller(Map<String, Map<String, Callable<Response>>> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);

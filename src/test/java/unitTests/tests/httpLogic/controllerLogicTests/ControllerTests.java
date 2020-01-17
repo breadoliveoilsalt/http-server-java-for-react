@@ -18,7 +18,7 @@ public class ControllerTests {
 
     private Controller controller;
     private Request clientRequest;
-    private Response testResponse;;
+    private Response testResponse;
 
     @Before
     public void testInit() {
@@ -111,5 +111,5 @@ public class ControllerTests {
 
     private void setControllerForGetActionForTest(String path, String method, Callable<Response> buildAction) {
         setControllerForHandleTest(path, method, buildAction);
-    };
+    }
 }

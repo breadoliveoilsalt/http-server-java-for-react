@@ -3,11 +3,11 @@ package httpServer.httpLogic.responses;
 import java.util.Map;
 
 public class Response {
-    protected String httpVersion;
-    protected String statusCode;
-    protected String statusMessage;
-    protected Map<String, String> headers;
-    protected String body;
+    protected final String httpVersion;
+    protected final String statusCode;
+    protected final String statusMessage;
+    protected final Map<String, String> headers;
+    protected final String body;
 
     public Response(String httpVersion,
                     String statusCode,

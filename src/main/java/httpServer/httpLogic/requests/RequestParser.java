@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class RequestParser {
 
-    private Request request;
+    private final Request request;
     private String rawClientRequest;
     private String[] parsedMetaDataAndBody;
     private String[] parsedRequestLineAndHeaders;
