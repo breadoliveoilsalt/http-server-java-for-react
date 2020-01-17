@@ -35,11 +35,6 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder setHeaders(Map<String, String> headerMap) {
-        headers = headerMap;
-        return this;
-    }
-
     public ResponseBuilder addBody(String body) {
         if (this.body == null) {
             this.body = "";

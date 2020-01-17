@@ -26,7 +26,7 @@ public class RequestParserTests {
 
         Object request = requestParser.parse(rawClientRequest);
 
-        assertTrue(request.getClass() == Request.class);
+        assertSame(request.getClass(), Request.class);
     }
 
     @Test

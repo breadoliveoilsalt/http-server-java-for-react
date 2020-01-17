@@ -2,14 +2,9 @@ package unitTests.factoryForTests;
 
 import httpServer.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
-import httpServer.wrappers.Reader;
 import httpServer.wrappers.ServerSokket;
 import httpServer.wrappers.Sokket;
-import httpServer.wrappers.Writer;
 import unitTests.testableObjects.TestableThread;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class MockAppFactory implements AppFactory {
 
@@ -19,18 +14,6 @@ public class MockAppFactory implements AppFactory {
         return this;
     }
     public int callCountForCreateServerSokket = 0;
-
-    private Reader reader;
-    public MockAppFactory setReaderToReturn(Reader reader) {
-        this.reader = reader;
-        return this;
-    }
-
-    private Writer writer;
-    public MockAppFactory setWriterToReturn(Writer writer) {
-        this.writer = writer;
-        return this;
-    }
 
     private HTTPServerListeningLoop HTTPServerListeningLoop;
     public MockAppFactory setHTTPServerListeningLoopToReturn(HTTPServerListeningLoop HTTPServerListeningLoop) {
@@ -46,13 +29,6 @@ public class MockAppFactory implements AppFactory {
     }
     public int callCountForCreateClientInitRunnable = 0;
 
-
-    private Runnable listenForClientMessageRunnableToReturn;
-    public MockAppFactory setListenForClientMessageRunnableToReturn(Runnable listenForClientMessageRunnableToReturn) {
-        this.listenForClientMessageRunnableToReturn = listenForClientMessageRunnableToReturn;
-        return this;
-    }
-
     public int callCountForCreateThreadFor = 0;
 
     private TestableThread testableThreadToReturn;
@@ -65,16 +41,6 @@ public class MockAppFactory implements AppFactory {
     public ServerSokket createServerSokketListeningAtPort(int port) {
         callCountForCreateServerSokket += 1;
         return serverSokket;
-    }
-
-    @Override
-    public Reader createReader(InputStream inputStream) {
-        return reader;
-    }
-
-    @Override
-    public Writer createWriter(OutputStream outputStream) {
-        return writer;
     }
 
     @Override
