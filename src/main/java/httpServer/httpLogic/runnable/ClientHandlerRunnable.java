@@ -1,6 +1,5 @@
 package httpServer.httpLogic.runnable;
 
-import httpServer.factory.AppFactory;
 import httpServer.httpLogic.controllerLogic.Controller;
 import httpServer.httpLogic.controllerLogic.ControllerFactory;
 import httpServer.httpLogic.io.RequestReader;
@@ -17,11 +16,9 @@ import java.io.IOException;
 public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     private final Sokket sokket;
-    private final AppFactory factory;
 
-    public ClientHandlerRunnable(Sokket sokket, AppFactory factory) {
+    public ClientHandlerRunnable(Sokket sokket) {
         this.sokket = sokket;
-        this.factory = factory;
     }
 
     public void run() {

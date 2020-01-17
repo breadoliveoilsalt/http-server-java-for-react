@@ -37,7 +37,7 @@ public class HTTPServerListeningLoopTests {
     }
 
     private void initFactory() {
-        clientInitRunnable = new MockClientHandlerRunnable(sokket, factory);
+        clientInitRunnable = new MockClientHandlerRunnable(sokket);
         thread = new TestableThread();
         factory = new MockAppFactory()
             .setTestableThreadToReturn(thread)

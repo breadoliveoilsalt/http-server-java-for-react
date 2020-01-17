@@ -14,6 +14,6 @@ public interface AppFactory {
 
     HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory);
 
-    Runnable createClientInitRunnable(Sokket sokket, AppFactory factory);
+    Runnable createClientInitRunnable(Sokket sokket);
 
 }

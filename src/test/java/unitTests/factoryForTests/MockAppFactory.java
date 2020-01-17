@@ -56,7 +56,7 @@ public class MockAppFactory implements AppFactory {
     }
 
     @Override
-    public Runnable createClientInitRunnable(Sokket sokket, AppFactory factory) {
+    public Runnable createClientInitRunnable(Sokket sokket) {
         callCountForCreateClientInitRunnable += 1;
         return clientInitRunnable;
     }

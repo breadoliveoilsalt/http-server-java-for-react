@@ -19,8 +19,8 @@ public class HTTPServerAppFactory implements AppFactory {
     public HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) { return new HTTPServerListeningLoop(serverSokket, factory);
     }
 
-    public Runnable createClientInitRunnable(Sokket sokket, AppFactory factory) {
-        return new ClientHandlerRunnable(sokket, factory);
+    public Runnable createClientInitRunnable(Sokket sokket) {
+        return new ClientHandlerRunnable(sokket);
     }
 
 }

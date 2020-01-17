@@ -8,7 +8,7 @@ import java.util.Map;
 public class ResponseParser {
 
     private Response response;
-    private String stringifiedReponse;
+    private String stringifiedResponse;
 
     public String stringify(Response response) {
         this.response = response;
@@ -16,11 +16,11 @@ public class ResponseParser {
         addHeaders();
         addEndOfMetaData();
         addBody();
-        return stringifiedReponse;
+        return stringifiedResponse;
     }
 
     private void stringifyStatusLine() {
-        stringifiedReponse = response.httpVersion + Constants.SPACE + response.statusCode + Constants.SPACE + response.statusMessage + Constants.CRLF;
+        stringifiedResponse = response.httpVersion + Constants.SPACE + response.statusCode + Constants.SPACE + response.statusMessage + Constants.CRLF;
     }
 
     private void addHeaders() {
@@ -28,19 +28,19 @@ public class ResponseParser {
             Iterator it = response.getHeaders().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                stringifiedReponse += pair.getKey() + ": " + pair.getValue() + Constants.CRLF;
+                stringifiedResponse += pair.getKey() + ": " + pair.getValue() + Constants.CRLF;
                 it.remove();
             }
         }
     }
 
     private void addEndOfMetaData() {
-        stringifiedReponse += Constants.CRLF;
+        stringifiedResponse += Constants.CRLF;
     }
 
     private void addBody() {
        if (response.body != null) {
-           stringifiedReponse += response.body;
+           stringifiedResponse += response.body;
        }
     }
 }
