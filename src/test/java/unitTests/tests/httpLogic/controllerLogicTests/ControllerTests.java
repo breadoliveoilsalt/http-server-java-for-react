@@ -4,6 +4,7 @@ import httpServer.httpLogic.controllerLogic.Controller;
 import httpServer.httpLogic.controllerLogic.ControllerBuilder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
+import httpServer.httpLogic.responses.ResponseBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,40 +19,67 @@ public class ControllerTests {
 
     private Controller controller;
     private Request clientRequest;
-    private Response testResponse;
+    private Response genericResponse;
 
     @Before
     public void testInit() {
-        testResponse = new Response("HTTP/1.1", "200", "OK", null, null);
+        genericResponse = new ResponseBuilder()
+            .addStatusCode("200")
+            .addStatusMessage("OK")
+            .addHeader("Date", "Some day")
+            .addHeader("Content-Length", "Some length")
+            .addBody("Some message")
+            .build();
     }
 
     @Test
     public void handleCausesAnActionSpecifiedByTheControllerToCreateAResponse() throws Exception {
         String path = "/some_path";
         String method = "GET";
-        Callable<Response> buildAction = () -> returnTestResponse();
-        setControllerForHandleTest(path, method, buildAction);
-        setClientRequestForHandleTest(path, method);
+        Callable<Response> buildAction = () -> returnGenericResponse();
+        setControllerForHandleActionTest(path, method, buildAction);
+        setClientRequest(path, method);
 
         Response result = controller.handle(clientRequest);
 
-        assertEquals(testResponse, result);
+        assertEquals(genericResponse, result);
     }
 
-    private Response returnTestResponse() {
-        return testResponse;
+    private Response returnGenericResponse() {
+        return genericResponse;
     }
 
-    private void setControllerForHandleTest(String path, String method, Callable<Response> action) {
+    private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
         ControllerBuilder builder = new ControllerBuilder();
-        builder.createPath(path).addMethodAndAction(method, action);
+        builder.createPath(path)
+            .addMethodAndAction(method, action);
         controller = builder.build();
     }
 
-    private void setClientRequestForHandleTest(String path, String method) {
+    private void setClientRequest(String path, String method) {
         clientRequest = new Request();
         clientRequest.setPath(path);
         clientRequest.setMethod(method);
+    }
+
+    @Test
+    public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
+        String path = "/some_path";
+        String method = "GET";
+        Callable<Response> buildAction = () -> returnGenericResponse();
+        setControllerForHandleActionTest(path, method, buildAction);
+        setClientRequest(path, method);
+
+        Response expectedResponse = new ResponseBuilder()
+            .addStatusCode("200")
+            .addStatusMessage("OK")
+            .addHeader("Date", "Some day")
+            .addHeader("Content-Length", "Some length")
+            .build();
+
+        Response result = controller.handle(clientRequest);
+
+        assertEquals(expectedResponse, result);
     }
 
     @Test
@@ -90,7 +118,7 @@ public class ControllerTests {
     }
 
     private void setControllerForGetMethodsForTest(String path, String method1, String method2) {
-        Callable<Response> randomBuildAction = () -> returnTestResponse();
+        Callable<Response> randomBuildAction = () -> returnGenericResponse();
         ControllerBuilder builder = new ControllerBuilder();
         builder.createPath(path)
                 .addMethodAndAction(method1, randomBuildAction)
@@ -103,13 +131,13 @@ public class ControllerTests {
     public void getActionForReturnsTheActionAssociatedWithAPathAndMethod() {
         String path = "/some_path";
         String method = "GET";
-        Callable<Response> buildAction = () -> returnTestResponse();
+        Callable<Response> buildAction = () -> returnGenericResponse();
         setControllerForGetActionForTest(path, method, buildAction);
 
         assertEquals(buildAction, controller.getActionFor(path, method));
     }
 
     private void setControllerForGetActionForTest(String path, String method, Callable<Response> buildAction) {
-        setControllerForHandleTest(path, method, buildAction);
+        setControllerForHandleActionTest(path, method, buildAction);
     }
 }
