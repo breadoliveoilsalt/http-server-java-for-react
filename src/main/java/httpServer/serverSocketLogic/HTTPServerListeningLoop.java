@@ -1,4 +1,4 @@
-package httpServer.logic;
+package httpServer.serverSocketLogic;
 
 import httpServer.factory.AppFactory;
 import httpServer.wrappers.ServerSokket;
@@ -31,7 +31,7 @@ public class HTTPServerListeningLoop implements HTTPServerLogicObject {
     }
 
     private void instantiateClientInitThread() {
-        Runnable clientInit = factory.createClientInitRunnable(connectedSokket, factory);
+        Runnable clientInit = factory.createClientInitRunnable(connectedSokket);
         threadToStart = factory.createThreadFor(clientInit);
     }
 

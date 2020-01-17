@@ -1,6 +1,6 @@
 import httpServer.factory.HTTPServerAppFactory;
 import httpServer.factory.AppFactory;
-import httpServer.logic.HTTPServerInit;
+import httpServer.serverSocketLogic.HTTPServerInit;
 
 import java.io.IOException;
 

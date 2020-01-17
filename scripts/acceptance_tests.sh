@@ -8,6 +8,7 @@ function finish {
 }
 trap finish EXIT
 
+./gradlew clean
 ./gradlew jar
 cd http_server_spec
 bundle install

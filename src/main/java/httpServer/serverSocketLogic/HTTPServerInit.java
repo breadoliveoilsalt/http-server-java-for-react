@@ -1,4 +1,4 @@
-package httpServer.logic;
+package httpServer.serverSocketLogic;
 
 import httpServer.factory.AppFactory;
 import httpServer.wrappers.ServerSokket;

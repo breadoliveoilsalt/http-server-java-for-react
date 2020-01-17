@@ -1,7 +1,7 @@
 package unitTests.mocks;
 
 import httpServer.factory.AppFactory;
-import httpServer.logic.HTTPServerListeningLoop;
+import httpServer.serverSocketLogic.HTTPServerListeningLoop;
 import httpServer.wrappers.ServerSokket;
 
 public class MockHTTPServerListeningLoop extends HTTPServerListeningLoop {

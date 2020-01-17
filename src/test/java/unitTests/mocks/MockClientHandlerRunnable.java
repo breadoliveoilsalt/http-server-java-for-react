@@ -1,8 +1,7 @@
 package unitTests.mocks;
 
-import httpServer.factory.AppFactory;
 import httpServer.wrappers.Sokket;
-import httpServer.logic.ClientHandlerRunnable;
+import httpServer.httpLogic.runnable.ClientHandlerRunnable;
 
 public class MockClientHandlerRunnable extends ClientHandlerRunnable {
 
@@ -12,8 +11,8 @@ public class MockClientHandlerRunnable extends ClientHandlerRunnable {
         return callCountForRun;
     }
 
-    public MockClientHandlerRunnable(Sokket sokket, AppFactory factory) {
-        super(sokket, factory);
+    public MockClientHandlerRunnable(Sokket sokket) {
+        super(sokket);
     }
 
     public void run() {
