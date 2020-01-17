@@ -4,22 +4,33 @@ import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseFactory;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 public class Controller {
 
     private final Map<String, Map<String, Callable<Response>>> routeMap;
+    private final HashSet<String> allowedMethods;
 
     public Controller(Map<String, Map<String, Callable<Response>>> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);
+        this.allowedMethods = new HashSet<>();
+        populateAllowedMethods();
+    }
+
+    private void populateAllowedMethods() {
+        routeMap.forEach( (path, methodAndAction) -> {
+            Set<String> listofMethodsForPath = methodAndAction.keySet();
+            allowedMethods.add("HEAD");
+            allowedMethods.addAll(listofMethodsForPath);
+        });
     }
 
     public Response handle(Request request) throws Exception {
         Response responseToReturn;
-        if (validHEADRequest(request)) {
+        if (invalidMethod(request)) {
+            responseToReturn = ResponseFactory.build501Response();
+        } else if (validHEADRequest(request)) {
             Callable<Response> action = getActionFor(request.getPath(), "GET");
             Response fullResponse = action.call();
             responseToReturn = ResponseFactory.buildHEADResponseFor(fullResponse);
@@ -28,6 +39,10 @@ public class Controller {
             responseToReturn = action.call();
         }
         return responseToReturn;
+    }
+
+    private boolean invalidMethod(Request request) {
+        return !allowedMethods.contains(request.getMethod());
     }
 
     private boolean validHEADRequest(Request request) {

@@ -20,4 +20,9 @@ module Requests
     base_url = "#{PROTOCOL}://#{HOSTNAME}:#{PORT}"
     Response.new(HTTParty.post("#{base_url}#{path}", {body: body}))
   end
+
+  def self.delete_request(path)
+    base_url = "#{PROTOCOL}://#{HOSTNAME}:#{PORT}"
+    Response.new(HTTParty.delete(base_url))
+  end
 end

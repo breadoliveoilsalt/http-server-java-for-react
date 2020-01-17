@@ -77,6 +77,17 @@ public class ControllerTests {
     }
 
     @Test
+    public void handleReturnsA501ResponseWhenTheServerDoesNotRecognizeTheMethod() throws Exception {
+        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
+        setClientRequest("/some_path", "BANANAS");
+
+        Response result = controller.handle(clientRequest);
+
+        assertEquals("501", result.getStatusCode());
+        assertEquals("501 Error: Method Not Implemented", result.getBody());
+    }
+
+    @Test
     public void getPathsReturnsASetListingValidPaths() {
         String path1 = "/simple_get";
         String path2 = "/simple_post";
