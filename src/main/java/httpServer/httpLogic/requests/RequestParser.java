@@ -16,11 +16,15 @@ public class RequestParser {
     }
 
     public Request parse(String rawClientRequest) {
-        this.rawClientRequest = rawClientRequest;
-        parseRawRequestIntoSections();
-        extractRequestLineForRequest();
-        extractHeadersForRequest();
-        extractBodyForRequest();
+        try {
+            this.rawClientRequest = rawClientRequest;
+            parseRawRequestIntoSections();
+            extractRequestLineForRequest();
+            extractHeadersForRequest();
+            extractBodyForRequest();
+        } catch (Exception e) {
+            request.flagAsInvalid();
+        }
         return request;
     }
 
