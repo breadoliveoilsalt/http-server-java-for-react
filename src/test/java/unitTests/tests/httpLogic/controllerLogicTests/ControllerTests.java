@@ -84,6 +84,7 @@ public class ControllerTests {
         Response result = controller.handle(clientRequest);
 
         assertEquals("501", result.getStatusCode());
+        assertEquals("501 Error: Method Not Implemented", result.getBody());
     }
 
     @Test

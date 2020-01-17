@@ -1,7 +1,5 @@
 package httpServer.httpLogic.responses;
 
-import java.util.concurrent.Callable;
-
 public class ResponseFactory {
 
     public static Response buildSimpleResponse() {
@@ -16,4 +14,13 @@ public class ResponseFactory {
                 .setHeaders(response.getHeaders())
                 .build();
     }
+
+    public static Response build501Response() {
+        return new ResponseBuilder()
+                .addStatusCode("501")
+                .addStatusMessage("Not Implemented")
+                .addBody("501 Error: Method Not Implemented")
+                .build();
+    }
+
 }
