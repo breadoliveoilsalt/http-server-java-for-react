@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ControllerTests {
 
@@ -64,22 +64,16 @@ public class ControllerTests {
 
     @Test
     public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
-        String path = "/some_path";
-        String method = "GET";
-        Callable<Response> buildAction = () -> returnGenericResponse();
-        setControllerForHandleActionTest(path, method, buildAction);
-        setClientRequest(path, method);
-
-        Response expectedResponse = new ResponseBuilder()
-            .addStatusCode("200")
-            .addStatusMessage("OK")
-            .addHeader("Date", "Some day")
-            .addHeader("Content-Length", "Some length")
-            .build();
+        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
+        setClientRequest("/some_path", "HEAD");
 
         Response result = controller.handle(clientRequest);
 
-        assertEquals(expectedResponse, result);
+        assertEquals("200", result.getStatusCode());
+        assertEquals("OK", result.getStatusMessage());
+        assertTrue(result.hasHeader("Date", "Some day"));
+        assertTrue(result.hasHeader("Content-Length", "Some length"));
+        assertNull(result.getBody());
     }
 
     @Test
