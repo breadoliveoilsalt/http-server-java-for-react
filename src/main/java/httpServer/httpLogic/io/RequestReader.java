@@ -9,7 +9,7 @@ import java.io.Reader;
 
 public class RequestReader {
 
-    final static int defaultBufferSize = 8192;
+    private final static int defaultBufferSize = 8192;
 
     public String readInputStream(Sokket sokket) throws IOException {
         char[] readerBuffer = new char[defaultBufferSize];
