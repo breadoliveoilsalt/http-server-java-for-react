@@ -84,4 +84,13 @@ public class RequestParserTests {
         assertEquals("Request Body", request.getBody());
     }
 
+    @Test
+    public void parseReturnsAResponseMarkedAsInvalidIfItCannotBeParsed() {
+        rawClientRequest = "JibberJabberJibberJabber";
+
+        Request request = requestParser.parse(rawClientRequest);
+
+        assertTrue(request.isInvalid());
+    }
+
 }
