@@ -23,6 +23,10 @@ public class ControllerTests {
 
     @Before
     public void testInit() {
+        buildGenericResponse();
+    }
+
+    private void buildGenericResponse() {
         genericResponse = new ResponseBuilder()
             .addStatusCode("200")
             .addStatusMessage("OK")
@@ -36,30 +40,12 @@ public class ControllerTests {
     public void handleCausesAnActionSpecifiedByTheControllerToCreateAResponse() throws Exception {
         String path = "/some_path";
         String method = "GET";
-        Callable<Response> buildAction = () -> returnGenericResponse();
-        setControllerForHandleActionTest(path, method, buildAction);
+        setControllerForHandleActionTest(path, method, () -> returnGenericResponse());
         setClientRequest(path, method);
 
         Response result = controller.handle(clientRequest);
 
         assertEquals(genericResponse, result);
-    }
-
-    private Response returnGenericResponse() {
-        return genericResponse;
-    }
-
-    private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
-        ControllerBuilder builder = new ControllerBuilder();
-        builder.createPath(path)
-            .addMethodAndAction(method, action);
-        controller = builder.build();
-    }
-
-    private void setClientRequest(String path, String method) {
-        clientRequest = new Request();
-        clientRequest.setPath(path);
-        clientRequest.setMethod(method);
     }
 
     @Test
@@ -99,6 +85,23 @@ public class ControllerTests {
         assertEquals("400", result.getStatusCode());
         assertEquals("Bad Request", result.getStatusMessage());
         assertEquals("400 Error: Bad Request Submitted", result.getBody());
+    }
+
+    private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
+        ControllerBuilder builder = new ControllerBuilder();
+        builder.createPath(path)
+                .addMethodAndAction(method, action);
+        controller = builder.build();
+    }
+
+    private void setClientRequest(String path, String method) {
+        clientRequest = new Request();
+        clientRequest.setPath(path);
+        clientRequest.setMethod(method);
+    }
+
+    private Response returnGenericResponse() {
+        return genericResponse;
     }
 
     @Test
