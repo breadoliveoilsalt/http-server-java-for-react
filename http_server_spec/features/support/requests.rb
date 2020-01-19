@@ -1,6 +1,7 @@
 require "httparty"
 
 module Requests
+
   def self.get(path)
     base_url = "#{PROTOCOL}://#{HOSTNAME}:#{PORT}"
     Response.new(HTTParty.get("#{base_url}#{path}", follow_redirects: false))
@@ -25,4 +26,21 @@ module Requests
     base_url = "#{PROTOCOL}://#{HOSTNAME}:#{PORT}"
     Response.new(HTTParty.delete(base_url))
   end
+
+  def self.bad_request(request_string)
+    @socket = TCPSocket.open("#{HOSTNAME}", "#{PORT}")
+    @socket.puts(request_string)
+    read_from_socket
+  end
+
+  private
+
+  def self.read_from_socket
+     response = ""
+     while line = @socket.gets
+        response += line
+    end
+    response
+  end
+
 end

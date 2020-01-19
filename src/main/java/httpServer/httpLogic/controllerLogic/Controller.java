@@ -30,7 +30,7 @@ public class Controller {
         Response responseToReturn;
         if (request.isInvalid()) {
             responseToReturn = ResponseFactory.build400Response();
-        } else if (invalidMethod(request)) {
+        } else if (hasUnrecognizedMethod(request)) {
             responseToReturn = ResponseFactory.build501Response();
         } else if (validHEADRequest(request)) {
             Callable<Response> action = getActionFor(request.getPath(), "GET");
@@ -43,7 +43,7 @@ public class Controller {
         return responseToReturn;
     }
 
-    private boolean invalidMethod(Request request) {
+    private boolean hasUnrecognizedMethod(Request request) {
         return !allowedMethods.contains(request.getMethod());
     }
 
