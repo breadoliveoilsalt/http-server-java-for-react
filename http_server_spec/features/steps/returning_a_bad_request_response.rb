@@ -10,14 +10,14 @@ class Spinach::Features::ReturningABadRequestResponse < Spinach::FeatureSteps
   end
 
   step 'my response should have a status code of 400' do
-    status_code = get_status_code_from(@response)
+    status_code = Response.get_status_code_from_raw_string_response(@response)
     expect(status_code).to eq 400
   end
 
-  private
-
-  def get_status_code_from(raw_response_string)
-    raw_response_string.split(" ")[1].to_i
-  end
+#   private
+#
+#   def get_status_code_from(raw_response_string)
+#     raw_response_string.split(" ")[1].to_i
+#   end
 
 end

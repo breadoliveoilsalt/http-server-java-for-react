@@ -20,8 +20,13 @@ class Response
     httpartyResponse.code
   end
 
+  def self.get_status_code_from_raw_string_response(response)
+    response.split(" ")[1].to_i
+  end
+
   private
 
   attr_accessor :httpartyResponse
+
 
 end
