@@ -5,62 +5,48 @@ import java.util.Map;
 public class Request {
 
     private String method;
+    private String path;
+    private float httpVersion;
+    private Map<String, String> headers;
+    private String body;
+    private boolean isValid;
+
+    public Request(
+            String method,
+            String path,
+            float httpVersion,
+            Map<String, String> headers,
+            String body,
+            boolean isValid) {
+        this.method = method;
+        this.path = path;
+        this.httpVersion = httpVersion;
+        this.headers = headers;
+        this.body = body;
+        this.isValid = isValid;
+    }
 
     public String getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    private String path;
-
     public String getPath() {
         return path;
     }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    private float httpVersion;
 
     public float getHTTPVersion() {
         return httpVersion;
     }
 
-    public void setHTTPVersion(float httpVersion) {
-        this.httpVersion = httpVersion;
-    }
-
-    private Map<String,String> headers;
-
     public Map<String, String> getHeaders() {
         return headers;
     }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
-    private String body;
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    private boolean isInvalid = false;
-
-    public void flagAsInvalid() {
-        isInvalid = true;
-    }
-
     public boolean isInvalid() {
-        return isInvalid;
+        return !isValid;
     }
 }

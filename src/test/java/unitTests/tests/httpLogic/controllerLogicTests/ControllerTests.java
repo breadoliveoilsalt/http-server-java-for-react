@@ -3,6 +3,7 @@ package unitTests.tests.httpLogic.controllerLogicTests;
 import httpServer.httpLogic.controllerLogic.Controller;
 import httpServer.httpLogic.controllerLogic.ControllerBuilder;
 import httpServer.httpLogic.requests.Request;
+import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class ControllerTests {
         String path = "/some_path";
         String method = "GET";
         setControllerForHandleActionTest(path, method, () -> returnGenericResponse());
-        setClientRequest(path, method);
+        clientRequest = new RequestBuilder().addPath(path).addMethod(method).build();
 
         Response result = controller.handle(clientRequest);
 
@@ -50,8 +51,9 @@ public class ControllerTests {
 
     @Test
     public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
-        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
-        setClientRequest("/some_path", "HEAD");
+        String path = "/some_path";
+        setControllerForHandleActionTest(path, "GET", () -> returnGenericResponse());
+        clientRequest = new RequestBuilder().addPath(path).addMethod("HEAD").build();
 
         Response result = controller.handle(clientRequest);
 
@@ -64,8 +66,9 @@ public class ControllerTests {
 
     @Test
     public void handleReturnsA501ResponseWhenTheServerDoesNotRecognizeTheMethod() throws Exception {
-        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
-        setClientRequest("/some_path", "BANANAS");
+        String path = "/some_path";
+        setControllerForHandleActionTest(path, "GET", () -> returnGenericResponse());
+        clientRequest = new RequestBuilder().addPath(path).addMethod("BANANAS").build();
 
         Response result = controller.handle(clientRequest);
 
@@ -77,8 +80,7 @@ public class ControllerTests {
     @Test
     public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsInvalid() throws Exception {
         setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
-        clientRequest = new Request();
-        clientRequest.flagAsInvalid();
+        clientRequest = new RequestBuilder().flagAsInvalid().build();
 
         Response result = controller.handle(clientRequest);
 
@@ -94,14 +96,19 @@ public class ControllerTests {
         controller = builder.build();
     }
 
-    private void setClientRequest(String path, String method) {
-        clientRequest = new Request();
-        clientRequest.setPath(path);
-        clientRequest.setMethod(method);
-    }
+//    private void setClientRequest(String path, String method) {
+//        clientRequest = new Request();
+//        clientRequest.setPath(path);
+//        clientRequest.setMethod(method);
+//    }
 
     private Response returnGenericResponse() {
         return genericResponse;
+    }
+
+    @Test
+    public void handlReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {
+
     }
 
     @Test
