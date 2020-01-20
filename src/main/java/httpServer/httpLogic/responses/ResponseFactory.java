@@ -8,7 +8,7 @@ public class ResponseFactory {
                 .build();
     }
 
-    public static Response buildHEADResponseFor(Response response) throws Exception {
+    public static Response buildHEADResponseFor(Response response) {
         return new ResponseBuilder()
                 .addOKStatusLine()
                 .setHeaders(response.getHeaders())

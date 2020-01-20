@@ -38,10 +38,7 @@ public class Response {
     }
 
     public boolean hasHeader(String key, String value) {
-        if (headers.get(key).equals(value)) {
-            return true;
-        }
-        return false;
+        return headers.get(key).equals(value);
     }
 
     public String getBody() {

@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 public class PathMethodMap {
 
     private final String pathName;
-    private Map<String, Callable<Response>> methodActionMap;
+    private final Map<String, Callable<Response>> methodActionMap;
 
     public PathMethodMap(String pathName) {
         this.pathName = pathName;
