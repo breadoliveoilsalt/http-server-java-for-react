@@ -65,7 +65,7 @@ public class RequestBuilderTests {
     }
 
     @Test
-    public void methodsCanBeChainedBeforeBuidlingARequest() {
+    public void methodsCanBeChainedBeforeBuildingARequest() {
         Request request = requestBuilder
                 .addMethod("GET")
                 .addPath("/simple_get")
@@ -74,6 +74,14 @@ public class RequestBuilderTests {
                 .addBody("Hello World")
                 .build();
 
+        assertEquals("GET", request.getMethod());
+        assertEquals("/simple_get", request.getPath());
 
+        Map<String, String> expectedHeader = new HashMap<>();
+        expectedHeader.put("Date", "Today");
+        expectedHeader.put("Content-Length", "0");
+        assertEquals(expectedHeader, request.getHeaders());
+
+        assertEquals("Hello World", request.getBody());
     }
 }
