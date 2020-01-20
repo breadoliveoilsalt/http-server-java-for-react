@@ -93,4 +93,14 @@ public class RequestParserTests {
         assertTrue(request.isInvalid());
     }
 
+    @Test
+    public void parseReturnsAResponseMarkedAsInvalidIfTheRequestIsMalformed() {
+        rawClientRequest = "HTTP/1.1 GET /simple_get";
+
+        Request request = requestParser.parse(rawClientRequest);
+
+        assertTrue(request.isInvalid());
+    }
+
+
 }
