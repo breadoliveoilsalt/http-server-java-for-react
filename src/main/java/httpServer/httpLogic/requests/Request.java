@@ -54,4 +54,13 @@ public class Request {
         this.body = body;
     }
 
+    private boolean isInvalid = false;
+
+    public void flagAsInvalid() {
+        isInvalid = true;
+    }
+
+    public boolean isInvalid() {
+        return isInvalid;
+    }
 }

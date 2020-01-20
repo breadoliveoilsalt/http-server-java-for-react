@@ -28,7 +28,9 @@ public class Controller {
 
     public Response handle(Request request) throws Exception {
         Response responseToReturn;
-        if (invalidMethod(request)) {
+        if (request.isInvalid()) {
+            responseToReturn = ResponseFactory.build400Response();
+        } else if (hasUnrecognizedMethod(request)) {
             responseToReturn = ResponseFactory.build501Response();
         } else if (validHEADRequest(request)) {
             Callable<Response> action = getActionFor(request.getPath(), "GET");
@@ -41,7 +43,7 @@ public class Controller {
         return responseToReturn;
     }
 
-    private boolean invalidMethod(Request request) {
+    private boolean hasUnrecognizedMethod(Request request) {
         return !allowedMethods.contains(request.getMethod());
     }
 

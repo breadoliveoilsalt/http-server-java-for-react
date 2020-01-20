@@ -23,6 +23,10 @@ public class ControllerTests {
 
     @Before
     public void testInit() {
+        buildGenericResponse();
+    }
+
+    private void buildGenericResponse() {
         genericResponse = new ResponseBuilder()
             .addStatusCode("200")
             .addStatusMessage("OK")
@@ -36,30 +40,12 @@ public class ControllerTests {
     public void handleCausesAnActionSpecifiedByTheControllerToCreateAResponse() throws Exception {
         String path = "/some_path";
         String method = "GET";
-        Callable<Response> buildAction = () -> returnGenericResponse();
-        setControllerForHandleActionTest(path, method, buildAction);
+        setControllerForHandleActionTest(path, method, () -> returnGenericResponse());
         setClientRequest(path, method);
 
         Response result = controller.handle(clientRequest);
 
         assertEquals(genericResponse, result);
-    }
-
-    private Response returnGenericResponse() {
-        return genericResponse;
-    }
-
-    private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
-        ControllerBuilder builder = new ControllerBuilder();
-        builder.createPath(path)
-            .addMethodAndAction(method, action);
-        controller = builder.build();
-    }
-
-    private void setClientRequest(String path, String method) {
-        clientRequest = new Request();
-        clientRequest.setPath(path);
-        clientRequest.setMethod(method);
     }
 
     @Test
@@ -84,7 +70,38 @@ public class ControllerTests {
         Response result = controller.handle(clientRequest);
 
         assertEquals("501", result.getStatusCode());
+        assertEquals("Not Implemented", result.getStatusMessage());
         assertEquals("501 Error: Method Not Implemented", result.getBody());
+    }
+
+    @Test
+    public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsInvalid() throws Exception {
+        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
+        clientRequest = new Request();
+        clientRequest.flagAsInvalid();
+
+        Response result = controller.handle(clientRequest);
+
+        assertEquals("400", result.getStatusCode());
+        assertEquals("Bad Request", result.getStatusMessage());
+        assertEquals("400 Error: Bad Request Submitted", result.getBody());
+    }
+
+    private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
+        ControllerBuilder builder = new ControllerBuilder();
+        builder.createPath(path)
+                .addMethodAndAction(method, action);
+        controller = builder.build();
+    }
+
+    private void setClientRequest(String path, String method) {
+        clientRequest = new Request();
+        clientRequest.setPath(path);
+        clientRequest.setMethod(method);
+    }
+
+    private Response returnGenericResponse() {
+        return genericResponse;
     }
 
     @Test

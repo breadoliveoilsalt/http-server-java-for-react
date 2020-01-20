@@ -8,7 +8,7 @@ public class ResponseFactory {
                 .build();
     }
 
-    public static Response buildHEADResponseFor(Response response) throws Exception {
+    public static Response buildHEADResponseFor(Response response) {
         return new ResponseBuilder()
                 .addOKStatusLine()
                 .setHeaders(response.getHeaders())
@@ -20,6 +20,14 @@ public class ResponseFactory {
                 .addStatusCode("501")
                 .addStatusMessage("Not Implemented")
                 .addBody("501 Error: Method Not Implemented")
+                .build();
+    }
+
+    public static Response build400Response() {
+        return new ResponseBuilder()
+                .addStatusCode("400")
+                .addStatusMessage("Bad Request")
+                .addBody("400 Error: Bad Request Submitted")
                 .build();
     }
 
