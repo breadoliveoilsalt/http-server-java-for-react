@@ -8,6 +8,13 @@ public class ResponseFactory {
                 .build();
     }
 
+    public static Response buildSimpleResponseWithBody() {
+        return new ResponseBuilder()
+                .addOKStatusLine()
+                .addBody("Hello World!")
+                .build();
+    }
+
     public static Response buildHEADResponseFor(Response response) {
         return new ResponseBuilder()
                 .addOKStatusLine()

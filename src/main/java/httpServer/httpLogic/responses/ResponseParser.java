@@ -39,7 +39,7 @@ public class ResponseParser {
     }
 
     private void addBody() {
-       if (response.body != null) {
+       if (response.getBody() != null) {
            stringifiedResponse += response.body;
        }
     }

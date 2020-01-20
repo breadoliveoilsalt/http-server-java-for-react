@@ -12,7 +12,7 @@ public class ControllerFactory {
             .addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponse());
 
         builder.createPath("/get_with_body")
-                .addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponse());
+                .addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponseWithBody());
 
         return builder.build();
     }
