@@ -97,12 +97,4 @@ public class HandlerTests {
         assertEquals("400 Error: Bad Request Submitted", result.getBody());
     }
 
-
-
-//    @Test
-//    public void handlReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {
-//
-//    }
-
-
 }

@@ -1,11 +1,14 @@
 package httpServer.httpLogic.controllers;
 
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseFactory;
+import httpServer.httpLogic.responses.ResponseBuilder;
 
 public class SimpleGetController {
 
     public static Response get() {
-        return ResponseFactory.buildSimpleResponse();
+        return new ResponseBuilder()
+                .addOKStatusLine()
+                .build();
     }
+
 }

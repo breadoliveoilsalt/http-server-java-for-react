@@ -1,8 +1,9 @@
 package httpServer.httpLogic.handler;
 
+import httpServer.httpLogic.controllers.ExceptionsController;
+import httpServer.httpLogic.controllers.HeadRequestController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseFactory;
 import httpServer.httpLogic.router.Router;
 
 import java.util.concurrent.Callable;
@@ -16,22 +17,19 @@ public class Handler {
     }
 
     public Response handle(Request request) throws Exception {
-        Response responseToReturn;
+        Callable<Response> action;
 
         if (request.isInvalid()) {
-            responseToReturn = ResponseFactory.build400Response();
+            action = ExceptionsController::build400Response;
         } else if (validHEADRequest(request)) {
-            Callable<Response> action = router.getActionFor(request.getPath(), "GET");
-            Response fullResponse = action.call();
-            responseToReturn = ResponseFactory.buildHEADResponseFor(fullResponse);
+            action = () -> HeadRequestController.buildHEADResponse(router, request);
         } else if (hasUnrecognizedMethod(request)) {
-            responseToReturn = ResponseFactory.build501Response();
+            action = ExceptionsController::build501Response;
         } else {
-            Callable<Response> action = router.getActionFor(request.getPath(), request.getMethod());
-            responseToReturn = action.call();
+            action = router.getActionFor(request.getPath(), request.getMethod());
         }
 
-        return responseToReturn;
+        return action.call();
     }
 
     private boolean hasUnrecognizedMethod(Request request) {
