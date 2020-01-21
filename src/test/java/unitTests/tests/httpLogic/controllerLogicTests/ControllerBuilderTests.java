@@ -1,7 +1,7 @@
 package unitTests.tests.httpLogic.controllerLogicTests;
 
-import httpServer.httpLogic.controllerLogic.Controller;
-import httpServer.httpLogic.controllerLogic.ControllerBuilder;
+import httpServer.httpLogic.router.Controller;
+import httpServer.httpLogic.router.ControllerBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;

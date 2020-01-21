@@ -1,7 +1,7 @@
 package unitTests.tests.httpLogic.controllerLogicTests;
 
-import httpServer.httpLogic.controllerLogic.Controller;
-import httpServer.httpLogic.controllerLogic.ControllerBuilder;
+import httpServer.httpLogic.router.Controller;
+import httpServer.httpLogic.router.ControllerBuilder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -96,20 +96,14 @@ public class ControllerTests {
         controller = builder.build();
     }
 
-//    private void setClientRequest(String path, String method) {
-//        clientRequest = new Request();
-//        clientRequest.setPath(path);
-//        clientRequest.setMethod(method);
-//    }
-
     private Response returnGenericResponse() {
         return genericResponse;
     }
 
-    @Test
-    public void handlReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {
-
-    }
+//    @Test
+//    public void handlReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {
+//
+//    }
 
     @Test
     public void getPathsReturnsASetListingValidPaths() {

@@ -1,7 +1,7 @@
-package httpServer.httpLogic.runnable;
+package httpServer.httpLogic;
 
-import httpServer.httpLogic.controllerLogic.Controller;
-import httpServer.httpLogic.controllerLogic.ControllerFactory;
+import httpServer.httpLogic.router.Controller;
+import httpServer.httpLogic.router.ControllerFactory;
 import httpServer.httpLogic.io.RequestReader;
 import httpServer.httpLogic.io.ResponseWriter;
 import httpServer.httpLogic.requests.RequestParser;
