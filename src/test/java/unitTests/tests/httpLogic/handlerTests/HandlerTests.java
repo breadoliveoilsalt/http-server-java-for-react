@@ -1,5 +1,6 @@
-package unitTests.tests.httpLogic.controllerLogicTests;
+package unitTests.tests.httpLogic.handlerTests;
 
+import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.requests.Request;
@@ -16,12 +17,17 @@ import static org.junit.Assert.*;
 public class HandlerTests {
 
     private Router router;
+    private Handler handler;
     private Request clientRequest;
     private Response genericResponse;
+    private String pathWithOnlyGet = "/path_with_only_get";
+    private String GET = "GET";
 
     @Before
     public void testInit() {
         buildGenericResponse();
+        buildRouter();
+        initializeHandler();
     }
 
     private void buildGenericResponse() {
@@ -34,25 +40,35 @@ public class HandlerTests {
             .build();
     }
 
-    @Test
-    public void handleCausesAnActionSpecifiedByTheControllerToCreateAResponse() throws Exception {
-        String path = "/some_path";
-        String method = "GET";
-        setControllerForHandleActionTest(path, method, () -> returnGenericResponse());
-        clientRequest = new RequestBuilder().addPath(path).addMethod(method).build();
+    private void buildRouter() {
+        RouterBuilder builder = new RouterBuilder();
+        builder.createPath(pathWithOnlyGet)
+                .addMethodAndAction(GET, () -> returnGenericResponse());
+        router = builder.build();
+    }
 
-        Response result = controller.handle(clientRequest);
+    private Response returnGenericResponse() {
+        return genericResponse;
+    }
+
+    private void initializeHandler() {
+        handler = new Handler(router);
+    }
+
+    @Test
+    public void handleCausesAnActionSpecifiedByTheRouterToCreateAResponse() throws Exception {
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(GET).build();
+
+        Response result = handler.handle(clientRequest);
 
         assertEquals(genericResponse, result);
     }
 
     @Test
     public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
-        String path = "/some_path";
-        setControllerForHandleActionTest(path, "GET", () -> returnGenericResponse());
-        clientRequest = new RequestBuilder().addPath(path).addMethod("HEAD").build();
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod("HEAD").build();
 
-        Response result = controller.handle(clientRequest);
+        Response result = handler.handle(clientRequest);
 
         assertEquals("200", result.getStatusCode());
         assertEquals("OK", result.getStatusMessage());
@@ -62,12 +78,10 @@ public class HandlerTests {
     }
 
     @Test
-    public void handleReturnsA501ResponseWhenTheServerDoesNotRecognizeTheMethod() throws Exception {
-        String path = "/some_path";
-        setControllerForHandleActionTest(path, "GET", () -> returnGenericResponse());
-        clientRequest = new RequestBuilder().addPath(path).addMethod("BANANAS").build();
+    public void handleReturnsA501ResponseWhenTheRouterDoesNotRecognizeTheMethod() throws Exception {
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod("BANANAS").build();
 
-        Response result = controller.handle(clientRequest);
+        Response result = handler.handle(clientRequest);
 
         assertEquals("501", result.getStatusCode());
         assertEquals("Not Implemented", result.getStatusMessage());
@@ -76,26 +90,16 @@ public class HandlerTests {
 
     @Test
     public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsInvalid() throws Exception {
-        setControllerForHandleActionTest("/some_path", "GET", () -> returnGenericResponse());
         clientRequest = new RequestBuilder().flagAsInvalid().build();
 
-        Response result = controller.handle(clientRequest);
+        Response result = handler.handle(clientRequest);
 
         assertEquals("400", result.getStatusCode());
         assertEquals("Bad Request", result.getStatusMessage());
         assertEquals("400 Error: Bad Request Submitted", result.getBody());
     }
 
-    private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
-        RouterBuilder builder = new RouterBuilder();
-        builder.createPath(path)
-                .addMethodAndAction(method, action);
-        router = builder.build();
-    }
 
-    private Response returnGenericResponse() {
-        return genericResponse;
-    }
 
 //    @Test
 //    public void handlReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {

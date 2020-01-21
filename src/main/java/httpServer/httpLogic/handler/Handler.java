@@ -17,18 +17,20 @@ public class Handler {
 
     public Response handle(Request request) throws Exception {
         Response responseToReturn;
+
         if (request.isInvalid()) {
             responseToReturn = ResponseFactory.build400Response();
-        } else if (hasUnrecognizedMethod(request)) {
-            responseToReturn = ResponseFactory.build501Response();
         } else if (validHEADRequest(request)) {
             Callable<Response> action = router.getActionFor(request.getPath(), "GET");
             Response fullResponse = action.call();
             responseToReturn = ResponseFactory.buildHEADResponseFor(fullResponse);
+        } else if (hasUnrecognizedMethod(request)) {
+            responseToReturn = ResponseFactory.build501Response();
         } else {
             Callable<Response> action = router.getActionFor(request.getPath(), request.getMethod());
             responseToReturn = action.call();
         }
+
         return responseToReturn;
     }
 

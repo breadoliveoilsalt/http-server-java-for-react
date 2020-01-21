@@ -1,11 +1,9 @@
 package httpServer.httpLogic.router;
-
-import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.responses.ResponseFactory;
 
 public class RouterFactory {
 
-    public Handler buildHTTPServerController() {
+    public Router buildHTTPServerRouter() {
         RouterBuilder builder = new RouterBuilder();
 
         builder

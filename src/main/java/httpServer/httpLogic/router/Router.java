@@ -27,8 +27,6 @@ public class Router {
     private void populateAllowedMethods() {
         routeMap.forEach( (path, methodAndAction) -> {
             Set<String> listOfMethodsForPath = methodAndAction.keySet();
-            // DO I REALLY NEED THIS NEXT LINE? //
-            recognizedMethods.add("HEAD");
             recognizedMethods.addAll(listOfMethodsForPath);
         });
     }
