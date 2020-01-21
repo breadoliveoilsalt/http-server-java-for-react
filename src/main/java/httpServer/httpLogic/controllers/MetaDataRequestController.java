@@ -21,23 +21,32 @@ public class MetaDataRequestController {
     }
 
     public static Response buildOPTIONSResponse(Router router, Request request) {
-        StringBuilder stringBuilder = new StringBuilder();
-        Set<String> methods = new HashSet<>(router.getMethodsFor(request.getPath()));
-        methods.add(Methods.HEAD);
-        methods.add(Methods.OPTIONS);
+        Set<String> methods = extractMethods(router, request);
+        String stringOfMethods = stringifyMethods(methods);
 
+        return new ResponseBuilder()
+                .addOKStatusLine()
+                .addHeader("Allow", stringOfMethods)
+                .build();
+    }
+
+    private static Set<String> extractMethods(Router router, Request request) {
+        Set<String> methods = new HashSet<>(router.getMethodsFor(request.getPath()));
+        methods.add(Methods.OPTIONS);
+        if (methods.contains(Methods.GET)) {
+            methods.add(Methods.HEAD);
+        }
+        return methods;
+    }
+
+    private static String stringifyMethods(Set<String> methods) {
+        StringBuilder stringBuilder = new StringBuilder();
         methods.forEach((method) -> {
             stringBuilder.append(method);
             stringBuilder.append(", ");
         });
         stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
-
-        String stringListOfMethods = stringBuilder.toString();
-
-        return new ResponseBuilder()
-                .addOKStatusLine()
-                .addHeader("Allow", stringListOfMethods)
-                .build();
+        return stringBuilder.toString();
     }
 
 }

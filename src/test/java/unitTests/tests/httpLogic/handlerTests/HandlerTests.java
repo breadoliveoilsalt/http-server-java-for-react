@@ -21,7 +21,6 @@ public class HandlerTests {
     private Response genericResponse;
     private final String pathWithOnlyGet = "/path_with_only_get";
     private final String pathWithMultipleMethods = "/path_with_multiple_methods";
-    private final String GET = "GET";
 
     @Before
     public void testInit() {
@@ -63,7 +62,7 @@ public class HandlerTests {
 
     @Test
     public void handleCausesAnActionSpecifiedByTheRouterToCreateAResponse() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(GET).build();
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(Methods.GET).build();
 
         Response result = handler.handle(clientRequest);
 
