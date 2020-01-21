@@ -14,10 +14,4 @@ class Spinach::Features::ReturningABadRequestResponse < Spinach::FeatureSteps
     expect(status_code).to eq 400
   end
 
-#   private
-#
-#   def get_status_code_from(raw_response_string)
-#     raw_response_string.split(" ")[1].to_i
-#   end
-
 end

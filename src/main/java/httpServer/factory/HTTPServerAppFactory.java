@@ -1,6 +1,6 @@
 package httpServer.factory;
 
-import httpServer.httpLogic.runnable.ClientHandlerRunnable;
+import httpServer.httpLogic.ClientHandlerRunnable;
 import httpServer.serverSocketLogic.*;
 import httpServer.wrappers.*;
 

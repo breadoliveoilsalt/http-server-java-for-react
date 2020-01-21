@@ -2,9 +2,6 @@ package httpServer.httpLogic.responses;
 
 import httpServer.httpLogic.Constants;
 
-import java.util.Iterator;
-import java.util.Map;
-
 public class ResponseParser {
 
     private Response response;
@@ -25,12 +22,9 @@ public class ResponseParser {
 
     private void addHeaders() {
         if (response.getHeaders() != null) {
-            Iterator it = response.getHeaders().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                stringifiedResponse += pair.getKey() + ": " + pair.getValue() + Constants.CRLF;
-                it.remove();
-            }
+            response.getHeaders().forEach(
+                (key, value) -> stringifiedResponse += key + ": " + value + Constants.CRLF
+            );
         }
     }
 
@@ -39,7 +33,7 @@ public class ResponseParser {
     }
 
     private void addBody() {
-       if (response.body != null) {
+       if (response.getBody() != null) {
            stringifiedResponse += response.body;
        }
     }

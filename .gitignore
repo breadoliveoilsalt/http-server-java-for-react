@@ -7,6 +7,9 @@ scraps*
 
 .idea
 .DS_Store
+# Ignoring files that IDEA builds when debugging
+/production/
+/test/
 
 ### VIM temp files ###
 *.swp

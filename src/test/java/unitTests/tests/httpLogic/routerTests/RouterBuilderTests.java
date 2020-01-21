@@ -1,7 +1,7 @@
-package unitTests.tests.httpLogic.controllerLogicTests;
+package unitTests.tests.httpLogic.routerTests;
 
-import httpServer.httpLogic.controllerLogic.Controller;
-import httpServer.httpLogic.controllerLogic.ControllerBuilder;
+import httpServer.httpLogic.router.Router;
+import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,23 +11,23 @@ import java.util.concurrent.Callable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ControllerBuilderTests {
+public class RouterBuilderTests {
 
-    ControllerBuilder builder;
+    RouterBuilder builder;
 
     @Before
     public void testInit() {
-        builder = new ControllerBuilder();
+        builder = new RouterBuilder();
     }
 
     @Test
-    public void createPathAddsAValidPathToTheControllerBeingBuilt() {
+    public void createPathAddsAValidPathToTheRouterBeingBuilt() {
         String path = "/some_path";
         builder.createPath(path);
 
-        Controller controller = builder.build();
+        Router router = builder.build();
 
-        assertTrue(controller.getPaths().contains(path));
+        assertTrue(router.getPaths().contains(path));
     }
 
     @Test
@@ -40,13 +40,13 @@ public class ControllerBuilderTests {
             .addMethodAndAction("GET", actionGET)
             .addMethodAndAction("POST", actionPOST);
 
-        Controller controller = builder.build();
+        Router router = builder.build();
 
-        assertTrue(controller.getMethodsFor(path).contains("GET"));
-        assertEquals(controller.getActionFor(path, "GET"), actionGET);
+        assertTrue(router.getMethodsFor(path).contains("GET"));
+        assertEquals(router.getActionFor(path, "GET"), actionGET);
 
-        assertTrue(controller.getMethodsFor(path).contains("POST"));
-        assertEquals(controller.getActionFor(path, "POST"), actionPOST);
+        assertTrue(router.getMethodsFor(path).contains("POST"));
+        assertEquals(router.getActionFor(path, "POST"), actionPOST);
     }
 
     private Response buildResponseForTests() {
