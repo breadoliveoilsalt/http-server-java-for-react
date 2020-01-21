@@ -106,9 +106,12 @@ public class HandlerTests {
     }
 
     @Test
-    public void handleReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {
+    public void handleReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() throws Exception {
         clientRequest = new RequestBuilder().addPath(pathWithMultipleMethods).addMethod(Methods.OPTIONS).build();
 
+        Response result = handler.handle(clientRequest);
+
+        assertTrue(result.hasHeader("Allow", Methods.GET + ", " + Methods.POST + ", " + Methods.PATCH));
     }
 
 }
