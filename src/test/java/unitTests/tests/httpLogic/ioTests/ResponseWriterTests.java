@@ -1,6 +1,6 @@
 package unitTests.tests.httpLogic.ioTests;
 
-import httpServer.httpLogic.Constants;
+import httpServer.httpLogic.constants.Whitespace;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class ResponseWriterTests {
 
     @Test
     public void writeToOutputStreamWritesAWritableResponseToTheSokketsOutputStream()   throws IOException {
-        String responseToClient = "HTTP/1.1 200 OK" + Constants.CRLF;
+        String responseToClient = "HTTP/1.1 200 OK" + Whitespace.CRLF;
         OutputStream outputStreamToClient = new ByteArrayOutputStream();
         sokket.setOutputStream(outputStreamToClient);
 

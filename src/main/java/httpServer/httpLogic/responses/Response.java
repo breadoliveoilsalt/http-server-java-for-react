@@ -41,6 +41,10 @@ public class Response {
         return headers.get(key).equals(value);
     }
 
+    public String getHeaderValue(String key) {
+        return headers.get(key);
+    }
+
     public String getBody() {
         return body;
     }
