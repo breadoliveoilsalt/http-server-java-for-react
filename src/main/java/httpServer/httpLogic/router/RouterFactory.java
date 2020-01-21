@@ -1,11 +1,12 @@
 package httpServer.httpLogic.router;
 
+import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.responses.ResponseFactory;
 
-public class ControllerFactory {
+public class RouterFactory {
 
     public Handler buildHTTPServerController() {
-        ControllerBuilder builder = new ControllerBuilder();
+        RouterBuilder builder = new RouterBuilder();
 
         builder
             .createPath("/simple_get")

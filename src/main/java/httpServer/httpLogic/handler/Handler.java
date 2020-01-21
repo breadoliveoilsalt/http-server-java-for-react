@@ -1,4 +1,4 @@
-package httpServer.httpLogic.router;
+package httpServer.httpLogic.handler;
 
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;

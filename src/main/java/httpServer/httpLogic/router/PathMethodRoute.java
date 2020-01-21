@@ -6,17 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-public class PathMethodMap {
+public class PathMethodRoute {
 
     private final String pathName;
     private final Map<String, Callable<Response>> methodActionMap;
 
-    public PathMethodMap(String pathName) {
+    public PathMethodRoute(String pathName) {
         this.pathName = pathName;
         this.methodActionMap = new HashMap<>();
     }
 
-    public PathMethodMap addMethodAndAction(String method, Callable<Response> action) {
+    public PathMethodRoute addMethodAndAction(String method, Callable<Response> action) {
         methodActionMap.put(method, action);
         return this;
     }

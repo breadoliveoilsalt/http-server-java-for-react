@@ -1,7 +1,7 @@
 package unitTests.tests.httpLogic.controllerLogicTests;
 
-import httpServer.httpLogic.router.Handler;
-import httpServer.httpLogic.router.ControllerBuilder;
+import httpServer.httpLogic.handler.Handler;
+import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,11 +13,11 @@ import static org.junit.Assert.assertTrue;
 
 public class HandlerBuilderTests {
 
-    ControllerBuilder builder;
+    RouterBuilder builder;
 
     @Before
     public void testInit() {
-        builder = new ControllerBuilder();
+        builder = new RouterBuilder();
     }
 
     @Test

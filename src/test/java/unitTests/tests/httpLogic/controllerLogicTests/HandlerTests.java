@@ -1,7 +1,7 @@
 package unitTests.tests.httpLogic.controllerLogicTests;
 
-import httpServer.httpLogic.router.Handler;
-import httpServer.httpLogic.router.ControllerBuilder;
+import httpServer.httpLogic.handler.Handler;
+import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -90,7 +90,7 @@ public class HandlerTests {
     }
 
     private void setControllerForHandleActionTest(String path, String method, Callable<Response> action) {
-        ControllerBuilder builder = new ControllerBuilder();
+        RouterBuilder builder = new RouterBuilder();
         builder.createPath(path)
                 .addMethodAndAction(method, action);
         handler = builder.build();
@@ -119,7 +119,7 @@ public class HandlerTests {
     }
 
     private void setControllerForGetPathsTest(String path1, String path2, String path3) {
-        ControllerBuilder builder = new ControllerBuilder();
+        RouterBuilder builder = new RouterBuilder();
         builder.createPath(path1);
         builder.createPath(path2);
         builder.createPath(path3);
@@ -142,7 +142,7 @@ public class HandlerTests {
 
     private void setControllerForGetMethodsForTest(String path, String method1, String method2) {
         Callable<Response> randomBuildAction = () -> returnGenericResponse();
-        ControllerBuilder builder = new ControllerBuilder();
+        RouterBuilder builder = new RouterBuilder();
         builder.createPath(path)
                 .addMethodAndAction(method1, randomBuildAction)
                 .addMethodAndAction(method2, randomBuildAction);
