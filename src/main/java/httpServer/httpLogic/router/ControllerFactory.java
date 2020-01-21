@@ -4,7 +4,7 @@ import httpServer.httpLogic.responses.ResponseFactory;
 
 public class ControllerFactory {
 
-    public Controller buildHTTPServerController() {
+    public Handler buildHTTPServerController() {
         ControllerBuilder builder = new ControllerBuilder();
 
         builder

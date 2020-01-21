@@ -7,12 +7,12 @@ import httpServer.httpLogic.responses.ResponseFactory;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-public class Controller {
+public class Handler {
 
     private final Map<String, Map<String, Callable<Response>>> routeMap;
     private final HashSet<String> allowedMethods;
 
-    public Controller(Map<String, Map<String, Callable<Response>>> routeMap) {
+    public Handler(Map<String, Map<String, Callable<Response>>> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);
         this.allowedMethods = new HashSet<>();
         populateAllowedMethods();

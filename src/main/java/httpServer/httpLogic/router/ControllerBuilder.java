@@ -21,11 +21,11 @@ public class ControllerBuilder {
         return pathMethodMap;
     }
 
-    public Controller build() {
+    public Handler build() {
         Map<String, Map<String, Callable<Response>>> tempMap = new HashMap<>();
         pathMethodMapList.forEach(pathMethodMap -> {
             tempMap.put(pathMethodMap.getPathName(), pathMethodMap.getMethodActionMap());
         });
-        return new Controller(tempMap);
+        return new Handler(tempMap);
     }
 }

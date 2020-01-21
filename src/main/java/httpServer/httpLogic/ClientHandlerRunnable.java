@@ -1,6 +1,6 @@
 package httpServer.httpLogic;
 
-import httpServer.httpLogic.router.Controller;
+import httpServer.httpLogic.router.Handler;
 import httpServer.httpLogic.router.ControllerFactory;
 import httpServer.httpLogic.io.RequestReader;
 import httpServer.httpLogic.io.ResponseWriter;
@@ -38,10 +38,10 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void handleClientRequest() throws Exception {
-        Controller controller = new ControllerFactory().buildHTTPServerController();
+        Handler handler = new ControllerFactory().buildHTTPServerController();
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request clientRequest = new RequestParser().parse(rawClientRequest);
-        Response serverResponse = controller.handle(clientRequest);
+        Response serverResponse = handler.handle(clientRequest);
         String writableResponse = new ResponseParser().stringify(serverResponse);
         new ResponseWriter().writeToOutputStream(sokket, writableResponse);
     }

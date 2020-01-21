@@ -1,6 +1,6 @@
 package unitTests.tests.httpLogic.controllerLogicTests;
 
-import httpServer.httpLogic.router.Controller;
+import httpServer.httpLogic.router.Handler;
 import httpServer.httpLogic.router.ControllerBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ControllerBuilderTests {
+public class HandlerBuilderTests {
 
     ControllerBuilder builder;
 
@@ -25,9 +25,9 @@ public class ControllerBuilderTests {
         String path = "/some_path";
         builder.createPath(path);
 
-        Controller controller = builder.build();
+        Handler handler = builder.build();
 
-        assertTrue(controller.getPaths().contains(path));
+        assertTrue(handler.getPaths().contains(path));
     }
 
     @Test
@@ -40,13 +40,13 @@ public class ControllerBuilderTests {
             .addMethodAndAction("GET", actionGET)
             .addMethodAndAction("POST", actionPOST);
 
-        Controller controller = builder.build();
+        Handler handler = builder.build();
 
-        assertTrue(controller.getMethodsFor(path).contains("GET"));
-        assertEquals(controller.getActionFor(path, "GET"), actionGET);
+        assertTrue(handler.getMethodsFor(path).contains("GET"));
+        assertEquals(handler.getActionFor(path, "GET"), actionGET);
 
-        assertTrue(controller.getMethodsFor(path).contains("POST"));
-        assertEquals(controller.getActionFor(path, "POST"), actionPOST);
+        assertTrue(handler.getMethodsFor(path).contains("POST"));
+        assertEquals(handler.getActionFor(path, "POST"), actionPOST);
     }
 
     private Response buildResponseForTests() {
