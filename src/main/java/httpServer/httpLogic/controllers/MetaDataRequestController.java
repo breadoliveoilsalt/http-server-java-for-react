@@ -5,7 +5,7 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 
-public class HeadRequestController {
+public class MetaDataRequestController {
 
     public static Response buildHEADResponse(Router router, Request request) throws Exception {
         Response fullResponse = router.getActionFor(request.getPath(), "GET").call();

@@ -1,7 +1,8 @@
 package httpServer.httpLogic.handler;
 
+import httpServer.httpLogic.constants.Methods;
 import httpServer.httpLogic.controllers.ExceptionsController;
-import httpServer.httpLogic.controllers.HeadRequestController;
+import httpServer.httpLogic.controllers.MetaDataRequestController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.router.Router;
@@ -22,7 +23,9 @@ public class Handler {
         if (request.isInvalid()) {
             action = ExceptionsController::build400Response;
         } else if (validHEADRequest(request)) {
-            action = () -> HeadRequestController.buildHEADResponse(router, request);
+            action = () -> MetaDataRequestController.buildHEADResponse(router, request);
+        } else if (validOPTIONSRequest(request)) {
+
         } else if (hasUnrecognizedMethod(request)) {
             action = ExceptionsController::build501Response;
         } else {
@@ -32,13 +35,16 @@ public class Handler {
         return action.call();
     }
 
+    private boolean validHEADRequest(Request request) {
+        return request.getMethod().equals(Methods.HEAD) && router.getMethodsFor(request.getPath()).contains(Methods.GET);
+    }
+
+    private boolean validOPTIONSRequest(Request request) {
+        return request.getMethod().equals(Methods.OPTIONS) && router.getPaths().contains(request.getPath());
+    }
+
     private boolean hasUnrecognizedMethod(Request request) {
         return !router.getRecognizedMethods().contains(request.getMethod());
     }
-
-    private boolean validHEADRequest(Request request) {
-        return request.getMethod().equals("HEAD") && router.getMethodsFor(request.getPath()).contains("GET");
-    }
-
 
 }
