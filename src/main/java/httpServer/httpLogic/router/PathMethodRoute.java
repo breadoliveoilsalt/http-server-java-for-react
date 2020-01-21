@@ -9,15 +9,15 @@ import java.util.concurrent.Callable;
 public class PathMethodRoute {
 
     private final String pathName;
-    private final Map<String, Callable<Response>> methodActionMap;
+    private final Map<String, Callable<Response>> methodToControllerMap;
 
     public PathMethodRoute(String pathName) {
         this.pathName = pathName;
-        this.methodActionMap = new HashMap<>();
+        this.methodToControllerMap = new HashMap<>();
     }
 
     public PathMethodRoute addMethodAndAction(String method, Callable<Response> action) {
-        methodActionMap.put(method, action);
+        methodToControllerMap.put(method, action);
         return this;
     }
 
@@ -26,7 +26,7 @@ public class PathMethodRoute {
     }
 
     public Map<String, Callable<Response>> getMethodActionMap() {
-        return methodActionMap;
+        return methodToControllerMap;
     }
 
 }
