@@ -1,4 +1,4 @@
-package unitTests.tests.httpLogic.controllerLogicTests;
+package unitTests.tests.httpLogic.routerTests;
 
 import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.router.RouterBuilder;
@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class HandlerBuilderTests {
+public class RouterBuilderTests {
 
     RouterBuilder builder;
 
@@ -21,7 +21,7 @@ public class HandlerBuilderTests {
     }
 
     @Test
-    public void createPathAddsAValidPathToTheControllerBeingBuilt() {
+    public void createPathAddsAValidPathToTheRouterBeingBuilt() {
         String path = "/some_path";
         builder.createPath(path);
 
