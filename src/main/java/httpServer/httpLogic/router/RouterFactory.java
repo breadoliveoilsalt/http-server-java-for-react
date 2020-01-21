@@ -1,4 +1,6 @@
 package httpServer.httpLogic.router;
+import httpServer.httpLogic.controllers.GetWithBodyController;
+import httpServer.httpLogic.controllers.SimpleGetController;
 import httpServer.httpLogic.responses.ResponseFactory;
 
 public class RouterFactory {
@@ -8,10 +10,10 @@ public class RouterFactory {
 
         builder
             .createPath("/simple_get")
-            .addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponse());
+                .addMethodAndAction("GET", SimpleGetController::get);
 
         builder.createPath("/get_with_body")
-                .addMethodAndAction("GET", () -> ResponseFactory.buildSimpleResponseWithBody());
+                .addMethodAndAction("GET", GetWithBodyController::get);
 
         return builder.build();
     }
