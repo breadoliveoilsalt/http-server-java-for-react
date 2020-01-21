@@ -111,7 +111,13 @@ public class HandlerTests {
 
         Response result = handler.handle(clientRequest);
 
-        assertTrue(result.hasHeader("Allow", Methods.GET + ", " + Methods.POST + ", " + Methods.PATCH));
+        String resultingListOfMethods = result.getHeaderValue("Allow");
+
+        assertTrue(resultingListOfMethods.contains(Methods.GET));
+        assertTrue(resultingListOfMethods.contains(Methods.POST));
+        assertTrue(resultingListOfMethods.contains(Methods.PATCH));
+        assertTrue(resultingListOfMethods.contains(Methods.HEAD));
+        assertTrue(resultingListOfMethods.contains(Methods.OPTIONS));
     }
 
 }

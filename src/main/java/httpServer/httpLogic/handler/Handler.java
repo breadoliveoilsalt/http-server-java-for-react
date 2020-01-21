@@ -25,7 +25,7 @@ public class Handler {
         } else if (validHEADRequest(request)) {
             action = () -> MetaDataRequestController.buildHEADResponse(router, request);
         } else if (validOPTIONSRequest(request)) {
-
+            action = () -> MetaDataRequestController.buildOPTIONSResponse(router, request);
         } else if (hasUnrecognizedMethod(request)) {
             action = ExceptionsController::build501Response;
         } else {
