@@ -1,6 +1,6 @@
 package unitTests.tests.httpLogic.responsesTests;
 
-import httpServer.httpLogic.Constants;
+import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.responses.ResponseParser;
@@ -25,7 +25,7 @@ public class ResponseParserTests {
 
         String result = responseParser.stringify(responseObject);
 
-        String expectedResult = "HTTP/1.1 200 OK" + Constants.CRLF + Constants.CRLF;
+        String expectedResult = "HTTP/1.1 200 OK" + Whitespace.CRLF + Whitespace.CRLF;
         assertEquals(expectedResult, result);
    }
 
@@ -49,10 +49,10 @@ public class ResponseParserTests {
         String result = responseParser.stringify(responseObject);
 
         String expectedResult =
-                "HTTP/1.1 200 OK" + Constants.CRLF +
-                "Content-Length: 0" + Constants.CRLF +
-                "Date: Some Date" + Constants.CRLF +
-                Constants.CRLF;
+                "HTTP/1.1 200 OK" + Whitespace.CRLF +
+                "Content-Length: 0" + Whitespace.CRLF +
+                "Date: Some Date" + Whitespace.CRLF +
+                        Whitespace.CRLF;
         assertEquals(expectedResult, result);
     }
 
@@ -74,9 +74,9 @@ public class ResponseParserTests {
         String result = responseParser.stringify(responseObject);
 
         String expectedResult =
-                "HTTP/1.1 200 OK" + Constants.CRLF +
-                "Content-Length: 5" + Constants.CRLF +
-                Constants.CRLF +
+                "HTTP/1.1 200 OK" + Whitespace.CRLF +
+                "Content-Length: 5" + Whitespace.CRLF +
+                        Whitespace.CRLF +
                 "Hello";
         assertEquals(expectedResult, result);
     }

@@ -1,6 +1,6 @@
 package httpServer.httpLogic.responses;
 
-import httpServer.httpLogic.Constants;
+import httpServer.httpLogic.constants.Whitespace;
 
 public class ResponseParser {
 
@@ -17,19 +17,19 @@ public class ResponseParser {
     }
 
     private void stringifyStatusLine() {
-        stringifiedResponse = response.httpVersion + Constants.SPACE + response.statusCode + Constants.SPACE + response.statusMessage + Constants.CRLF;
+        stringifiedResponse = response.httpVersion + Whitespace.SPACE + response.statusCode + Whitespace.SPACE + response.statusMessage + Whitespace.CRLF;
     }
 
     private void addHeaders() {
         if (response.getHeaders() != null) {
             response.getHeaders().forEach(
-                (key, value) -> stringifiedResponse += key + ": " + value + Constants.CRLF
+                (key, value) -> stringifiedResponse += key + ": " + value + Whitespace.CRLF
             );
         }
     }
 
     private void addEndOfMetaData() {
-        stringifiedResponse += Constants.CRLF;
+        stringifiedResponse += Whitespace.CRLF;
     }
 
     private void addBody() {

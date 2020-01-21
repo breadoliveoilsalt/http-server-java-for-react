@@ -1,5 +1,6 @@
 package unitTests.tests.httpLogic.handlerTests;
 
+import httpServer.httpLogic.constants.Methods;
 import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
@@ -19,6 +20,7 @@ public class HandlerTests {
     private Request clientRequest;
     private Response genericResponse;
     private final String pathWithOnlyGet = "/path_with_only_get";
+    private final String pathWithMultipleMethods = "/path_with_multiple_methods";
     private final String GET = "GET";
 
     @Before
@@ -41,7 +43,13 @@ public class HandlerTests {
     private void buildRouter() {
         RouterBuilder builder = new RouterBuilder();
         builder.createPath(pathWithOnlyGet)
-                .addMethodAndAction(GET, () -> returnGenericResponse());
+                .addMethodAndAction(Methods.GET, () -> returnGenericResponse());
+
+        builder.createPath(pathWithMultipleMethods)
+                .addMethodAndAction(Methods.GET, () -> returnGenericResponse())
+                .addMethodAndAction(Methods.POST, () -> returnGenericResponse())
+                .addMethodAndAction(Methods.PATCH, () -> returnGenericResponse());
+
         router = builder.build();
     }
 
@@ -64,7 +72,7 @@ public class HandlerTests {
 
     @Test
     public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod("HEAD").build();
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(Methods.HEAD).build();
 
         Response result = handler.handle(clientRequest);
 
@@ -95,6 +103,12 @@ public class HandlerTests {
         assertEquals("400", result.getStatusCode());
         assertEquals("Bad Request", result.getStatusMessage());
         assertEquals("400 Error: Bad Request Submitted", result.getBody());
+    }
+
+    @Test
+    public void handleReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() {
+        clientRequest = new RequestBuilder().addPath(pathWithMultipleMethods).addMethod(Methods.OPTIONS).build();
+
     }
 
 }
