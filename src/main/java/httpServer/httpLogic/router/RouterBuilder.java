@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 
 public class RouterBuilder {
 
-    private ArrayList<PathAndMethodRoute> pathAndMethodRouteList;
+    private final ArrayList<PathAndMethodRoute> pathAndMethodRouteList;
 
     public RouterBuilder() {
         this.pathAndMethodRouteList = new ArrayList<>();

@@ -2,7 +2,7 @@ package httpServer.httpLogic.requests;
 
 public class RequestParser {
 
-    private RequestBuilder requestBuilder;
+    private final RequestBuilder requestBuilder;
     private String rawClientRequest;
     private String[] parsedMetaDataAndBody;
     private String[] parsedRequestLineAndHeaders;

@@ -1,6 +1,5 @@
 package unitTests.tests.httpLogic.routerTests;
 
-import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.responses.Response;

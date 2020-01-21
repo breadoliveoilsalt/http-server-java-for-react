@@ -4,12 +4,12 @@ import java.util.Map;
 
 public class Request {
 
-    private String method;
-    private String path;
-    private float httpVersion;
-    private Map<String, String> headers;
-    private String body;
-    private boolean isValid;
+    private final String method;
+    private final String path;
+    private final float httpVersion;
+    private final Map<String, String> headers;
+    private final String body;
+    private final boolean isValid;
 
     public Request(
             String method,

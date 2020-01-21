@@ -1,7 +1,6 @@
 package httpServer.httpLogic.router;
 import httpServer.httpLogic.controllers.GetWithBodyController;
 import httpServer.httpLogic.controllers.SimpleGetController;
-import httpServer.httpLogic.responses.ResponseFactory;
 
 public class RouterFactory {
 

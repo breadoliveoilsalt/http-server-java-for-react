@@ -10,8 +10,6 @@ import httpServer.httpLogic.responses.ResponseBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.concurrent.Callable;
-
 import static org.junit.Assert.*;
 
 public class HandlerTests {
@@ -20,8 +18,8 @@ public class HandlerTests {
     private Handler handler;
     private Request clientRequest;
     private Response genericResponse;
-    private String pathWithOnlyGet = "/path_with_only_get";
-    private String GET = "GET";
+    private final String pathWithOnlyGet = "/path_with_only_get";
+    private final String GET = "GET";
 
     @Before
     public void testInit() {
