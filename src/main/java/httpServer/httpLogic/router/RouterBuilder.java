@@ -1,6 +1,5 @@
 package httpServer.httpLogic.router;
 
-import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.responses.Response;
 
 import java.util.ArrayList;
@@ -10,23 +9,23 @@ import java.util.concurrent.Callable;
 
 public class RouterBuilder {
 
-    private ArrayList<PathMethodRoute> pathMethodRouteList;
+    private ArrayList<PathAndMethodRoute> pathAndMethodRouteList;
 
     public RouterBuilder() {
-        this.pathMethodRouteList = new ArrayList<>();
+        this.pathAndMethodRouteList = new ArrayList<>();
     }
 
-    public PathMethodRoute createPath(String name) {
-        PathMethodRoute pathMethodRoute = new PathMethodRoute(name);
-        pathMethodRouteList.add(pathMethodRoute);
-        return pathMethodRoute;
+    public PathAndMethodRoute createPath(String name) {
+        PathAndMethodRoute pathAndMethodRoute = new PathAndMethodRoute(name);
+        pathAndMethodRouteList.add(pathAndMethodRoute);
+        return pathAndMethodRoute;
     }
 
-    public Handler build() {
+    public Router build() {
         Map<String, Map<String, Callable<Response>>> tempMap = new HashMap<>();
-        pathMethodRouteList.forEach(pathMethodRoute -> {
-            tempMap.put(pathMethodRoute.getPathName(), pathMethodRoute.getMethodActionMap());
+        pathAndMethodRouteList.forEach(pathAndMethodRoute -> {
+            tempMap.put(pathAndMethodRoute.getPathName(), pathAndMethodRoute.getMethodActionMap());
         });
-        return new Handler(tempMap);
+        return new Router(tempMap);
     }
 }

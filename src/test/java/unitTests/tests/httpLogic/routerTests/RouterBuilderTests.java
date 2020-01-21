@@ -1,6 +1,7 @@
 package unitTests.tests.httpLogic.routerTests;
 
 import httpServer.httpLogic.handler.Handler;
+import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
@@ -25,9 +26,9 @@ public class RouterBuilderTests {
         String path = "/some_path";
         builder.createPath(path);
 
-        Handler handler = builder.build();
+        Router router = builder.build();
 
-        assertTrue(handler.getPaths().contains(path));
+        assertTrue(router.getPaths().contains(path));
     }
 
     @Test
@@ -40,13 +41,13 @@ public class RouterBuilderTests {
             .addMethodAndAction("GET", actionGET)
             .addMethodAndAction("POST", actionPOST);
 
-        Handler handler = builder.build();
+        Router router = builder.build();
 
-        assertTrue(handler.getMethodsFor(path).contains("GET"));
-        assertEquals(handler.getActionFor(path, "GET"), actionGET);
+        assertTrue(router.getMethodsFor(path).contains("GET"));
+        assertEquals(router.getActionFor(path, "GET"), actionGET);
 
-        assertTrue(handler.getMethodsFor(path).contains("POST"));
-        assertEquals(handler.getActionFor(path, "POST"), actionPOST);
+        assertTrue(router.getMethodsFor(path).contains("POST"));
+        assertEquals(router.getActionFor(path, "POST"), actionPOST);
     }
 
     private Response buildResponseForTests() {
