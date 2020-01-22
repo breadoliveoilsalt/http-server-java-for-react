@@ -4,14 +4,15 @@ import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 
+import java.io.UnsupportedEncodingException;
+
 public class EchoBodyController {
 
-    public static Response post(Request request) {
-        System.out.println("Here's the body");
-        System.out.println(request.getBody());
+    public static Response post(Request request) throws UnsupportedEncodingException {
+        String responseBody = request.getBody();
         return new ResponseBuilder()
-                .addOKStatusLine()
-                .addBody(request.getBody())
+                .addBody(responseBody)
+                .finalizeMetaDataForOKResponse()
                 .build();
     }
 }

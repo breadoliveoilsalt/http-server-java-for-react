@@ -1,5 +1,6 @@
 package httpServer.httpLogic.responses;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,27 @@ public class ResponseBuilder {
         }
         this.body += body;
         return this;
+    }
+
+    public ResponseBuilder finalizeMetaDataForOKResponse() throws UnsupportedEncodingException {
+        addOKStatusLine();
+        addContentLength();
+        return this;
+    }
+
+    public ResponseBuilder addContentLength() throws UnsupportedEncodingException {
+        if (body != null) {
+            calculateContentLength();
+        } else {
+            addHeader("Content-Length", "0");
+        }
+        return this;
+    }
+
+    private void calculateContentLength() throws UnsupportedEncodingException {
+        byte[] responseBodyBytes = body.getBytes("UTF-8");
+        String contentLength = String.valueOf(responseBodyBytes.length);
+        addHeader("Content-Length", contentLength);
     }
 
     public Response build() {
