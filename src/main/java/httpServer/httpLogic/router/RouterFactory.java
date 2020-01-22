@@ -7,10 +7,10 @@ public class RouterFactory {
 
     public Router buildHTTPServerRouter() {
         return new RouterBuilder()
-                .addPathAndController("/simple_get", SimpleGetController.class)
-                .addPathAndController("/get_with_body", GetWithBodyController.class)
-                .addPathAndController("/echo_body", EchoBodyController.class)
-                .build();
+            .addPathAndController("/simple_get", SimpleGetController.class)
+            .addPathAndController("/get_with_body", GetWithBodyController.class)
+            .addPathAndController("/echo_body", EchoBodyController.class)
+            .build();
     }
 
 }

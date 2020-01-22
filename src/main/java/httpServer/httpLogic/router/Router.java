@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 public class Router {
 
@@ -33,52 +32,29 @@ public class Router {
     private void populateRecognizedMethods() {
         routeMap.values().forEach( controllerClass -> {
             Method[] classMethods = controllerClass.getMethods();
-            addClassMethodsToRecognizedMethods(classMethods);
+            Set<String> parsedMethods = parseMethodsThatReturnResponseObjects(classMethods);
+            recognizedMethods.addAll(parsedMethods);
         });
-
-//        routeMap.forEach((path, controllerClass) -> {
-//            Method[] classMethods = controllerClass.getMethods();
-//            addClassMethodsToRecognizedMethods(classMethods);
-//        });
     }
 
-    private void addClassMethodsToRecognizedMethods(Method[] classMethods) {
+    public Set<String> getPaths() {
+        return routeMap.keySet();
+    }
+
+    public Set<String> getMethodsFor(String path) {
+        Class controllerClass = routeMap.get(path);
+        Method[] classMethods = controllerClass.getMethods();
+        return parseMethodsThatReturnResponseObjects(classMethods);
+    }
+
+    private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
+        HashSet<String> parsedMethods = new HashSet<>();
         for (Method method : classMethods) {
             if (method.getReturnType() == Response.class) {
-                recognizedMethods.add(method.getName().toUpperCase());
+                parsedMethods.add(method.getName().toUpperCase());
             }
         }
+        return parsedMethods;
     }
-//    private final Map<String, Map<String, Callable<Response>>> routeMap;
-//    private HashSet<String> recognizedMethods;
-//
-//    public Router(Map<String, Map<String, Callable<Response>>> routeMap) {
-//        this.routeMap = Collections.unmodifiableMap(routeMap);
-//    }
-//
-//    public HashSet<String> getRecognizedMethods() {
-//        if (recognizedMethods == null) {
-//            recognizedMethods = new HashSet<>();
-//            populateAllowedMethods();
-//        }
-//        return recognizedMethods;
-//    }
-//    private void populateAllowedMethods() {
-//        routeMap.forEach( (path, methodAndAction) -> {
-//            Set<String> listOfMethodsForPath = methodAndAction.keySet();
-//            recognizedMethods.addAll(listOfMethodsForPath);
-//        });
-//    }
-//
-//    public Set<String> getPaths() {
-//        return routeMap.keySet();
-//    }
-//
-//    public Set<String> getMethodsFor(String path) {
-//        return routeMap.get(path).keySet();
-//    }
-//
-//    public Callable<Response> getActionFor(String path, String method) {
-//        return routeMap.get(path).get(method);
-//    }
+
 }
