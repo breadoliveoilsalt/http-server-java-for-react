@@ -1,6 +1,6 @@
 package unitTests.tests.httpLogic.handlerTests;
 
-import httpServer.httpLogic.constants.Methods;
+import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
@@ -42,12 +42,12 @@ public class HandlerTests {
     private void buildRouter() {
         RouterBuilder builder = new RouterBuilder();
         builder.createPath(pathWithOnlyGet)
-                .addMethodAndAction(Methods.GET, () -> returnGenericResponse());
+                .addMethodAndAction(HTTPMethods.GET, () -> returnGenericResponse());
 
         builder.createPath(pathWithMultipleMethods)
-                .addMethodAndAction(Methods.GET, () -> returnGenericResponse())
-                .addMethodAndAction(Methods.POST, () -> returnGenericResponse())
-                .addMethodAndAction(Methods.PATCH, () -> returnGenericResponse());
+                .addMethodAndAction(HTTPMethods.GET, () -> returnGenericResponse())
+                .addMethodAndAction(HTTPMethods.POST, () -> returnGenericResponse())
+                .addMethodAndAction(HTTPMethods.PATCH, () -> returnGenericResponse());
 
         router = builder.build();
     }
@@ -62,7 +62,7 @@ public class HandlerTests {
 
     @Test
     public void handleCausesAnActionSpecifiedByTheRouterToCreateAResponse() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(Methods.GET).build();
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(HTTPMethods.GET).build();
 
         Response result = handler.handle(clientRequest);
 
@@ -71,7 +71,7 @@ public class HandlerTests {
 
     @Test
     public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(Methods.HEAD).build();
+        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(HTTPMethods.HEAD).build();
 
         Response result = handler.handle(clientRequest);
 
@@ -106,17 +106,17 @@ public class HandlerTests {
 
     @Test
     public void handleReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithMultipleMethods).addMethod(Methods.OPTIONS).build();
+        clientRequest = new RequestBuilder().addPath(pathWithMultipleMethods).addMethod(HTTPMethods.OPTIONS).build();
 
         Response result = handler.handle(clientRequest);
 
         String resultingListOfMethods = result.getHeaderValue("Allow");
 
-        assertTrue(resultingListOfMethods.contains(Methods.GET));
-        assertTrue(resultingListOfMethods.contains(Methods.POST));
-        assertTrue(resultingListOfMethods.contains(Methods.PATCH));
-        assertTrue(resultingListOfMethods.contains(Methods.HEAD));
-        assertTrue(resultingListOfMethods.contains(Methods.OPTIONS));
+        assertTrue(resultingListOfMethods.contains(HTTPMethods.GET));
+        assertTrue(resultingListOfMethods.contains(HTTPMethods.POST));
+        assertTrue(resultingListOfMethods.contains(HTTPMethods.PATCH));
+        assertTrue(resultingListOfMethods.contains(HTTPMethods.HEAD));
+        assertTrue(resultingListOfMethods.contains(HTTPMethods.OPTIONS));
     }
 
 }

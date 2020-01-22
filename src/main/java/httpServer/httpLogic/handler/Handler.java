@@ -1,16 +1,11 @@
 package httpServer.httpLogic.handler;
 
-import httpServer.httpLogic.constants.Methods;
-import httpServer.httpLogic.controllers.Controller;
-import httpServer.httpLogic.controllers.ExceptionsController;
-import httpServer.httpLogic.controllers.MetaDataRequestController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.router.Router;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.concurrent.Callable;
 
 public class Handler {
 
