@@ -14,6 +14,7 @@ public class RouterFactory {
         Map<String, Class> routeMap = new HashMap<>();
         routeMap.put("/echo_body", EchoBodyController.class);
         routeMap.put("/simple_get", SimpleGetController.class);
+        routeMap.put("/get_with_body", GetWithBodyController.class);
         return new Router(routeMap);
 //        RouterBuilder builder = new RouterBuilder();
 //

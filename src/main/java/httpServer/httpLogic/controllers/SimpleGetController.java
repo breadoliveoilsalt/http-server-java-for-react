@@ -17,10 +17,9 @@ public class SimpleGetController {
         this.request = request;
     }
 
-    public Response get() throws UnsupportedEncodingException {
+    public Response get() {
         return new ResponseBuilder()
                 .finalizeMetaDataForOKResponse()
-//                .addOKStatusLine()
                 .build();
     }
 

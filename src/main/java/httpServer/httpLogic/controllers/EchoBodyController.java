@@ -18,7 +18,7 @@ public class EchoBodyController {
         this.request = request;
     }
 
-    public Response post() throws UnsupportedEncodingException {
+    public Response post() {
         String responseBody = request.getBody();
         return new ResponseBuilder()
                 .addBody(responseBody)

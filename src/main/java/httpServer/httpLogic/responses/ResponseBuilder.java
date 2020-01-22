@@ -49,13 +49,13 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder finalizeMetaDataForOKResponse() throws UnsupportedEncodingException {
+    public ResponseBuilder finalizeMetaDataForOKResponse() {
         addOKStatusLine();
         addContentLength();
         return this;
     }
 
-    public ResponseBuilder addContentLength() throws UnsupportedEncodingException {
+    public ResponseBuilder addContentLength() {
         if (body != null) {
             calculateContentLength();
         } else {
@@ -64,10 +64,14 @@ public class ResponseBuilder {
         return this;
     }
 
-    private void calculateContentLength() throws UnsupportedEncodingException {
-        byte[] responseBodyBytes = body.getBytes("UTF-8");
-        String contentLength = String.valueOf(responseBodyBytes.length);
-        addHeader("Content-Length", contentLength);
+    private void calculateContentLength() {
+        try {
+            byte[] responseBodyBytes = body.getBytes("UTF-8");
+            String contentLength = String.valueOf(responseBodyBytes.length);
+            addHeader("Content-Length", contentLength);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public Response build() {
