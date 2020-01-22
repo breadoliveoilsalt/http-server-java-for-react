@@ -11,11 +11,20 @@ import java.util.Map;
 public class RouterFactory {
 
     public Router buildHTTPServerRouter() {
-        Map<String, Class> routeMap = new HashMap<>();
-        routeMap.put("/echo_body", EchoBodyController.class);
-        routeMap.put("/simple_get", SimpleGetController.class);
-        routeMap.put("/get_with_body", GetWithBodyController.class);
-        return new Router(routeMap);
+        return new RouterBuilder()
+                .addPathAndController("/simple_get", SimpleGetController.class)
+                .addPathAndController("/get_with_body", GetWithBodyController.class)
+                .addPathAndController("/echo_body", EchoBodyController.class)
+                .build();
+    }
+
+}
+
+//        Map<String, Class> routeMap = new HashMap<>();
+//        routeMap.put("/echo_body", EchoBodyController.class);
+//        routeMap.put("/simple_get", SimpleGetController.class);
+//        routeMap.put("/get_with_body", GetWithBodyController.class);
+//        return new Router(routeMap);
 //        RouterBuilder builder = new RouterBuilder();
 //
 //        builder.createPath("/simple_get")
@@ -37,6 +46,6 @@ public class RouterFactory {
 //                .addMethodAndAction(Methods.PUT, (Request request) -> EchoBodyController.post(request));
 
 //        return builder.build();
-    }
+//    }
 
-}
+//}

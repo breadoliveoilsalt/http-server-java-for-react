@@ -2,6 +2,7 @@ package httpServer.httpLogic.router;
 
 import httpServer.httpLogic.responses.Response;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.concurrent.Callable;
 public class Router {
 
     private final Map<String, Class> routeMap;
+    private Set<String> recognizedMethods;
 
     public Router(Map<String, Class> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);
@@ -20,6 +22,31 @@ public class Router {
        return routeMap.get(path);
     }
 
+    public Set<String> getRecognizedMethods() {
+        if (recognizedMethods == null) {
+            recognizedMethods = new HashSet<>();
+            populateRecognizedMethods();
+        }
+        return recognizedMethods;
+    }
+
+    private void populateRecognizedMethods() {
+        routeMap.values().forEach( controllerClass -> {
+            Method[] classMethods = controllerClass.getMethods();
+            addClassMethodsToRecognizedMethods(classMethods);
+
+        });
+//        routeMap.forEach((path, controllerClass) -> {
+//            Method[] classMethods = controllerClass.getMethods();
+//            addClassMethodsToRecognizedMethods(classMethods);
+//        });
+    }
+
+    private void addClassMethodsToRecognizedMethods(Method[] classMethods) {
+        for (Method method : classMethods) {
+            recognizedMethods.add(method.getName());
+        }
+    }
 //    private final Map<String, Map<String, Callable<Response>>> routeMap;
 //    private HashSet<String> recognizedMethods;
 //

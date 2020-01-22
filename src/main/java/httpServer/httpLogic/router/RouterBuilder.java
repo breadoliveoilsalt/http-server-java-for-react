@@ -1,19 +1,25 @@
 package httpServer.httpLogic.router;
 
 import httpServer.httpLogic.controllers.Controller;
-import httpServer.httpLogic.responses.Response;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class RouterBuilder {
 
-    private final Map<String, Controller> routeMap;
+    private final Map<String, Class> routeMap;
 
     public RouterBuilder() {
         this.routeMap = new HashMap<>();
+    }
+
+    public RouterBuilder addPathAndController(String path, Class controllerClass) {
+        routeMap.put(path, controllerClass);
+        return this;
+    }
+
+    public Router build() {
+        return new Router(routeMap);
     }
 
 //    private final ArrayList<PathAndMethodRoute> pathAndMethodRouteList;
