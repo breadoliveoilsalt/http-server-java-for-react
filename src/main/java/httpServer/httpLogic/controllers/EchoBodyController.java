@@ -10,8 +10,8 @@ import java.io.UnsupportedEncodingException;
 
 public class EchoBodyController {
 
-    Router router;
-    Request request;
+    private Router router;
+    private Request request;
 
     public EchoBodyController(Router router, Request request) {
         this.router = router;

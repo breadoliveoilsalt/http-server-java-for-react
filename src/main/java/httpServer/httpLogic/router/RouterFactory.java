@@ -13,6 +13,7 @@ public class RouterFactory {
     public Router buildHTTPServerRouter() {
         Map<String, Class> routeMap = new HashMap<>();
         routeMap.put("/echo_body", EchoBodyController.class);
+        routeMap.put("/simple_get", SimpleGetController.class);
         return new Router(routeMap);
 //        RouterBuilder builder = new RouterBuilder();
 //
