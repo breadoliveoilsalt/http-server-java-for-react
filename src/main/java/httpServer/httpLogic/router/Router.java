@@ -34,8 +34,8 @@ public class Router {
         routeMap.values().forEach( controllerClass -> {
             Method[] classMethods = controllerClass.getMethods();
             addClassMethodsToRecognizedMethods(classMethods);
-
         });
+
 //        routeMap.forEach((path, controllerClass) -> {
 //            Method[] classMethods = controllerClass.getMethods();
 //            addClassMethodsToRecognizedMethods(classMethods);
@@ -44,7 +44,9 @@ public class Router {
 
     private void addClassMethodsToRecognizedMethods(Method[] classMethods) {
         for (Method method : classMethods) {
-            recognizedMethods.add(method.getName());
+            if (method.getReturnType() == Response.class) {
+                recognizedMethods.add(method.getName().toUpperCase());
+            }
         }
     }
 //    private final Map<String, Map<String, Callable<Response>>> routeMap;

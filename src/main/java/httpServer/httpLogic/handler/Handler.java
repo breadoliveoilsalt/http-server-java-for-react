@@ -57,6 +57,7 @@ public class Handler {
         Constructor controllerConstructor = controllerClass.getConstructor(Router.class, Request.class);
         Object controller = controllerConstructor.newInstance(router, request);
         Method methodToInvoke = controllerClass.getMethod(methodRequested);
+        System.out.println(router.getRecognizedMethods());
         return (Response) methodToInvoke.invoke(controller);
 //        Method methodToInvoke = methodToInvoke.invoke(controller);
 //        Method methodToInvoke = controller.getDeclaredMethod(methodRequested);
