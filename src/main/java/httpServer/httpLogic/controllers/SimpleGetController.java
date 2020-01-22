@@ -5,16 +5,10 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 
-import java.io.UnsupportedEncodingException;
-
-public class SimpleGetController {
-
-    private Router router;
-    private Request request;
+public class SimpleGetController extends Controller {
 
     public SimpleGetController(Router router, Request request) {
-        this.router = router;
-        this.request = request;
+        super(router, request);
     }
 
     public Response get() {

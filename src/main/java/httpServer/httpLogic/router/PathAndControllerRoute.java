@@ -6,17 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-public class PathAndMethodRoute {
+public class PathAndControllerRoute {
 
     private final String pathName;
     private final Map<String, Callable<Response>> methodToControllerMap;
 
-    public PathAndMethodRoute(String pathName) {
+    public PathAndControllerRoute(String pathName) {
         this.pathName = pathName;
         this.methodToControllerMap = new HashMap<>();
     }
 
-    public PathAndMethodRoute addMethodAndAction(String method, Callable<Response> action) {
+    public PathAndControllerRoute addMethodAndAction(String method, Callable<Response> action) {
         methodToControllerMap.put(method, action);
         return this;
     }

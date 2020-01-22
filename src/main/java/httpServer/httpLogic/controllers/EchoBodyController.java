@@ -5,17 +5,14 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 
-import java.io.UnsupportedEncodingException;
 
+public class EchoBodyController extends Controller {
 
-public class EchoBodyController {
-
-    private Router router;
-    private Request request;
+//    private Router router;
+//    private Request request;
 
     public EchoBodyController(Router router, Request request) {
-        this.router = router;
-        this.request = request;
+        super(router, request);
     }
 
     public Response post() {

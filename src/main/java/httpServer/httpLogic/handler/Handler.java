@@ -54,7 +54,6 @@ public class Handler {
     public Response handle(Request request) throws Exception {
         String methodRequested = request.getMethod().toLowerCase();
         Class controllerClass = router.getControllerFor(request.getPath());
-        System.out.println(controllerClass.getClass().getName());
         Constructor controllerConstructor = controllerClass.getConstructor(Router.class, Request.class);
         Object controller = controllerConstructor.newInstance(router, request);
         Method methodToInvoke = controllerClass.getMethod(methodRequested);

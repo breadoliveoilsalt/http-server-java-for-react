@@ -5,14 +5,10 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 
-public class GetWithBodyController {
-
-    private Router router;
-    private Request request;
+public class GetWithBodyController extends Controller {
 
     public GetWithBodyController(Router router, Request request) {
-        this.router = router;
-        this.request = request;
+        super(router, request);
     }
 
     public Response get() {
