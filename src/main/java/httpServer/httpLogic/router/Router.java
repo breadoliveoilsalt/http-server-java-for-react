@@ -18,7 +18,7 @@ public class Router {
        return routeMap.get(path);
     }
 
-    public Set<String> getRecognizedMethods() {
+    public Set<String> getAllRecognizedMethods() {
         if (recognizedMethods == null) {
             recognizedMethods = new HashSet<>();
             populateRecognizedMethods();
@@ -40,12 +40,6 @@ public class Router {
 
     public Class getClassFor(String path) {
         return routeMap.get(path);
-    }
-
-    public Set<String> getMethodsFor(String path) {
-        Class controllerClass = routeMap.get(path);
-        Method[] classMethods = controllerClass.getMethods();
-        return parseMethodsThatReturnResponseObjects(classMethods);
     }
 
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
