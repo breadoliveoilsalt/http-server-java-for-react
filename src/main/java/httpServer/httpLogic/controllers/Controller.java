@@ -15,7 +15,6 @@ public abstract class Controller {
 
     protected Router router;
     protected Request request;
-    private Set<String> recognizedMethods;
 
     public Controller(Router router, Request request) {
         this.router = router;
@@ -23,26 +22,18 @@ public abstract class Controller {
     }
 
     public Response options() {
-        getRecognizedMethods();
-        String listOfRecognizedMethods = stringifyRecognizedMethods();
+        Set<String> recognizedMethods = this.getRecognizedMethods();
+        String stringOfRecognizedMethods = stringifyRecognizedMethods(recognizedMethods);
         return new ResponseBuilder()
-                .addHeader("Allow", listOfRecognizedMethods)
+                .addHeader("Allow", stringOfRecognizedMethods)
                 .finalizeMetaDataForOKResponse()
                 .build();
     }
 
     public Set<String> getRecognizedMethods() {
-        if (recognizedMethods == null) {
-            recognizedMethods = new HashSet<>();
-            populateRecognizedMethods();
-        }
-        return recognizedMethods;
-    }
-
-    private void populateRecognizedMethods() {
         Method[] classMethods = this.getClass().getMethods();
         Set<String> parsedMethods = parseMethodsThatReturnResponseObjects(classMethods);
-        recognizedMethods.addAll(parsedMethods);
+        return parsedMethods;
     }
 
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
@@ -55,7 +46,7 @@ public abstract class Controller {
         return parsedMethods;
     }
 
-    private String stringifyRecognizedMethods() {
+    private String stringifyRecognizedMethods(Set<String> recognizedMethods) {
         StringBuilder stringBuilder = new StringBuilder();
         recognizedMethods.forEach((method) -> {
             stringBuilder.append(method);
@@ -81,4 +72,5 @@ public abstract class Controller {
         }
         return responseToReturn;
     }
+
 }

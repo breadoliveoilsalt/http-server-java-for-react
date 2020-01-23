@@ -3,14 +3,10 @@ package httpServer.httpLogic.router;
 import httpServer.httpLogic.responses.Response;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Router {
 
-    // SEE IF I CAN CLEAN THIS UP W/R/T FUNCTIONALITY OF EACH CONTROLLER
     private final Map<String, Class> routeMap;
     private Set<String> recognizedMethods;
 

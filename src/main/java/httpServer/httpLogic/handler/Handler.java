@@ -15,8 +15,6 @@ public class Handler {
         this.router = router;
     }
 
-    // COMMENTS
-
 //    public Response handle(Request request) throws Exception {
 //        Callable<Response> action;
 //
@@ -35,9 +33,6 @@ public class Handler {
 //        return action.call();
 //    }
 
-//    {"/some_path": SomePathController,
-//    "/another_path": AnotherPathController}
-
     // WORKS:
 //    public Response handle(Request request) throws Exception {
 //        String methodRequested = request.getMethod().toLowerCase();
@@ -52,18 +47,8 @@ public class Handler {
         Constructor controllerConstructor = controllerClass.getConstructor(Router.class, Request.class);
         Object controller = controllerConstructor.newInstance(router, request);
         Method methodToInvoke = controllerClass.getMethod(methodRequested);
-        System.out.println(router.getRecognizedMethods());
         return (Response) methodToInvoke.invoke(controller);
-//        Method methodToInvoke = methodToInvoke.invoke(controller);
-//        Method methodToInvoke = controller.getDeclaredMethod(methodRequested);
-//        return (Response) methodToInvoke.invoke(null, request);
     }
-
-//        if (controllerClass.getMethods().contains())
-//        Constructor<Controller> controllerConstructor = controllerClass.getConstructor(Router.class, Request.class);
-//        Controller controller = controllerConstructor.newInstance(router, request);
-
-//    }
 
 //    private boolean validHEADRequest(Request request)
 //        return request.getMethod().equals(Methods.HEAD) && router.getMethodsFor(request.getPath()).contains(Methods.GET);
