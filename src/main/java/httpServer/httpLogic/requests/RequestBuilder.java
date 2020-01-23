@@ -10,7 +10,7 @@ public class RequestBuilder {
     private float httpVersion;
     private Map<String, String> headers;
     private String body;
-    private boolean isValid = true;
+    private boolean wasParsable = true;
 
     public RequestBuilder addMethod(String method) {
         this.method = method;
@@ -48,13 +48,13 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder flagAsInvalid() {
-        isValid = false;
+    public RequestBuilder flagAsUnparsable() {
+        wasParsable = false;
         return this;
     }
 
     public Request build() {
-        return new Request(method, path, httpVersion, headers, body, isValid);
+        return new Request(method, path, httpVersion, headers, body, wasParsable);
     }
 
 }

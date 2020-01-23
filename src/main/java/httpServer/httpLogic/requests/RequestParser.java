@@ -22,7 +22,7 @@ public class RequestParser {
             extractHeadersForRequest();
             extractBodyForRequest();
         } catch (Exception e) {
-            requestBuilder.flagAsInvalid();
+            requestBuilder.flagAsUnparsable();
         }
 
         return requestBuilder.build();

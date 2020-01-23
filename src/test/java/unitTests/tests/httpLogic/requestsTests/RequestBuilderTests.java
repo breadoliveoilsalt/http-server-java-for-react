@@ -23,7 +23,7 @@ public class RequestBuilderTests {
     public void buildDefaultsToBuildingAValidRequest() {
         Request request = requestBuilder.build();
 
-        assertFalse(request.unparsable());
+        assertFalse(request.wasUnparsable());
     }
 
     @Test
@@ -58,10 +58,10 @@ public class RequestBuilderTests {
     }
 
     @Test
-    public void flagAsInvalidMarksTheBuiltRequestAsInvalid() {
-        Request request = requestBuilder.flagAsInvalid().build();
+    public void flagAsUnparsableMarksTheBuiltRequestAsInvalid() {
+        Request request = requestBuilder.flagAsUnparsable().build();
 
-        assertTrue(request.unparsable());
+        assertTrue(request.wasUnparsable());
     }
 
     @Test

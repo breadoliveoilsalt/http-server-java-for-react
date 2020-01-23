@@ -96,7 +96,7 @@ public class RequestParserTests {
 
         Request request = requestParser.parse(rawClientRequest);
 
-        assertTrue(request.unparsable());
+        assertTrue(request.wasUnparsable());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class RequestParserTests {
 
         Request request = requestParser.parse(rawClientRequest);
 
-        assertTrue(request.unparsable());
+        assertTrue(request.wasUnparsable());
     }
 
 }

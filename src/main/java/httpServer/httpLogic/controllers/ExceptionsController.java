@@ -5,7 +5,7 @@ import httpServer.httpLogic.responses.ResponseBuilder;
 
 public class ExceptionsController {
 
-    public static Response build400Response() {
+    public Response render400Response() {
         return new ResponseBuilder()
                 .addStatusCode("400")
                 .addStatusMessage("Bad Request")
@@ -13,7 +13,7 @@ public class ExceptionsController {
                 .build();
     }
 
-    public static Response build501Response() {
+    public Response render501Response() {
         return new ResponseBuilder()
                 .addStatusCode("501")
                 .addStatusMessage("Not Implemented")
