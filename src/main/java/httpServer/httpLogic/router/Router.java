@@ -34,14 +34,6 @@ public class Router {
         });
     }
 
-    public Set<String> getPaths() {
-        return routeMap.keySet();
-    }
-
-    public Class getClassFor(String path) {
-        return routeMap.get(path);
-    }
-
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
         HashSet<String> parsedMethods = new HashSet<>();
         for (Method method : classMethods) {
@@ -50,6 +42,10 @@ public class Router {
             }
         }
         return parsedMethods;
+    }
+
+    public Set<String> getPaths() {
+        return routeMap.keySet();
     }
 
 }

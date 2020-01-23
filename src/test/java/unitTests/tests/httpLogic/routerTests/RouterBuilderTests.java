@@ -24,7 +24,7 @@ public class RouterBuilderTests {
 
         Router router = builder.build();
 
-        assertEquals(somePathController.class, router.getClassFor(path));
+        assertEquals(somePathController.class, router.getControllerFor(path));
     }
 
     @Test
@@ -38,8 +38,8 @@ public class RouterBuilderTests {
 
         Router router = builder.build();
 
-        assertEquals(path1Controller.class, router.getClassFor(path1));
-        assertEquals(path2Controller.class, router.getClassFor(path2));
+        assertEquals(path1Controller.class, router.getControllerFor(path1));
+        assertEquals(path2Controller.class, router.getControllerFor(path2));
     }
 
 }
