@@ -1,5 +1,6 @@
 package unitTests.tests.httpLogic.requestsTests;
 
+import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestParser;
 import org.junit.Before;
@@ -20,9 +21,20 @@ public class RequestParserTests {
         requestParser = new RequestParser();
     }
 
+    private String clientRequestStatusLineOnly() {
+        return "GET /simple_get HTTP/1.1" + Whitespace.CRLF + Whitespace.CRLF;
+    }
+
+    private String clientRequestWithHeadersAndBody() {
+        return "GET /simple_get HTTP/1.1" + Whitespace.CRLF +
+                "Content-Type: text/html" + Whitespace.CRLF +
+                "Content-Length: 1354" + Whitespace.CRLF + Whitespace.CRLF +
+                "Request Body";
+    }
+
     @Test
     public void parseReturnsARequestObject() {
-        rawClientRequest = "GET /simple_get HTTP/1.1";
+        rawClientRequest =  clientRequestStatusLineOnly();
 
         Object request = requestParser.parse(rawClientRequest);
 
@@ -31,7 +43,7 @@ public class RequestParserTests {
 
     @Test
     public void theParsedRequestObjectKnowsTheMethodRequested() {
-        rawClientRequest = "GET /simple_get HTTP/1.1";
+        rawClientRequest =  clientRequestStatusLineOnly();
 
         Request request = requestParser.parse(rawClientRequest);
 
@@ -40,7 +52,7 @@ public class RequestParserTests {
 
     @Test
     public void theParsedRequestObjectKnowsThePathRequested() {
-        rawClientRequest = "GET /simple_get HTTP/1.1";
+        rawClientRequest =  clientRequestStatusLineOnly();
 
         Request request = requestParser.parse(rawClientRequest);
 
@@ -49,7 +61,7 @@ public class RequestParserTests {
 
     @Test
     public void theParsedRequestObjectKnowsTheHTTPVersionSpecifiedInTheRequest() {
-        rawClientRequest = "GET /simple_get HTTP/1.1";
+        rawClientRequest =  clientRequestStatusLineOnly();
 
         Request request = requestParser.parse(rawClientRequest);
 
@@ -58,9 +70,7 @@ public class RequestParserTests {
 
     @Test
     public void theParsedRequestObjectKnowsTheHeadersOfTheRequest() {
-        rawClientRequest =  "GET /simple_get HTTP/1.1\n" +
-                            "Content-Type: text/html\n" +
-                            "Content-Length: 1354";
+        rawClientRequest = clientRequestWithHeadersAndBody();
 
         Map<String, String> expectedHeaders = new HashMap<>();
         expectedHeaders.put("Content-Type", "text/html");
@@ -73,11 +83,7 @@ public class RequestParserTests {
 
     @Test
     public void theParsedRequestObjectKnowsTheBodyOfTheRequest() {
-        rawClientRequest =  "GET /simple_get HTTP/1.1\n" +
-                            "Content-Type: text/html\n" +
-                            "Content-Length: 1354" +
-                            "\r\n" +
-                            "Request Body";
+        rawClientRequest = clientRequestWithHeadersAndBody();
 
         Request request = requestParser.parse(rawClientRequest);
 
@@ -95,12 +101,11 @@ public class RequestParserTests {
 
     @Test
     public void parseReturnsAResponseMarkedAsInvalidIfTheRequestIsMalformed() {
-        rawClientRequest = "HTTP/1.1 GET /simple_get";
+        rawClientRequest = "HTTP/1.1 /simple_get GET";
 
         Request request = requestParser.parse(rawClientRequest);
 
         assertTrue(request.isInvalid());
     }
-
 
 }
