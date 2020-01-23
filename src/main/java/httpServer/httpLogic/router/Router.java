@@ -38,6 +38,10 @@ public class Router {
         return routeMap.keySet();
     }
 
+    public Class getClassFor(String path) {
+        return routeMap.get(path);
+    }
+
     public Set<String> getMethodsFor(String path) {
         Class controllerClass = routeMap.get(path);
         Method[] classMethods = controllerClass.getMethods();
