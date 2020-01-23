@@ -1,4 +1,4 @@
-package unitTests.tests.httpLogic.handlerTests;
+package unitTests.tests.httpLogic.controllerTests;
 
 import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.requests.Request;

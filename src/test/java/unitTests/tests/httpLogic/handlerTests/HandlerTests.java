@@ -9,6 +9,7 @@ import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
+import unitTests.tests.httpLogic.controllerTests.TestController;
 
 import static org.junit.Assert.*;
 
@@ -23,6 +24,7 @@ public class HandlerTests {
         router = new RouterBuilder()
                 .addPathAndController(somePath, TestController.class)
                 .build();
+        TestController.getResponseToReturn = null;
     }
 
     private Request getRequestToSomePath() {
