@@ -1,5 +1,6 @@
 package httpServer.httpLogic.handler;
 
+import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.router.Router;

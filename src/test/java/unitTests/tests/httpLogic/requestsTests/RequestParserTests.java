@@ -91,21 +91,21 @@ public class RequestParserTests {
     }
 
     @Test
-    public void parseReturnsAResponseMarkedAsInvalidIfItCannotBeParsed() {
+    public void parseReturnsAResponseMarkedAsUnparsableIfItCannotBeParsed() {
         rawClientRequest = "JibberJabberJibberJabber";
 
         Request request = requestParser.parse(rawClientRequest);
 
-        assertTrue(request.isInvalid());
+        assertTrue(request.unparsable());
     }
 
     @Test
-    public void parseReturnsAResponseMarkedAsInvalidIfTheRequestIsMalformed() {
+    public void parseReturnsAResponseMarkedAsUnparsableIfTheRequestIsMalformed() {
         rawClientRequest = "HTTP/1.1 /simple_get GET";
 
         Request request = requestParser.parse(rawClientRequest);
 
-        assertTrue(request.isInvalid());
+        assertTrue(request.unparsable());
     }
 
 }
