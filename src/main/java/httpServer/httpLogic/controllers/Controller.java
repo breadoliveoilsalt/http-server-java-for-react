@@ -13,8 +13,8 @@ import java.util.Set;
 
 public abstract class Controller {
 
-    protected Router router;
-    protected Request request;
+    protected final Router router;
+    protected final Request request;
 
     public Controller(Router router, Request request) {
         this.router = router;
@@ -32,8 +32,7 @@ public abstract class Controller {
 
     public Set<String> getRecognizedMethods() {
         Method[] classMethods = this.getClass().getMethods();
-        Set<String> parsedMethods = parseMethodsThatReturnResponseObjects(classMethods);
-        return parsedMethods;
+        return parseMethodsThatReturnResponseObjects(classMethods);
     }
 
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {

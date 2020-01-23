@@ -1,6 +1,5 @@
 package unitTests.tests.httpLogic.controllerTests;
 
-import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;

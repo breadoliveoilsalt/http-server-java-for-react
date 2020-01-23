@@ -1,5 +1,6 @@
 package httpServer.httpLogic.handler;
 
+import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.controllers.ExceptionsController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
@@ -28,7 +29,7 @@ public class Handler {
 
     private Response mapRequestToControllerAndReturnResponse(Request request) throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
         String methodRequested = request.getMethod().toLowerCase();
-        Class controllerClass = router.getControllerFor(request.getPath());
+        Class<?> controllerClass = router.getControllerFor(request.getPath());
         Constructor controllerConstructor = controllerClass.getConstructor(Router.class, Request.class);
         Object controller = controllerConstructor.newInstance(router, request);
         Method methodToInvoke = controllerClass.getMethod(methodRequested);

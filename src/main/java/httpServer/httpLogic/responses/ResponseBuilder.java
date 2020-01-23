@@ -1,6 +1,7 @@
 package httpServer.httpLogic.responses;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,13 +66,9 @@ public class ResponseBuilder {
     }
 
     private void calculateContentLength() {
-        try {
-            byte[] responseBodyBytes = body.getBytes("UTF-8");
-            String contentLength = String.valueOf(responseBodyBytes.length);
-            addHeader("Content-Length", contentLength);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        byte[] responseBodyBytes = body.getBytes(StandardCharsets.UTF_8);
+        String contentLength = String.valueOf(responseBodyBytes.length);
+        addHeader("Content-Length", contentLength);
     }
 
     public Response build() {
