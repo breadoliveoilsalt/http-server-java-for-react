@@ -77,4 +77,5 @@ public class ResponseBuilder {
     public Response build() {
         return new Response(httpVersion, statusCode, statusMessage, headers, body);
     }
+
 }

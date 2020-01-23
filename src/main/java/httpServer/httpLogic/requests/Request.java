@@ -49,4 +49,5 @@ public class Request {
     public boolean wasUnparsable() {
         return !wasParsable;
     }
+
 }

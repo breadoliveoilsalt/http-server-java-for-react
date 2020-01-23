@@ -21,7 +21,7 @@ public class RouterTests {
             return new ResponseBuilder().build();
         }
 
-        public void randomVoidFunction() {
+        public void publicFunctionThatRouterWillNotConsideredAsARecognizedMethod() {
         }
 
     }
