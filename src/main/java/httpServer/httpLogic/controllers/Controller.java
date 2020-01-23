@@ -26,7 +26,7 @@ public abstract class Controller {
         getRecognizedMethods();
         String listOfRecognizedMethods = stringifyRecognizedMethods();
         return new ResponseBuilder()
-                .addHeader("Accept", listOfRecognizedMethods)
+                .addHeader("Allow", listOfRecognizedMethods)
                 .finalizeMetaDataForOKResponse()
                 .build();
     }
