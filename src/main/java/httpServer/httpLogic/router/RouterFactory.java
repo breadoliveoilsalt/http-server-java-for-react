@@ -10,6 +10,7 @@ public class RouterFactory {
             .addPathAndController("/echo_body", EchoBodyController.class)
             .addPathAndController("/method_options", MethodOptionsController.class)
             .addPathAndController("/method_options2", MethodOptions2Controller.class)
+            .addPathAndController("/redirect", RedirectController.class)
             .build();
     }
 
