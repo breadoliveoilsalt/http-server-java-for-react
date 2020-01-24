@@ -30,4 +30,13 @@ public class ExceptionsController {
                 .build();
     }
 
+    public Response render301ResponseRedirectingTo(String newPath) {
+        return new ResponseBuilder()
+                .addStatusCode("301")
+                .addHeader("Location", "http://127.0.0.1:5000" + newPath)
+                .addStatusMessage("Moved Permanently")
+                .addContentLength()
+                .build();
+    }
+
 }
