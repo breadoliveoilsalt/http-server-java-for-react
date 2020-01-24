@@ -11,11 +11,4 @@ public class GetWithBodyController extends Controller {
         super(router, request);
     }
 
-    public Response get() {
-        return new ResponseBuilder()
-            .addBody("Hello World!")
-            .finalizeMetaDataForOKResponse()
-            .build();
-    }
-
 }

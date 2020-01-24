@@ -67,6 +67,5 @@ public class HandlerTests {
 
         assertEquals("405", result.getStatusCode());
         assertEquals("Method Not Allowed", result.getStatusMessage());
-        assertEquals("405 Error: Method is known by the server but is not supported by the target resource", result.getBody());
     }
 }

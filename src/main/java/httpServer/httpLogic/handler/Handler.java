@@ -37,7 +37,7 @@ public class Handler {
         mapRequestToController();
 
         if (controllerDoesNotSupportTheMethod()) {
-            return new ExceptionsController().render405Response();
+            return new ExceptionsController().render405Response(controller);
         }
 
         return callControllerMethod();
