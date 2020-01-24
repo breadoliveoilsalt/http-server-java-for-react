@@ -1,8 +1,8 @@
 package httpServer.serverSocketLogic;
 
-import httpServer.factory.AppFactory;
-import httpServer.wrappers.ServerSokket;
-import httpServer.wrappers.Sokket;
+import httpServer.serverSocketLogic.factory.AppFactory;
+import httpServer.serverSocketLogic.wrappers.ServerSokket;
+import httpServer.serverSocketLogic.wrappers.Sokket;
 
 import java.io.IOException;
 
