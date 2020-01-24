@@ -34,6 +34,10 @@ public class Handler {
             return new ExceptionsController().render501Response();
         }
 
+        if (requestedResourceDoesNotExist()) {
+            return new ExceptionsController().render404Response();
+        }
+
         mapRequestToController();
 
         if (controllerDoesNotSupportTheMethod()) {
@@ -72,6 +76,10 @@ public class Handler {
 
     private boolean controllerDoesNotSupportTheMethod() {
         return requestHasRecognizedMethod() && !controller.getRecognizedMethods().contains(controllerMethodRequested);
+    }
+
+    private boolean requestedResourceDoesNotExist() {
+        return !router.getPaths().contains(pathRequested);
     }
 
 }
