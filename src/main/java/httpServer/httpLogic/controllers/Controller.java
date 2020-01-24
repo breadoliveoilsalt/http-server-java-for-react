@@ -69,7 +69,8 @@ public abstract class Controller {
                     .build();
         } catch (NoSuchMethodException|InvocationTargetException|IllegalAccessException e) {
             responseToReturn = new ResponseBuilder()
-                    .addStatusCode("400")
+                    .addStatusCode("200")
+                    .addContentLength()
                     .build();
         }
         return responseToReturn;
