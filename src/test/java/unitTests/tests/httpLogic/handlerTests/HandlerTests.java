@@ -67,4 +67,14 @@ public class HandlerTests {
         assertEquals("405", result.getStatusCode());
         assertEquals("Method Not Allowed", result.getStatusMessage());
     }
+
+    @Test
+    public void handleReturnsA404NotFoundResponseIfTheAMethodIsRecognizedByTheServerButTheResourceDoesNotExist() throws Exception {
+        Request clientRequest = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
+
+        Response result = new Handler(router).handle(clientRequest);
+
+        assertEquals("404", result.getStatusCode());
+        assertEquals("Not Found", result.getStatusMessage());
+    }
 }
