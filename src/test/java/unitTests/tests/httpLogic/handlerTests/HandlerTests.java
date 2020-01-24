@@ -9,27 +9,26 @@ import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
-import unitTests.tests.httpLogic.controllerTests.TestController;
+import unitTests.tests.httpLogic.controllerTests.PathOneTestController;
+import unitTests.tests.httpLogic.controllerTests.TestRouterFactory;
 
 import static org.junit.Assert.*;
 
 public class HandlerTests {
 
     Router router;
-    String somePath;
+    String pathOne;
 
     @Before
     public void testInit() {
-        somePath = "/some_path";
-        router = new RouterBuilder()
-                .addPathAndController(somePath, TestController.class)
-                .build();
-        TestController.getResponseToReturn = null;
+        pathOne = "/path_one";
+        router = TestRouterFactory.buildWithPathOneAndPathTwoControllers();
+        PathOneTestController.getResponseToReturn = null;
     }
 
     private Request getRequestToSomePath() {
         return new RequestBuilder()
-                .addPath(somePath)
+                .addPath(pathOne)
                 .addMethod(HTTPMethods.GET)
                 .build();
     }
@@ -38,7 +37,7 @@ public class HandlerTests {
     public void handleReliesOnARouterToMatchThePathAndHTTPMethodOfAClientRequestToAControllerAndMethodToReturnAResponse() throws Exception {
         Request clientRequest = getRequestToSomePath();
         Response expectedResponse = new ResponseBuilder().build();
-        TestController.getResponseToReturn = expectedResponse;
+        PathOneTestController.getResponseToReturn = expectedResponse;
 
         Response result = new Handler(router).handle(clientRequest);
 
@@ -47,7 +46,7 @@ public class HandlerTests {
 
     @Test
     public void handleReturnsA501ResponseWhenTheRouterDoesNotRecognizeTheMethod() throws Exception {
-        Request clientRequest = new RequestBuilder().addPath(somePath).addMethod("BANANAS").build();
+        Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod("BANANAS").build();
 
         Response result = new Handler(router).handle(clientRequest);
 
@@ -67,4 +66,14 @@ public class HandlerTests {
         assertEquals("400 Error: Bad Request Submitted", result.getBody());
     }
 
+    @Test
+    public void handleReturnsA405MethodNotAllowedResponseIfAMethodIsRecognizedByTheServerButTheRequestedResourceDoesNotImplementTheRequestedMethod() throws Exception {
+        Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod(HTTPMethods.PUT).build();
+
+        Response result = new Handler(router).handle(clientRequest);
+
+        assertEquals("405", result.getStatusCode());
+        assertEquals("Method Not Allowed", result.getStatusMessage());
+        assertEquals("405 Error: Method is known by the server but is not supported by the target resource", result.getBody());
+    }
 }
