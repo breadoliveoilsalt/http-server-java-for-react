@@ -1,5 +1,5 @@
-import httpServer.factory.HTTPServerAppFactory;
-import httpServer.factory.AppFactory;
+import httpServer.serverSocketLogic.factory.HTTPServerAppFactory;
+import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerInit;
 
 import java.io.IOException;

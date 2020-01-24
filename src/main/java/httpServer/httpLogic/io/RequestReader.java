@@ -1,6 +1,6 @@
 package httpServer.httpLogic.io;
 
-import httpServer.wrappers.Sokket;
+import httpServer.serverSocketLogic.wrappers.Sokket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
