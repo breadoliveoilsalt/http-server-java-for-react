@@ -12,22 +12,24 @@ import java.lang.reflect.Method;
 public class Handler {
 
     private final Router router;
+    private Request request;
 
     public Handler(Router router) {
         this.router = router;
     }
 
     public Response handle(Request request) throws Exception {
+        this.request = request;
         if (request.wasUnparsable()) {
             return new ExceptionsController().render400Response();
-        } else if (hasUnrecognizedMethod(request)) {
+        } else if (hasUnrecognizedMethod()) {
             return new ExceptionsController().render501Response();
         } else {
-            return mapRequestToControllerAndReturnResponse(request);
+            return mapRequestToControllerAndReturnResponse();
         }
     }
 
-    private Response mapRequestToControllerAndReturnResponse(Request request) throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+    private Response mapRequestToControllerAndReturnResponse() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
         String methodRequested = request.getMethod().toLowerCase();
         Class<?> controllerClass = router.getControllerFor(request.getPath());
         Constructor controllerConstructor = controllerClass.getConstructor(Router.class, Request.class);
@@ -36,7 +38,7 @@ public class Handler {
         return (Response) methodToInvoke.invoke(controller);
     }
 
-    private boolean hasUnrecognizedMethod(Request request) {
+    private boolean hasUnrecognizedMethod() {
         return !router.getAllRecognizedMethods().contains(request.getMethod());
     }
 
