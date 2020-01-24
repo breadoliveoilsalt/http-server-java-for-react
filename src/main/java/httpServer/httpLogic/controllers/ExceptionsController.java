@@ -21,4 +21,11 @@ public class ExceptionsController {
                 .build();
     }
 
+    public Response render405Response() {
+        return new ResponseBuilder()
+                .addStatusCode("405")
+                .addStatusMessage("Method Not Allowed")
+                .addBody("405 Error: Method is known by the server but is not supported by the target resource")
+                .build();
+    }
 }

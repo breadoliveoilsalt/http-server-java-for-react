@@ -38,7 +38,7 @@ public class Router {
         HashSet<String> parsedMethods = new HashSet<>();
         for (Method method : classMethods) {
             if (method.getReturnType() == Response.class) {
-                parsedMethods.add(method.getName().toUpperCase());
+                parsedMethods.add(method.getName());
             }
         }
         return parsedMethods;

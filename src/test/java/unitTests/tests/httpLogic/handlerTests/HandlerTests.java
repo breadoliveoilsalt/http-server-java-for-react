@@ -26,16 +26,9 @@ public class HandlerTests {
         PathOneTestController.getResponseToReturn = null;
     }
 
-    private Request getRequestToSomePath() {
-        return new RequestBuilder()
-                .addPath(pathOne)
-                .addMethod(HTTPMethods.GET)
-                .build();
-    }
-
     @Test
     public void handleReliesOnARouterToMatchThePathAndHTTPMethodOfAClientRequestToAControllerAndMethodToReturnAResponse() throws Exception {
-        Request clientRequest = getRequestToSomePath();
+        Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod(HTTPMethods.GET).build();
         Response expectedResponse = new ResponseBuilder().build();
         PathOneTestController.getResponseToReturn = expectedResponse;
 
