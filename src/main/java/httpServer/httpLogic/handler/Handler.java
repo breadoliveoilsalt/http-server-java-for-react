@@ -14,7 +14,6 @@ public class Handler {
     private final Router router;
     private Request request;
     private String pathRequested;
-    private String httpMethodRequested;
     private String controllerMethodRequested;
     private Class<Controller> controllerClass;
     private Controller controller;
@@ -24,28 +23,31 @@ public class Handler {
     }
 
     public Response handle(Request request) throws Exception {
-        populateRequestFields(request);
 
         if (request.wasUnparsable()) {
             return new ExceptionsController().render400Response();
-        } else if (requestHasUnrecognizedMethod()) {
-            return new ExceptionsController().render501Response();
-        } else {
-            mapRequestToController();
-            if (controllerDoesNotSupportTheMethod()) {
-                return new ExceptionsController().render405Response();
-            } else {
-                return callControllerMethod();
-            }
         }
+
+        populateHandlerFields(request);
+
+        if (requestHasUnrecognizedMethod()) {
+            return new ExceptionsController().render501Response();
+        }
+
+        mapRequestToController();
+
+        if (controllerDoesNotSupportTheMethod()) {
+            return new ExceptionsController().render405Response();
+        }
+
+        return callControllerMethod();
     }
 
-    private void populateRequestFields(Request request) {
+    private void populateHandlerFields(Request request) {
         if (!request.wasUnparsable()) {
             this.request = request;
             this.pathRequested = request.getPath();
-            this.httpMethodRequested = request.getMethod();
-            this.controllerMethodRequested = this.httpMethodRequested.toLowerCase();
+            this.controllerMethodRequested = request.getMethod().toLowerCase();
         }
     }
 
