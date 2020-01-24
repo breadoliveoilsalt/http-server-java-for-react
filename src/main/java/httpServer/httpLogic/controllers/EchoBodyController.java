@@ -5,17 +5,18 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 
-public class GetWithBodyController extends Controller {
+public class EchoBodyController extends Controller {
 
-    public GetWithBodyController(Router router, Request request) {
+    public EchoBodyController(Router router, Request request) {
         super(router, request);
     }
 
-    public Response get() {
+    public Response post() {
+        String responseBody = request.getBody();
         return new ResponseBuilder()
-            .addBody("Hello World!")
-            .finalizeMetaDataForOKResponse()
-            .build();
+                .addBody(responseBody)
+                .finalizeMetaDataForOKResponse()
+                .build();
     }
 
 }

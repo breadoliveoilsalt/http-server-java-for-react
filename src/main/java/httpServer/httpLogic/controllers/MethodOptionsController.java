@@ -5,17 +5,16 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 
-public class GetWithBodyController extends Controller {
+public class MethodOptionsController extends Controller {
 
-    public GetWithBodyController(Router router, Request request) {
+    public MethodOptionsController(Router router, Request request) {
         super(router, request);
     }
 
     public Response get() {
         return new ResponseBuilder()
-            .addBody("Hello World!")
-            .finalizeMetaDataForOKResponse()
-            .build();
+                .finalizeMetaDataForOKResponse()
+                .build();
     }
 
 }

@@ -1,5 +1,7 @@
 package httpServer.httpLogic.requests;
 
+import httpServer.httpLogic.constants.Whitespace;
+
 public class RequestParser {
 
     private final RequestBuilder requestBuilder;
@@ -20,15 +22,15 @@ public class RequestParser {
             extractHeadersForRequest();
             extractBodyForRequest();
         } catch (Exception e) {
-            requestBuilder.flagAsInvalid();
+            requestBuilder.flagAsUnparsable();
         }
 
         return requestBuilder.build();
     }
 
     private void parseRawRequestIntoSections() {
-        parsedMetaDataAndBody = rawClientRequest.split("\r\n");
-        parsedRequestLineAndHeaders = parsedMetaDataAndBody[0].split("\n");
+        parsedMetaDataAndBody = rawClientRequest.split(Whitespace.CRLF + Whitespace.CRLF);
+        parsedRequestLineAndHeaders = parsedMetaDataAndBody[0].split(Whitespace.CRLF);
         parsedRequestLine = parsedRequestLineAndHeaders[0].split(" ");
     }
 

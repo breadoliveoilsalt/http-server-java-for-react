@@ -1,31 +1,23 @@
 package httpServer.httpLogic.router;
 
-import httpServer.httpLogic.responses.Response;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class RouterBuilder {
 
-    private final ArrayList<PathAndMethodRoute> pathAndMethodRouteList;
+    private final Map<String, Class> routeMap;
 
     public RouterBuilder() {
-        this.pathAndMethodRouteList = new ArrayList<>();
+        this.routeMap = new HashMap<>();
     }
 
-    public PathAndMethodRoute createPath(String name) {
-        PathAndMethodRoute pathAndMethodRoute = new PathAndMethodRoute(name);
-        pathAndMethodRouteList.add(pathAndMethodRoute);
-        return pathAndMethodRoute;
+    public RouterBuilder addPathAndController(String path, Class controllerClass) {
+        routeMap.put(path, controllerClass);
+        return this;
     }
 
     public Router build() {
-        Map<String, Map<String, Callable<Response>>> tempMap = new HashMap<>();
-        pathAndMethodRouteList.forEach(pathAndMethodRoute -> {
-            tempMap.put(pathAndMethodRoute.getPathName(), pathAndMethodRoute.getMethodActionMap());
-        });
-        return new Router(tempMap);
+        return new Router(routeMap);
     }
+
 }

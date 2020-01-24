@@ -3,6 +3,7 @@ package httpServer.httpLogic.responses;
 import java.util.Map;
 
 public class Response {
+
     protected final String httpVersion;
     protected final String statusCode;
     protected final String statusMessage;
@@ -41,14 +42,12 @@ public class Response {
         return headers.get(key).equals(value);
     }
 
-    public String getHeaderValue(String key) {
+    public String getHeaderValueFor(String key) {
         return headers.get(key);
     }
 
     public String getBody() {
         return body;
     }
-
-
 
 }

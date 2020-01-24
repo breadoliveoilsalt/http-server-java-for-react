@@ -2,14 +2,10 @@ package unitTests.tests.httpLogic.routerTests;
 
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
-import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.concurrent.Callable;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class RouterBuilderTests {
 
@@ -21,35 +17,29 @@ public class RouterBuilderTests {
     }
 
     @Test
-    public void createPathAddsAValidPathToTheRouterBeingBuilt() {
+    public void addPathAndControllerMapsAPathToAControllerClass()  {
         String path = "/some_path";
-        builder.createPath(path);
+        class somePathController { }
+        builder.addPathAndController(path, somePathController.class);
 
         Router router = builder.build();
 
-        assertTrue(router.getPaths().contains(path));
+        assertEquals(somePathController.class, router.getControllerFor(path));
     }
 
     @Test
-    public void createPathAllowsChainingOfMethodsAndActionsToPath() {
-        String path = "/some_path";
-        Callable<Response> actionGET = () -> buildResponseForTests();
-        Callable<Response> actionPOST = () -> buildResponseForTests();
-
-        builder.createPath(path)
-            .addMethodAndAction("GET", actionGET)
-            .addMethodAndAction("POST", actionPOST);
+    public void addPathAndControllerCanBeChainedBeforeCallingBuild() {
+        String path1 = "/path1";
+        class path1Controller { }
+        String path2 = "/path2";
+        class path2Controller { }
+        builder.addPathAndController(path1, path1Controller.class);
+        builder.addPathAndController(path2, path2Controller.class);
 
         Router router = builder.build();
 
-        assertTrue(router.getMethodsFor(path).contains("GET"));
-        assertEquals(router.getActionFor(path, "GET"), actionGET);
-
-        assertTrue(router.getMethodsFor(path).contains("POST"));
-        assertEquals(router.getActionFor(path, "POST"), actionPOST);
+        assertEquals(path1Controller.class, router.getControllerFor(path1));
+        assertEquals(path2Controller.class, router.getControllerFor(path2));
     }
 
-    private Response buildResponseForTests() {
-        return new Response("HTTP/1.1", "200", "OK", null, null);
-    }
 }

@@ -37,4 +37,5 @@ public class ResponseParser {
            stringifiedResponse += response.body;
        }
     }
+
 }

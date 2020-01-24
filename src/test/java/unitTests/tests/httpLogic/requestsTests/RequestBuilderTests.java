@@ -1,5 +1,6 @@
 package unitTests.tests.httpLogic.requestsTests;
 
+import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import org.junit.Before;
@@ -23,7 +24,7 @@ public class RequestBuilderTests {
     public void buildDefaultsToBuildingAValidRequest() {
         Request request = requestBuilder.build();
 
-        assertFalse(request.isInvalid());
+        assertFalse(request.wasUnparsable());
     }
 
     @Test
@@ -58,23 +59,23 @@ public class RequestBuilderTests {
     }
 
     @Test
-    public void flagAsInvalidMarksTheBuiltRequestAsInvalid() {
-        Request request = requestBuilder.flagAsInvalid().build();
+    public void flagAsUnparsableMarksTheBuiltRequestAsInvalid() {
+        Request request = requestBuilder.flagAsUnparsable().build();
 
-        assertTrue(request.isInvalid());
+        assertTrue(request.wasUnparsable());
     }
 
     @Test
     public void methodsCanBeChainedBeforeBuildingARequest() {
         Request request = requestBuilder
-                .addMethod("GET")
+                .addMethod(HTTPMethods.GET)
                 .addPath("/simple_get")
                 .addHeader("Date", "Today")
                 .addHeader("Content-Length", "0")
                 .addBody("Hello World")
                 .build();
 
-        assertEquals("GET", request.getMethod());
+        assertEquals(HTTPMethods.GET, request.getMethod());
         assertEquals("/simple_get", request.getPath());
 
         Map<String, String> expectedHeader = new HashMap<>();

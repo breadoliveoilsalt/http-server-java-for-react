@@ -9,7 +9,7 @@ public class Request {
     private final float httpVersion;
     private final Map<String, String> headers;
     private final String body;
-    private final boolean isValid;
+    private final boolean wasParsable;
 
     public Request(
             String method,
@@ -17,13 +17,13 @@ public class Request {
             float httpVersion,
             Map<String, String> headers,
             String body,
-            boolean isValid) {
+            boolean wasParsable) {
         this.method = method;
         this.path = path;
         this.httpVersion = httpVersion;
         this.headers = headers;
         this.body = body;
-        this.isValid = isValid;
+        this.wasParsable = wasParsable;
     }
 
     public String getMethod() {
@@ -46,7 +46,8 @@ public class Request {
         return body;
     }
 
-    public boolean isInvalid() {
-        return !isValid;
+    public boolean wasUnparsable() {
+        return !wasParsable;
     }
+
 }

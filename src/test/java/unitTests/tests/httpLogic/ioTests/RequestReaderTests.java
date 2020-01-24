@@ -1,5 +1,6 @@
 package unitTests.tests.httpLogic.ioTests;
 
+import httpServer.httpLogic.constants.Whitespace;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,6 @@ public class RequestReaderTests {
 
     private MockSokket sokket;
     private RequestReader requestReader;
-    private final String crlf = "\r\n";
 
     @Before
     public void testInit() {
@@ -36,8 +36,8 @@ public class RequestReaderTests {
     }
 
     @Test
-    public void readInputStreamRemovesTheLastCRLF() throws IOException {
-        String requestSentFromClient = "GET /simple_get HTTP/1.1" + crlf;
+    public void readInputStreamRemovesAnyTrailingCRLFs() throws IOException {
+        String requestSentFromClient = "GET /simple_get HTTP/1.1" + Whitespace.CRLF + Whitespace.CRLF;
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 
@@ -48,7 +48,7 @@ public class RequestReaderTests {
 
     @Test
     public void readInputStreamDoesNotRemoveIntermediaryCRLF() throws IOException {
-        String requestSentFromClient = "GET /simple_get HTTP/1.1" + crlf + "Body of request";
+        String requestSentFromClient = "GET /simple_get HTTP/1.1" + Whitespace.CRLF + Whitespace.CRLF + "Body of request";
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
         sokket.setInputStream(inputStreamFromClient);
 

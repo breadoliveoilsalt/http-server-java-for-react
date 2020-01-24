@@ -1,5 +1,7 @@
 package httpServer.httpLogic.responses;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +50,29 @@ public class ResponseBuilder {
         return this;
     }
 
+    public ResponseBuilder finalizeMetaDataForOKResponse() {
+        addOKStatusLine();
+        addContentLength();
+        return this;
+    }
+
+    public ResponseBuilder addContentLength() {
+        if (body != null) {
+            calculateContentLength();
+        } else {
+            addHeader("Content-Length", "0");
+        }
+        return this;
+    }
+
+    private void calculateContentLength() {
+        byte[] responseBodyBytes = body.getBytes(StandardCharsets.UTF_8);
+        String contentLength = String.valueOf(responseBodyBytes.length);
+        addHeader("Content-Length", contentLength);
+    }
+
     public Response build() {
         return new Response(httpVersion, statusCode, statusMessage, headers, body);
     }
+
 }

@@ -1,92 +1,55 @@
 package unitTests.tests.httpLogic.handlerTests;
-
-import httpServer.httpLogic.constants.Methods;
+import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.handler.Handler;
+import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterBuilder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import unitTests.tests.httpLogic.controllerTests.TestController;
 
 import static org.junit.Assert.*;
 
 public class HandlerTests {
 
-    private Router router;
-    private Handler handler;
-    private Request clientRequest;
-    private Response genericResponse;
-    private final String pathWithOnlyGet = "/path_with_only_get";
-    private final String pathWithMultipleMethods = "/path_with_multiple_methods";
+    Router router;
+    String somePath;
 
     @Before
     public void testInit() {
-        buildGenericResponse();
-        buildRouter();
-        initializeHandler();
+        somePath = "/some_path";
+        router = new RouterBuilder()
+                .addPathAndController(somePath, TestController.class)
+                .build();
+        TestController.getResponseToReturn = null;
     }
 
-    private void buildGenericResponse() {
-        genericResponse = new ResponseBuilder()
-            .addStatusCode("200")
-            .addStatusMessage("OK")
-            .addHeader("Date", "Some day")
-            .addHeader("Content-Length", "Some length")
-            .addBody("Some message")
-            .build();
-    }
-
-    private void buildRouter() {
-        RouterBuilder builder = new RouterBuilder();
-        builder.createPath(pathWithOnlyGet)
-                .addMethodAndAction(Methods.GET, () -> returnGenericResponse());
-
-        builder.createPath(pathWithMultipleMethods)
-                .addMethodAndAction(Methods.GET, () -> returnGenericResponse())
-                .addMethodAndAction(Methods.POST, () -> returnGenericResponse())
-                .addMethodAndAction(Methods.PATCH, () -> returnGenericResponse());
-
-        router = builder.build();
-    }
-
-    private Response returnGenericResponse() {
-        return genericResponse;
-    }
-
-    private void initializeHandler() {
-        handler = new Handler(router);
+    private Request getRequestToSomePath() {
+        return new RequestBuilder()
+                .addPath(somePath)
+                .addMethod(HTTPMethods.GET)
+                .build();
     }
 
     @Test
-    public void handleCausesAnActionSpecifiedByTheRouterToCreateAResponse() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(Methods.GET).build();
+    public void handleReliesOnARouterToMatchThePathAndHTTPMethodOfAClientRequestToAControllerAndMethodToReturnAResponse() throws Exception {
+        Request clientRequest = getRequestToSomePath();
+        Response expectedResponse = new ResponseBuilder().build();
+        TestController.getResponseToReturn = expectedResponse;
 
-        Response result = handler.handle(clientRequest);
+        Response result = new Handler(router).handle(clientRequest);
 
-        assertEquals(genericResponse, result);
-    }
-
-    @Test
-    public void handleReturnsAResponseWithOnlyAPathsMetaDataInResponseToAHEADRequest() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod(Methods.HEAD).build();
-
-        Response result = handler.handle(clientRequest);
-
-        assertEquals("200", result.getStatusCode());
-        assertEquals("OK", result.getStatusMessage());
-        assertTrue(result.hasHeader("Date", "Some day"));
-        assertTrue(result.hasHeader("Content-Length", "Some length"));
-        assertNull(result.getBody());
+        assertEquals(expectedResponse, result);
     }
 
     @Test
     public void handleReturnsA501ResponseWhenTheRouterDoesNotRecognizeTheMethod() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithOnlyGet).addMethod("BANANAS").build();
+        Request clientRequest = new RequestBuilder().addPath(somePath).addMethod("BANANAS").build();
 
-        Response result = handler.handle(clientRequest);
+        Response result = new Handler(router).handle(clientRequest);
 
         assertEquals("501", result.getStatusCode());
         assertEquals("Not Implemented", result.getStatusMessage());
@@ -94,29 +57,14 @@ public class HandlerTests {
     }
 
     @Test
-    public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsInvalid() throws Exception {
-        clientRequest = new RequestBuilder().flagAsInvalid().build();
+    public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsUnparsable() throws Exception {
+        Request clientRequest = new RequestBuilder().flagAsUnparsable().build();
 
-        Response result = handler.handle(clientRequest);
+        Response result = new Handler(router).handle(clientRequest);
 
         assertEquals("400", result.getStatusCode());
         assertEquals("Bad Request", result.getStatusMessage());
         assertEquals("400 Error: Bad Request Submitted", result.getBody());
-    }
-
-    @Test
-    public void handleReturnsA200ResponseWithAListOfAvailableMethodsInResponseToAnOPTIONSRequestToASpecificPath() throws Exception {
-        clientRequest = new RequestBuilder().addPath(pathWithMultipleMethods).addMethod(Methods.OPTIONS).build();
-
-        Response result = handler.handle(clientRequest);
-
-        String resultingListOfMethods = result.getHeaderValue("Allow");
-
-        assertTrue(resultingListOfMethods.contains(Methods.GET));
-        assertTrue(resultingListOfMethods.contains(Methods.POST));
-        assertTrue(resultingListOfMethods.contains(Methods.PATCH));
-        assertTrue(resultingListOfMethods.contains(Methods.HEAD));
-        assertTrue(resultingListOfMethods.contains(Methods.OPTIONS));
     }
 
 }
