@@ -19,7 +19,7 @@ public class controllerInheritanceTests {
 
     @Before
     public void testInit() {
-        TestController.getResponseToReturn = new ResponseBuilder()
+        PathOneTestController.getResponseToReturn = new ResponseBuilder()
                             .addBody("Hello World!")
                             .addHeader("TestField", "TestValue")
                             .finalizeMetaDataForOKResponse()
@@ -30,7 +30,7 @@ public class controllerInheritanceTests {
 
     @Test
     public void extendingControllerGivesASubclassTheAbilityToRespondToHEADRequestsWithoutDefiningAHeadMethodForTheSubclass() {
-        Response response = new TestController(router, request).head();
+        Response response = new PathOneTestController(router, request).head();
 
         assertTrue(response.getStatusCode() == "200");
         assertTrue(response.hasHeader("TestField", "TestValue"));
@@ -39,7 +39,7 @@ public class controllerInheritanceTests {
 
     @Test
     public void extendingControllerGivesASubclassTheAbilityToRespondToOPTIONSRequestsWithoutDefiningAnOptionsMethodForTheSubclass() {
-        Response response = new TestController(router, request).options();
+        Response response = new PathOneTestController(router, request).options();
 
         String listOfMethods = response.getHeaderValueFor("Allow");
 

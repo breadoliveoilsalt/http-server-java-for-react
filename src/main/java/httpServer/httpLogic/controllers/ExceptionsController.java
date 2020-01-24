@@ -21,4 +21,13 @@ public class ExceptionsController {
                 .build();
     }
 
+    public Response render405Response(Controller controller) {
+        String recognizedMethods = controller.getStringOfRecognizedMethods();
+        return new ResponseBuilder()
+                .addStatusCode("405")
+                .addHeader("Allow", recognizedMethods)
+                .addStatusMessage("Method Not Allowed")
+                .build();
+    }
+
 }

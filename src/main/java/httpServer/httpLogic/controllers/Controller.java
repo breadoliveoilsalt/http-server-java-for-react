@@ -22,10 +22,8 @@ public abstract class Controller {
     }
 
     public Response options() {
-        Set<String> recognizedMethods = this.getRecognizedMethods();
-        String stringOfRecognizedMethods = stringifyRecognizedMethods(recognizedMethods);
         return new ResponseBuilder()
-                .addHeader("Allow", stringOfRecognizedMethods)
+                .addHeader("Allow", getStringOfRecognizedMethods())
                 .finalizeMetaDataForOKResponse()
                 .build();
     }
@@ -35,11 +33,16 @@ public abstract class Controller {
         return parseMethodsThatReturnResponseObjects(classMethods);
     }
 
+    public String getStringOfRecognizedMethods() {
+        Set<String> recognizedMethods = getRecognizedMethods();
+        return stringifyRecognizedMethods(recognizedMethods);
+    }
+
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
         HashSet<String> parsedMethods = new HashSet<>();
         for (Method method : classMethods) {
             if (method.getReturnType() == Response.class) {
-                parsedMethods.add(method.getName().toUpperCase());
+                parsedMethods.add(method.getName());
             }
         }
         return parsedMethods;
@@ -48,7 +51,7 @@ public abstract class Controller {
     private String stringifyRecognizedMethods(Set<String> recognizedMethods) {
         StringBuilder stringBuilder = new StringBuilder();
         recognizedMethods.forEach((method) -> {
-            stringBuilder.append(method);
+            stringBuilder.append(method.toUpperCase());
             stringBuilder.append(", ");
         });
         stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
