@@ -68,10 +68,7 @@ public abstract class Controller {
                     .finalizeMetaDataForOKResponse()
                     .build();
         } catch (NoSuchMethodException|InvocationTargetException|IllegalAccessException e) {
-            responseToReturn = new ResponseBuilder()
-                    .addStatusCode("200")
-                    .addContentLength()
-                    .build();
+            responseToReturn = new ExceptionsController().render405Response(this);
         }
         return responseToReturn;
     }

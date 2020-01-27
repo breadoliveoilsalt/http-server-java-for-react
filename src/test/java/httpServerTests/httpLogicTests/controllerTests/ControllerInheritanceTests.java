@@ -38,13 +38,20 @@ public class ControllerInheritanceTests {
     }
 
     @Test
+    public void aHEADRequestReturnsA405ResponseIfTheControllerHasNoGETMethod() {
+        Response response = new PathTwoTestController(router, request).head();
+
+        assertTrue(response.getStatusCode() == "405");
+        assertTrue(response.hasHeader("Allow", "HEAD, OPTIONS, PUT"));
+        assertNull(response.getBody());
+    }
+
+    @Test
     public void extendingControllerGivesASubclassTheAbilityToRespondToOPTIONSRequestsWithoutDefiningAnOptionsMethodForTheSubclass() {
         Response response = new PathOneTestController(router, request).options();
 
-        String listOfMethods = response.getHeaderValueFor("Allow");
-
         assertTrue(response.getStatusCode() == "200");
-        assertTrue(listOfMethods.equals("HEAD, GET, OPTIONS"));
+        assertTrue(response.hasHeader("Allow", "HEAD, GET, OPTIONS"));
         assertNull(response.getBody());
     }
 
