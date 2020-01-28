@@ -44,6 +44,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request clientRequest = new RequestParser().parse(rawClientRequest);
         Response serverResponse = new Handler(router, logger).handle(clientRequest);
+
         String writableResponse = new ResponseParser().stringify(serverResponse);
         new ResponseWriter().writeToOutputStream(sokket, writableResponse);
     }

@@ -1,5 +1,6 @@
 package httpServer.httpLogic.responses;
 
+import java.io.File;
 import java.util.Map;
 
 public class Response {
@@ -9,6 +10,7 @@ public class Response {
     protected final String statusMessage;
     protected final Map<String, String> headers;
     protected final String body;
+    public File file;
 
     public Response(String httpVersion,
                     String statusCode,
