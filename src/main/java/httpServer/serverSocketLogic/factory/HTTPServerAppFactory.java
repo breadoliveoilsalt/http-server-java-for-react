@@ -2,7 +2,7 @@ package httpServer.serverSocketLogic.factory;
 
 import httpServer.httpLogic.ClientHandlerRunnable;
 import httpServer.serverSocketLogic.*;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.*;
 
 import java.io.IOException;

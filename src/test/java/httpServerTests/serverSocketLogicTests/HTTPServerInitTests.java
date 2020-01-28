@@ -2,7 +2,7 @@ package httpServerTests.serverSocketLogicTests;
 
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.serverSocketLogic.HTTPServerInit;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServerTests.serverSocketLogicTests.factoryForTests.MockAppFactory;
 import httpServerTests.serverSocketLogicTests.mocks.MockHTTPServerListeningLoop;
 import httpServerTests.serverSocketLogicTests.mocks.MockServerSokket;

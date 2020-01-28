@@ -1,4 +1,4 @@
-package httpServer.serverSocketLogic.serverLogger;
+package httpServer.serverLogger;
 
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.requests.Request;

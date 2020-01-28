@@ -7,7 +7,7 @@ import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import org.junit.Before;
 import org.junit.Test;
 import httpServerTests.httpLogicTests.controllerTests.PathOneTestController;

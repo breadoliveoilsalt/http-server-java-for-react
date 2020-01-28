@@ -2,7 +2,7 @@ package httpServerTests.serverSocketLogicTests.factoryForTests;
 
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 import httpServerTests.serverSocketLogicTests.testableObjects.TestableThread;

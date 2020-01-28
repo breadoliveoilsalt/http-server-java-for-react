@@ -1,4 +1,4 @@
-package httpServerTests.serverSocketLogicTests.loggerTests;
+package httpServerTests.loggerTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.Whitespace;
@@ -6,12 +6,11 @@ import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 import static org.junit.Assert.assertEquals;

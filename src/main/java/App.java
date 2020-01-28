@@ -1,7 +1,7 @@
 import httpServer.serverSocketLogic.factory.HTTPServerAppFactory;
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerInit;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package httpServerTests.serverSocketLogicTests.mocks;
 
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 import httpServer.httpLogic.ClientHandlerRunnable;
 

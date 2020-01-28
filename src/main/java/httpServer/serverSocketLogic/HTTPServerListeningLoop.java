@@ -1,7 +1,7 @@
 package httpServer.serverSocketLogic;
 
 import httpServer.serverSocketLogic.factory.AppFactory;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 

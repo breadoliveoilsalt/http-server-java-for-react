@@ -10,7 +10,7 @@ import httpServer.httpLogic.responses.ResponseParser;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.serverSocketLogic.HTTPServerLogicObject;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.*;
 
 import java.io.IOException;

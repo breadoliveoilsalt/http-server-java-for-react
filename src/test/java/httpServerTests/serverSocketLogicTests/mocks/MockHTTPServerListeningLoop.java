@@ -2,7 +2,7 @@ package httpServerTests.serverSocketLogicTests.mocks;
 
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
 
 public class MockHTTPServerListeningLoop extends HTTPServerListeningLoop {

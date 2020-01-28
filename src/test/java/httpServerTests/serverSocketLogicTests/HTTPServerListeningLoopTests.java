@@ -1,7 +1,7 @@
 package httpServerTests.serverSocketLogicTests;
 
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 import httpServerTests.serverSocketLogicTests.factoryForTests.MockAppFactory;
 import httpServerTests.serverSocketLogicTests.mocks.*;
 

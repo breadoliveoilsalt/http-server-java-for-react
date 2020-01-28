@@ -5,7 +5,7 @@ import httpServer.httpLogic.controllers.ExceptionsController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.router.Router;
-import httpServer.serverSocketLogic.serverLogger.ServerLogger;
+import httpServer.serverLogger.ServerLogger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
