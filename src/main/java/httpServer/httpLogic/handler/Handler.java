@@ -14,7 +14,7 @@ public class Handler {
 
     private final Router router;
     private Request request;
-    private ServerLogger logger;
+    private final ServerLogger logger;
     private String pathRequested;
     private String controllerMethodRequested;
     private Class<Controller> controllerClass;

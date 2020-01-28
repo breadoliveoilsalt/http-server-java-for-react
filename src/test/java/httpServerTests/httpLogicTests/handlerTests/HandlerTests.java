@@ -92,8 +92,8 @@ public class HandlerTests {
     @Test
     public void handleCausesTheLoggerToLogAMessageAboutTheRequestAndResponse() throws Exception {
         Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod(HTTPMethods.GET).addHeader("Host", "000.000.000").build();
-        Response expectedResponse = new ResponseBuilder().addStatusCode("200").build();
-        PathOneTestController.getResponseToReturn = expectedResponse;
+        Response response = new ResponseBuilder().addStatusCode("200").build();
+        PathOneTestController.getResponseToReturn = response;
 
         Response result = new Handler(router, logger).handle(clientRequest);
 

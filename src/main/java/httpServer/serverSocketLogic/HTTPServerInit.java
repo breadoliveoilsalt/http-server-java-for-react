@@ -11,7 +11,7 @@ public class HTTPServerInit implements HTTPServerLogicObject {
     private final int port;
     private HTTPServerLogicObject httpServerListeningLoop;
     private final AppFactory factory;
-    private ServerLogger logger;
+    private final ServerLogger logger;
     private ServerSokket serverSokket;
 
     public HTTPServerInit(int port, AppFactory factory, ServerLogger logger) {

@@ -19,7 +19,6 @@ public class HTTPServerInitTests {
     private MockHTTPServerListeningLoop serverListeningLoop;
     private MockServerSokket serverSokket;
     private ServerLogger logger;
-    private OutputStream loggerOutputStream;
     private MockAppFactory factory;
     private int samplePort;
     private HTTPServerInit httpServerInit;
@@ -27,7 +26,7 @@ public class HTTPServerInitTests {
     @Before
     public void testInit() {
         serverSokket = new MockServerSokket();
-        loggerOutputStream = new ByteArrayOutputStream();
+        OutputStream loggerOutputStream = new ByteArrayOutputStream();
         logger = new ServerLogger(loggerOutputStream);
         serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, factory, logger);
         factory = new MockAppFactory()

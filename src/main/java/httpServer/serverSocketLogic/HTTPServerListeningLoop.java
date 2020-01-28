@@ -11,7 +11,7 @@ public class HTTPServerListeningLoop implements HTTPServerLogicObject {
 
     private final ServerSokket serverSokket;
     private final AppFactory factory;
-    private ServerLogger logger;
+    private final ServerLogger logger;
     private Sokket connectedSokket;
     private Thread threadToStart;
 

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     private final Sokket sokket;
-    private ServerLogger logger;
+    private final ServerLogger logger;
 
     public ClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
         this.sokket = sokket;

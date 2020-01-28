@@ -41,7 +41,7 @@ public class ServerLoggerTests {
     }
 
     @Test
-    public void printCanBeChained() throws IOException {
+    public void printCanBeChained() {
         String message1 = "Message 1";
         String message2 = "Message 2";
 

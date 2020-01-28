@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class ServerLogger {
 
-    private OutputStream outputStream;
-    private ArrayList<String> logList;
+    private final OutputStream outputStream;
+    private final ArrayList<String> logList;
 
     public ServerLogger(OutputStream outputStream) {
         this.outputStream = outputStream;
@@ -49,7 +49,7 @@ public class ServerLogger {
 
     public void logServerInit(int port) {
         try {
-            String message = "The server is now listening on port " + String.valueOf(port) + "." + newLine();
+            String message = "The server is now listening on port " + port + "." + newLine();
             addToLogList(message);
             writeToOutputStream(message);
         } catch (IOException e) {
