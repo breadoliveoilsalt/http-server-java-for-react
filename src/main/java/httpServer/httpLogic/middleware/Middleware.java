@@ -15,10 +15,10 @@ public abstract class Middleware {
         return this.next;
     }
 
-    public void passToNext(Request request, Response response) {
+    public void passToNextMiddleware(Request request, Response response) {
         if (this.next != null) {
             this.next.handle(request, response);
         }
     }
-    
+
 }

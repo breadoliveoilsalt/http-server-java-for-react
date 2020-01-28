@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class Response {
 
-    protected final String httpVersion;
-    protected final String statusCode;
-    protected final String statusMessage;
-    protected final Map<String, String> headers;
-    protected final String body;
+    public String httpVersion;
+    public String statusCode;
+    public String statusMessage;
+    public Map<String, String> headers;
+    public String body;
     public File file;
 
     public Response(String httpVersion,
