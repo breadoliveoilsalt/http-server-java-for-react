@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class HTTPServerInitTests {
@@ -21,7 +22,8 @@ public class HTTPServerInitTests {
     @Before
     public void testInit() {
         serverSokket = new MockServerSokket();
-        serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, factory);
+        ServerLogger logger = new ServerLogger(new ByteArrayOutputStream());
+        serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, factory, logger);
         factory = new MockAppFactory()
             .setServerSokketToReturn(serverSokket)
             .setHTTPServerListeningLoopToReturn(serverListeningLoop);

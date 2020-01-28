@@ -2,6 +2,7 @@ package httpServer.serverSocketLogic.factory;
 
 import httpServer.httpLogic.ClientHandlerRunnable;
 import httpServer.serverSocketLogic.*;
+import httpServer.serverSocketLogic.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.*;
 
 import java.io.IOException;
@@ -16,11 +17,11 @@ public class HTTPServerAppFactory implements AppFactory {
         return new Thread(runnable);
     }
 
-    public HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) { return new HTTPServerListeningLoop(serverSokket, factory);
+    public HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) { return new HTTPServerListeningLoop(serverSokket, factory, logger);
     }
 
-    public Runnable createClientInitRunnable(Sokket sokket) {
-        return new ClientHandlerRunnable(sokket);
+    public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
+        return new ClientHandlerRunnable(sokket, logger);
     }
 
 }

@@ -30,6 +30,7 @@ public class HTTPServerInit implements HTTPServerLogicObject {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            logger.logServerShuttingDown();
             closeServerSokket();
         }
 
@@ -40,7 +41,7 @@ public class HTTPServerInit implements HTTPServerLogicObject {
     }
 
     private void instantiateHTTPServerListeningLoop() {
-        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, factory);
+        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, factory, logger);
     }
 
     private void runHTTPServerListeningLoop() throws IOException {

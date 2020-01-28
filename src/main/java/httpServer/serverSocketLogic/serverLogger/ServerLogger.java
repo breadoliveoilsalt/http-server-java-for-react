@@ -2,6 +2,7 @@ package httpServer.serverSocketLogic.serverLogger;
 
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.requests.Request;
+import httpServer.httpLogic.responses.Response;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,13 +24,18 @@ public class ServerLogger {
 
     public ServerLogger print(String message) {
         try {
-            logList.add(message + newLine());
+            addToLogList(message + newLine());
             writeToOutputStream(message + newLine());
             return this;
         } catch (IOException e) {
             e.printStackTrace();
             return this;
         }
+    }
+
+
+    private void addToLogList(String message) {
+        logList.add(message);
     }
 
     private String newLine() {
@@ -43,8 +49,8 @@ public class ServerLogger {
 
     public void logServerInit(int port) {
         try {
-            String message = "The server is now listening on port " + String.valueOf(port) + newLine();
-            logList.add(message);
+            String message = "The server is now listening on port " + String.valueOf(port) + "." + newLine();
+            addToLogList(message);
             writeToOutputStream(message);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,28 +59,44 @@ public class ServerLogger {
 
     public void logServerShuttingDown() {
         try {
-            String message = "The server is shutting down" + newLine();
-            logList.add(message);
+            String message = "The server is shutting down." + newLine();
+            addToLogList(message);
             writeToOutputStream(message);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void logClientConnection(Request request) {
+    public synchronized void logRequestAndResponse(Request request, Response response) {
+        String host = populateHost(request);
         try {
-            String hostName = request.getHeaderValue("Host");
             String message =
-                    hostName +
+                    Whitespace.DIVIDER +
+                    newLine() +
+                    host +
                     " made a " +
                     request.getMethod() +
                     " request to " +
                     request.getPath() +
-                    newLine();
-            logList.add(message);
+                    "." +
+                    newLine() +
+                    "The server responded with a " +
+                    response.getStatusCode() +
+                    " status code." +
+                    newLine() +
+                    Whitespace.DIVIDER;
+            addToLogList(message);
             writeToOutputStream(message);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private String populateHost(Request request) {
+        if (request.getHeaders() != null && request.getHeaders().containsKey("Host")) {
+            return request.getHeaderValue("Host");
+        } else {
+            return "Unidentified client";
         }
     }
 

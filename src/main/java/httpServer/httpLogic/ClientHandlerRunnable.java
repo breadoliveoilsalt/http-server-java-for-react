@@ -10,6 +10,7 @@ import httpServer.httpLogic.responses.ResponseParser;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.serverSocketLogic.HTTPServerLogicObject;
+import httpServer.serverSocketLogic.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.*;
 
 import java.io.IOException;
@@ -17,16 +18,16 @@ import java.io.IOException;
 public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     private final Sokket sokket;
+    private ServerLogger logger;
 
-    public ClientHandlerRunnable(Sokket sokket) {
+    public ClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
         this.sokket = sokket;
+        this.logger = logger;
     }
 
     public void run() {
         try {
             handleClientRequest();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -42,7 +43,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Router router = new RouterFactory().buildHTTPServerRouter();
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request clientRequest = new RequestParser().parse(rawClientRequest);
-        Response serverResponse = new Handler(router).handle(clientRequest);
+        Response serverResponse = new Handler(router, logger).handle(clientRequest);
         String writableResponse = new ResponseParser().stringify(serverResponse);
         new ResponseWriter().writeToOutputStream(sokket, writableResponse);
     }

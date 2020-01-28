@@ -1,7 +1,10 @@
 package httpServerTests.serverSocketLogicTests.mocks;
 
+import httpServer.serverSocketLogic.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 import httpServer.httpLogic.ClientHandlerRunnable;
+
+import java.io.ByteArrayOutputStream;
 
 public class MockClientHandlerRunnable extends ClientHandlerRunnable {
 
@@ -11,8 +14,8 @@ public class MockClientHandlerRunnable extends ClientHandlerRunnable {
         return callCountForRun;
     }
 
-    public MockClientHandlerRunnable(Sokket sokket) {
-        super(sokket);
+    public MockClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
+        super(sokket, logger);
     }
 
     public void run() {

@@ -2,6 +2,7 @@ package httpServerTests.serverSocketLogicTests.factoryForTests;
 
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
+import httpServer.serverSocketLogic.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 import httpServerTests.serverSocketLogicTests.testableObjects.TestableThread;
@@ -22,12 +23,12 @@ public class MockAppFactory implements AppFactory {
     }
     public int callCountForCreateHTTPServerListeningLoop = 0;
 
-    private Runnable clientInitRunnable;
-    public MockAppFactory setClientInitRunnableToReturn(Runnable clientInitRunnable) {
-        this.clientInitRunnable = clientInitRunnable;
+    private Runnable clientHandlerRunnable;
+    public MockAppFactory setClientHandlerRunnableToReturn(Runnable clientInitRunnable) {
+        this.clientHandlerRunnable = clientInitRunnable;
         return this;
     }
-    public int callCountForCreateClientInitRunnable = 0;
+    public int callCountForCreateClientHandlerRunnable = 0;
 
     public int callCountForCreateThreadFor = 0;
 
@@ -50,15 +51,15 @@ public class MockAppFactory implements AppFactory {
     }
 
     @Override
-    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) {
+    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) {
         callCountForCreateHTTPServerListeningLoop += 1;
         return HTTPServerListeningLoop;
     }
 
     @Override
-    public Runnable createClientInitRunnable(Sokket sokket) {
-        callCountForCreateClientInitRunnable += 1;
-        return clientInitRunnable;
+    public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
+        callCountForCreateClientHandlerRunnable += 1;
+        return clientHandlerRunnable;
     }
 
 }

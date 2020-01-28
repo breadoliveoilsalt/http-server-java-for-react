@@ -4,6 +4,8 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
+import httpServer.httpLogic.responses.Response;
+import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.serverSocketLogic.serverLogger.ServerLogger;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +59,7 @@ public class ServerLoggerTests {
     public void logServerInitLogsAMessageThatTheServerStarted() {
         logger.logServerInit(5000);
 
-        String expectedLog = "The server is now listening on port 5000" + Whitespace.CRLF;
+        String expectedLog = "The server is now listening on port 5000." + Whitespace.CRLF;
         assertTrue(logger.getLogList().contains(expectedLog));
     }
 
@@ -65,17 +67,27 @@ public class ServerLoggerTests {
     public void logServerShuttingDownLogsAMessageThatTheServerIsShuttingDown() {
         logger.logServerShuttingDown();
 
-        String expectedLog = "The server is shutting down" + Whitespace.CRLF;
+        String expectedLog = "The server is shutting down." + Whitespace.CRLF;
         assertTrue(logger.getLogList().contains(expectedLog));
     }
 
     @Test
-    public void logClientConnectionLogsTheConnectedHostAndItsMethodAndResourceRequested() {
-        Request clientRequest = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/simple_get").addHeader("Host", "000.000.000").build();
+    public void logRequestAndResponseLogsInformationAboutTheRequestAndResponse() {
+        Request request  = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/simple_get").addHeader("Host", "000.000.000").build();
 
-        logger.logClientConnection(clientRequest);
+        Response response = new ResponseBuilder().addStatusCode("200").build();
 
-        String expectedLog = "000.000.000 made a GET request to /simple_get" + Whitespace.CRLF;
+        logger.logRequestAndResponse(request, response);
+
+        String expectedLog =
+                Whitespace.DIVIDER +
+                Whitespace.CRLF +
+                "000.000.000 made a GET request to /simple_get." +
+                Whitespace.CRLF +
+                "The server responded with a 200 status code." +
+                Whitespace.CRLF +
+                Whitespace.DIVIDER;
+
         assertTrue(logger.getLogList().contains(expectedLog));
     }
 
