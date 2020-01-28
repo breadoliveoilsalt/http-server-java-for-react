@@ -1,6 +1,6 @@
 class Spinach::Features::ReturningAMethodNotAllowedResponse < Spinach::FeatureSteps
-  step 'I make an GET request to "/get_with_body"' do
-    @response = Requests.get("/get_with_body")
+  step 'I make an GET request to "/only_head_method"' do
+    @response = Requests.get("/only_head_method")
   end
 
   step 'my response should have status code 405' do
