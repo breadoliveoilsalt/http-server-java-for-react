@@ -42,6 +42,10 @@ public class Request {
         return headers;
     }
 
+    public String getHeaderValue(String key) {
+        return headers.get(key);
+    }
+
     public String getBody() {
         return body;
     }

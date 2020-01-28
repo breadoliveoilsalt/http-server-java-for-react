@@ -5,6 +5,7 @@ import httpServer.httpLogic.controllers.ExceptionsController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.router.Router;
+import httpServer.serverLogger.ServerLogger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -13,22 +14,29 @@ public class Handler {
 
     private final Router router;
     private Request request;
+    private final ServerLogger logger;
     private String pathRequested;
     private String controllerMethodRequested;
     private Class<Controller> controllerClass;
     private Controller controller;
 
-    public Handler(Router router) {
+    public Handler(Router router, ServerLogger logger) {
         this.router = router;
+        this.logger = logger;
     }
 
     public Response handle(Request request) throws Exception {
+        populateHandlerFields(request);
+        Response response = determineResponse();
+        logger.logRequestAndResponse(request, response);
+        return response;
+    }
+
+    private Response determineResponse() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
 
         if (request.wasUnparsable()) {
             return new ExceptionsController().render400Response();
         }
-
-        populateHandlerFields(request);
 
         if (requestHasUnrecognizedMethod()) {
             return new ExceptionsController().render501Response();
@@ -48,8 +56,8 @@ public class Handler {
     }
 
     private void populateHandlerFields(Request request) {
+        this.request = request;
         if (!request.wasUnparsable()) {
-            this.request = request;
             this.pathRequested = request.getPath();
             this.controllerMethodRequested = request.getMethod().toLowerCase();
         }

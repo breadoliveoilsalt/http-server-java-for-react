@@ -1,6 +1,7 @@
 package httpServer.serverSocketLogic.factory;
 
 import httpServer.serverSocketLogic.HTTPServerLogicObject;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 
@@ -12,8 +13,8 @@ public interface AppFactory {
 
     Thread createThreadFor(Runnable runnable);
 
-    HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory);
+    HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger);
 
-    Runnable createClientInitRunnable(Sokket sokket);
+    Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger);
 
 }

@@ -1,6 +1,7 @@
 package httpServerTests.serverSocketLogicTests;
 
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
+import httpServer.serverLogger.ServerLogger;
 import httpServerTests.serverSocketLogicTests.factoryForTests.MockAppFactory;
 import httpServerTests.serverSocketLogicTests.mocks.*;
 
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,15 +39,16 @@ public class HTTPServerListeningLoopTests {
     }
 
     private void initFactory() {
-        clientInitRunnable = new MockClientHandlerRunnable(sokket);
+        clientInitRunnable = new MockClientHandlerRunnable(sokket, new ServerLogger(new ByteArrayOutputStream()));
         thread = new TestableThread();
         factory = new MockAppFactory()
             .setTestableThreadToReturn(thread)
-            .setClientInitRunnableToReturn(clientInitRunnable);
+            .setClientHandlerRunnableToReturn(clientInitRunnable);
     }
 
     private void initHTTPServerListeningLoop() {
-        HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, factory);
+        ServerLogger logger = new ServerLogger(new ByteArrayOutputStream());
+        HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, factory, logger);
     }
 
     private void setLoopToRunOnce() {
@@ -63,12 +66,12 @@ public class HTTPServerListeningLoopTests {
     }
 
     @ Test
-    public void testRunLoopInstantiatesAClientInitThread() throws IOException {
+    public void testRunLoopInstantiatesAClientHandlerThread() throws IOException {
         setLoopToRunOnce();
 
         HTTPServerListeningLoop.run();
 
-        assertEquals(1, factory.callCountForCreateClientInitRunnable);
+        assertEquals(1, factory.callCountForCreateClientHandlerRunnable);
         assertEquals(1, factory.callCountForCreateThreadFor);
     }
 
@@ -91,7 +94,7 @@ public class HTTPServerListeningLoopTests {
         HTTPServerListeningLoop.run();
 
         assertEquals(3, serverSokket.getCallCountForAcceptConnectionAndReturnConnectedSokket());
-        assertEquals(3, factory.callCountForCreateClientInitRunnable);
+        assertEquals(3, factory.callCountForCreateClientHandlerRunnable);
         assertEquals(3, clientInitRunnable.getCallCountForRun());
         assertEquals(3, thread.getCallCountForStart());
         assertEquals(3, clientInitRunnable.getCallCountForRun());

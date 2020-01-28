@@ -11,6 +11,7 @@ public class RouterFactory {
             .addPathAndController("/method_options", MethodOptionsController.class)
             .addPathAndController("/method_options2", MethodOptions2Controller.class)
             .addPathAndController("/redirect", RedirectController.class)
+            .addPathAndController("/only_head_method", OnlyHeadMethodController.class)
             .build();
     }
 

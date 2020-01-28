@@ -2,6 +2,7 @@ package httpServerTests.serverSocketLogicTests.mocks;
 
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
+import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
 
 public class MockHTTPServerListeningLoop extends HTTPServerListeningLoop {
@@ -11,8 +12,8 @@ public class MockHTTPServerListeningLoop extends HTTPServerListeningLoop {
         return callCountForRun;
     }
 
-    public MockHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory) {
-        super(serverSokket, factory);
+    public MockHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) {
+        super(serverSokket, factory, logger);
     }
 
     @Override
