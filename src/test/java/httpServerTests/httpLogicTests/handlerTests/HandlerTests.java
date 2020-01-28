@@ -1,5 +1,6 @@
 package httpServerTests.httpLogicTests.handlerTests;
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.router.Router;
@@ -86,5 +87,25 @@ public class HandlerTests {
 
         assertEquals("404", result.getStatusCode());
         assertEquals("Not Found", result.getStatusMessage());
+    }
+
+    @Test
+    public void handleCausesTheLoggerToLogAMessageAboutTheRequestAndResponse() throws Exception {
+        Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod(HTTPMethods.GET).addHeader("Host", "000.000.000").build();
+        Response expectedResponse = new ResponseBuilder().addStatusCode("200").build();
+        PathOneTestController.getResponseToReturn = expectedResponse;
+
+        Response result = new Handler(router, logger).handle(clientRequest);
+
+        String expectedLog =
+                Whitespace.DIVIDER +
+                Whitespace.CRLF +
+                "000.000.000 made a GET request to /path_one." +
+                Whitespace.CRLF +
+                "The server responded with a 200 status code." +
+                Whitespace.CRLF +
+                Whitespace.DIVIDER;
+
+        assertEquals(expectedLog, loggerOutputStream.toString());
     }
 }
