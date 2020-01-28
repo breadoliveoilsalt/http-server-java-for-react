@@ -23,13 +23,17 @@ public class ServerLogger {
 
     public ServerLogger print(String message) {
         try {
-            logList.add(message);
-            writeToOutputStream(message);
+            logList.add(message + newLine());
+            writeToOutputStream(message + newLine());
             return this;
         } catch (IOException e) {
             e.printStackTrace();
             return this;
         }
+    }
+
+    private String newLine() {
+       return Whitespace.CRLF;
     }
 
     private void writeToOutputStream(String message) throws IOException {
@@ -39,7 +43,7 @@ public class ServerLogger {
 
     public void logServerInit(int port) {
         try {
-            String message = "The server is now listening on port " + String.valueOf(port);
+            String message = "The server is now listening on port " + String.valueOf(port) + newLine();
             logList.add(message);
             writeToOutputStream(message);
         } catch (IOException e) {
@@ -49,7 +53,7 @@ public class ServerLogger {
 
     public void logServerShuttingDown() {
         try {
-            String message = "The server is shutting down";
+            String message = "The server is shutting down" + newLine();
             logList.add(message);
             writeToOutputStream(message);
         } catch (IOException e) {
@@ -65,7 +69,8 @@ public class ServerLogger {
                     " made a " +
                     request.getMethod() +
                     " request to " +
-                    request.getPath();
+                    request.getPath() +
+                    newLine();
             logList.add(message);
             writeToOutputStream(message);
         } catch (IOException e) {

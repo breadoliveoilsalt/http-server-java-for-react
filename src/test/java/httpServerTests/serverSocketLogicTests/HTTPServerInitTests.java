@@ -1,6 +1,7 @@
 package httpServerTests.serverSocketLogicTests;
 
 import httpServer.serverSocketLogic.HTTPServerInit;
+import httpServer.serverSocketLogic.serverLogger.ServerLogger;
 import httpServerTests.serverSocketLogicTests.factoryForTests.MockAppFactory;
 import httpServerTests.serverSocketLogicTests.mocks.MockHTTPServerListeningLoop;
 import httpServerTests.serverSocketLogicTests.mocks.MockServerSokket;
@@ -25,7 +26,7 @@ public class HTTPServerInitTests {
             .setServerSokketToReturn(serverSokket)
             .setHTTPServerListeningLoopToReturn(serverListeningLoop);
         int samplePort = 8000;
-        httpServerInit = new HTTPServerInit(samplePort, factory);
+        httpServerInit = new HTTPServerInit(samplePort, factory, new ServerLogger(System.out));
     }
 
     @Test
