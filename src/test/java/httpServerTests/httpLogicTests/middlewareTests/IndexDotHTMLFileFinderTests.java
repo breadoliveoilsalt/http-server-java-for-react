@@ -2,6 +2,7 @@ package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.middleware.IndexDotHTMLFileFinder;
+import httpServer.httpLogic.middleware.Middleware;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -76,5 +77,39 @@ public class IndexDotHTMLFileFinderTests {
         assertNull(response.getStatusMessage());
     }
 
+    @Test
+    public void handleDoesNotCallHandleOnTheObjectSpecifiedAsTheNextMiddleWareIfTheResourceRequestedIsTheRootPath() {
+        NextMiddleware nextMiddleware = createTestMiddleware();
+        String pathOfTempFolder = tempFolder.getRoot().getPath();
+        indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
+        indexDotHTMLFileFinder.setNext(nextMiddleware);
 
+        indexDotHTMLFileFinder.handle(request, response);
+
+        assertFalse(nextMiddleware.handleWasCalled);
+    }
+
+    @Test
+    public void handleCallsHandleOnTheObjectSpecifiedAsTheNextMiddleWareIfTheResourceRequestedIsNotTheRootPath() {
+        request = new RequestBuilder().addPath("/another_path").addMethod(HTTPMethods.GET).build();
+        NextMiddleware nextMiddleware = createTestMiddleware();
+        String pathOfTempFolder = tempFolder.getRoot().getPath();
+        indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
+        indexDotHTMLFileFinder.setNext(nextMiddleware);
+
+        indexDotHTMLFileFinder.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
+    }
+
+    private NextMiddleware createTestMiddleware() {
+        return new NextMiddleware();
+    }
+
+    class NextMiddleware extends Middleware {
+        public boolean handleWasCalled = false;
+        public void handle(Request request, Response response) {
+            handleWasCalled = true;
+        }
+    }
 }
