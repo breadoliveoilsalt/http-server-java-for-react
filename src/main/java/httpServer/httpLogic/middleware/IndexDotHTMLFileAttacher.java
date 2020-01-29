@@ -25,8 +25,9 @@ public class IndexDotHTMLFileAttacher extends Middleware {
                 response.statusCode = "200";
                 response.statusMessage = "OK";
             }
+        } else {
+            passToNextMiddleware(request, response);
         }
-        
-        passToNextMiddleware(request, response);
     }
+
 }

@@ -12,6 +12,8 @@ public class Response {
     public String body;
     public File file;
 
+    public Response() {}
+
     public Response(String httpVersion,
                     String statusCode,
                     String statusMessage,
