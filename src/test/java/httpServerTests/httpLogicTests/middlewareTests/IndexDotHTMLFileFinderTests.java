@@ -10,7 +10,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -19,6 +18,7 @@ public class IndexDotHTMLFileFinderTests {
 
     private Request request;
     private Response response;
+    private IndexDotHTMLFileFinder indexDotHTMLFileFinder;
 
     @Before
     public void testInit() {
@@ -33,7 +33,7 @@ public class IndexDotHTMLFileFinderTests {
     public void handleAssignsAnIndexDotHtmlFileToAResponse_sFileFieldIfTheRootPathResourceIsRequested() throws IOException {
         tempFolder.newFile("index.html");
         String pathOfTempFolder = tempFolder.getRoot().getPath();
-        IndexDotHTMLFileFinder indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
+        indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
 
         assertNull(response.file);
         indexDotHTMLFileFinder.handle(request, response);
@@ -44,14 +44,36 @@ public class IndexDotHTMLFileFinderTests {
 
     @Test
     public void handle_sDefaultPathIsTheProjectRootDirectory() {
-        IndexDotHTMLFileFinder indexDotHTMLFileFinder = new IndexDotHTMLFileFinder();
+        indexDotHTMLFileFinder = new IndexDotHTMLFileFinder();
 
         assertEquals(System.getProperty("user.dir"), indexDotHTMLFileFinder.getPath());
     }
 
     @Test
-    public void handleAddsA200StatusCodeAndOKMessageToResponseIfIndexDotHTMLFileExists() {
+    public void handleAddsA200StatusCodeAndOKMessageToResponseIfIndexDotHTMLFileExists() throws IOException {
+        tempFolder.newFile("index.html");
+        String pathOfTempFolder = tempFolder.getRoot().getPath();
+        indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
 
+        assertNull(response.getStatusCode());
+        assertNull(response.getStatusMessage());
+        indexDotHTMLFileFinder.handle(request, response);
+
+        assertEquals("200", response.getStatusCode());
+        assertEquals("OK", response.getStatusMessage());
+    }
+
+    @Test
+    public void handleDoesNotChangeTheStatusCodeAndOKMessageToResponseIfIndexDotHTMLFileDoesNotExists() {
+        String pathOfTempFolder = tempFolder.getRoot().getPath();
+        indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
+
+        assertNull(response.getStatusCode());
+        assertNull(response.getStatusMessage());
+        indexDotHTMLFileFinder.handle(request, response);
+
+        assertNull(response.getStatusCode());
+        assertNull(response.getStatusMessage());
     }
 
 
