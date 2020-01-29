@@ -20,20 +20,25 @@ public class IndexDotHTMLFileFinderTests {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
-    public void handleAssignsAnIndexDotHtmlFileToAResponse_sFileField() throws IOException {
-        File tempIndexDotHtmlFile = tempFolder.newFile("index.html");
+    public void handleAssignsAnIndexDotHtmlFileToAResponse_sFileFieldIfTheRootPathResourceIsRequested() throws IOException {
         Request request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
         Response response = new Response();
-        assertNull(response.file);
-
+        tempFolder.newFile("index.html");
         String pathOfTempFolder = tempFolder.getRoot().getPath();
-
         IndexDotHTMLFileFinder indexDotHTMLFileFinder = new IndexDotHTMLFileFinder(pathOfTempFolder);
 
+        assertNull(response.file);
         indexDotHTMLFileFinder.handle(request, response);
 
         assertNotNull(response.file);
         assertEquals("index.html", response.file.getName());
+    }
+
+    @Test
+    public void handle_sDefaultPathIsTheProjectRootDirectory() {
+        IndexDotHTMLFileFinder indexDotHTMLFileFinder = new IndexDotHTMLFileFinder();
+
+        assertEquals(System.getProperty("user.dir"), indexDotHTMLFileFinder.getPath());
     }
 
 
