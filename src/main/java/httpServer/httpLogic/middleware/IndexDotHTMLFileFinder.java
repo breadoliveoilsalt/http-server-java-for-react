@@ -6,14 +6,21 @@ import httpServer.httpLogic.responses.Response;
 import java.io.File;
 
 public class IndexDotHTMLFileFinder extends Middleware {
-    
-    public IndexDotHTMLFileFinder() { }
-    
+
+    private String path;
+
+    public IndexDotHTMLFileFinder() {
+        this.path = System.getProperty("user.dir");
+    }
+
+    public IndexDotHTMLFileFinder(String path) {
+       this.path = path;
+    }
+
     @Override
     public void handle(Request request, Response response) {
         if (request.getPath() == "/") {
-            String rootDirectory = System.getProperty("user.dir");
-            File file = new File(rootDirectory + "/index.html");
+            File file = new File(path + "/index.html");
             if (file.exists()) {
                 response.file = file;
                 response.statusCode = "200";
@@ -22,6 +29,10 @@ public class IndexDotHTMLFileFinder extends Middleware {
         } else {
             passToNextMiddleware(request, response);
         }
+    }
+
+    public String getPath() {
+        return path;
     }
 
 }
