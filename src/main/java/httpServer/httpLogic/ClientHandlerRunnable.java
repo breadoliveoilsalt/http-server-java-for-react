@@ -46,8 +46,10 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Request clientRequest = new RequestParser().parse(rawClientRequest);
         Response serverResponse = new Handler(router, logger).handle(clientRequest);
         new IndexDotHTMLFileFinder().handle(clientRequest, serverResponse);
-        String writableResponse = new ResponseParser().stringify(serverResponse);
-        new ResponseWriter().writeToOutputStream(sokket, writableResponse);
+//        String writableResponse = new ResponseParser().stringify(serverResponse);
+        byte[] rawResponse = new ResponseParser().convertToByteArray(serverResponse);
+        new ResponseWriter().writeToOutputStream(sokket, rawResponse);
+//        new ResponseWriter().writeToOutputStream(sokket, writableResponse);
     }
 
 }
