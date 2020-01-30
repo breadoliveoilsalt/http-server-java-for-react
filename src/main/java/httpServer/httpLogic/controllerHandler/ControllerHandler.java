@@ -1,4 +1,4 @@
-package httpServer.httpLogic.handler;
+package httpServer.httpLogic.controllerHandler;
 
 import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.controllers.ExceptionsController;
@@ -10,7 +10,7 @@ import httpServer.serverLogger.ServerLogger;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-public class Handler {
+public class ControllerHandler {
 
     private final Router router;
     private Request request;
@@ -20,7 +20,7 @@ public class Handler {
     private Class<Controller> controllerClass;
     private Controller controller;
 
-    public Handler(Router router, ServerLogger logger) {
+    public ControllerHandler(Router router, ServerLogger logger) {
         this.router = router;
         this.logger = logger;
     }
