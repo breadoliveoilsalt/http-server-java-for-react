@@ -67,7 +67,7 @@ public class ResponseParserTests {
         responseObject = builder.build();
     }
 
-    @Test public void convertToByteArrayAddsAResponsesStringBody() throws IOException {
+    @Test public void convertToByteArrayAddsAResponse_sStringBody() throws IOException {
         buildResponseForStringBodyTest();
 
         String expectedResult =
@@ -90,7 +90,7 @@ public class ResponseParserTests {
         responseObject = builder.build();
     }
 
-    @Test public void convertToByteArrayOutputStreamAddsAResponsesFile() throws IOException {
+    @Test public void convertToByteArrayOutputStreamAddsAResponse_sFile() throws IOException {
         File fileForTest = getFileForTest();
         buildResponseForFileTest(fileForTest);
 
@@ -112,6 +112,7 @@ public class ResponseParserTests {
     }
 
     private File getFileForTest() {
+        System.out.println("Hey there");
         URL urlToFileToWrite = this.getClass().getResource("fileToWriteForTests.txt");
         return new File(urlToFileToWrite.getPath());
     }

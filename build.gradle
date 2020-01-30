@@ -30,6 +30,13 @@ task runAcceptanceTests(type:Exec) {
     commandLine = "./acceptance_tests.sh"
 }
 
+test {
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
+}
+
 // Uncomment to compile with warnings
 //allprojects {
 //    gradle.projectsEvaluated {

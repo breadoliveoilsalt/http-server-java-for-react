@@ -17,7 +17,7 @@ public class ResponseParser {
         stringifyStatusLine();
         stringifyHeaders();
         stringifyEndOfMetaData();
-        addBody();
+        stringifyBody();
         return stringifiedResponse;
     }
 
@@ -37,7 +37,7 @@ public class ResponseParser {
         stringifiedMetaData += Whitespace.CRLF;
     }
 
-    private void addBody() {
+    private void stringifyBody() {
        if (response.getStringBody() != null) {
            stringifiedResponse += response.stringBody;
        }
