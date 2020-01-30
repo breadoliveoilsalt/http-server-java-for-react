@@ -23,15 +23,13 @@ public class ResponseParserTests {
     }
 
     @Test
-    public void convertToByteArrayOutputStreamConvertsAResponseObjectToAByteArrayOutputStream() throws IOException {
+    public void convertToByteArrayConvertsAResponseObjectToAByteArray() throws IOException {
         buildResponseForBasicStringTest();
-        String rawResponseString = "HTTP/1.1 200 OK" + Whitespace.CRLF + Whitespace.CRLF;
-        ByteArrayOutputStream expectedResult = new ByteArrayOutputStream();
-        expectedResult.write(rawResponseString.getBytes());
+        String expectedResult = "HTTP/1.1 200 OK" + Whitespace.CRLF + Whitespace.CRLF;
 
-        ByteArrayOutputStream result = responseParser.convertToByteArrayOutputStream(responseObject);
+        byte[] result = responseParser.convertToByteArray(responseObject);
 
-        assertEquals(expectedResult.toString(), result.toString());
+        assertEquals(expectedResult, new String(result));
     }
 
    private void buildResponseForBasicStringTest() {
@@ -44,20 +42,17 @@ public class ResponseParserTests {
    }
 
     @Test
-    public void convertToByteArrayOutputStreamCanConvertAResponseWithHeaders() throws IOException {
+    public void convertToByteArrayCanConvertAResponseWithHeaders() throws IOException {
         buildResponseForHeadersTest();
-        String rawResponseString =
+        String expectedResult =
                 "HTTP/1.1 200 OK" + Whitespace.CRLF +
                 "Content-Length: 0" + Whitespace.CRLF +
                 "Date: Some Date" + Whitespace.CRLF +
                 Whitespace.CRLF;
 
-        ByteArrayOutputStream expectedResult = new ByteArrayOutputStream();
-        expectedResult.write(rawResponseString.getBytes());
+        byte[] result = responseParser.convertToByteArray(responseObject);
 
-        ByteArrayOutputStream result = responseParser.convertToByteArrayOutputStream(responseObject);
-
-        assertEquals(expectedResult.toString(), result.toString());
+        assertEquals(expectedResult, new String(result));
     }
 
     private void buildResponseForHeadersTest() {
@@ -69,21 +64,18 @@ public class ResponseParserTests {
         responseObject = builder.build();
     }
 
-    @Test public void convertToByteArrayOutputStreamAddsAResponsesStringBody() throws IOException {
+    @Test public void convertToByteArrayAddsAResponsesStringBody() throws IOException {
         buildResponseForStringBodyTest();
 
-        String rawResponseString =
+        String expectedResult =
                 "HTTP/1.1 200 OK" + Whitespace.CRLF +
                 "Content-Length: 5" + Whitespace.CRLF +
                         Whitespace.CRLF +
                 "Hello";
 
-        ByteArrayOutputStream expectedResult = new ByteArrayOutputStream();
-        expectedResult.write(rawResponseString.getBytes());
+        byte[] result = responseParser.convertToByteArray(responseObject);
 
-        ByteArrayOutputStream result = responseParser.convertToByteArrayOutputStream(responseObject);
-
-        assertEquals(expectedResult.toString(), result.toString());
+        assertEquals(expectedResult, new String(result));
     }
 
     private void buildResponseForStringBodyTest() {
@@ -94,4 +86,21 @@ public class ResponseParserTests {
 
         responseObject = builder.build();
     }
+
+//    @Test public void convertToByteArrayOutputStreamAddsAResponsesFile() throws IOException {
+//        buildResponseForStringBodyTest();
+//
+//        String rawResponseString =
+//                "HTTP/1.1 200 OK" + Whitespace.CRLF +
+//                        "Content-Length: 5" + Whitespace.CRLF +
+//                        Whitespace.CRLF +
+//                        "Hello";
+//
+//        ByteArrayOutputStream expectedResult = new ByteArrayOutputStream();
+//        expectedResult.write(rawResponseString.getBytes());
+//
+//        ByteArrayOutputStream result = responseParser.convertToByteArray(responseObject);
+//
+//        assertEquals(expectedResult.toString(), result.toString());
+//    }
 }

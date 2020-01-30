@@ -45,7 +45,7 @@ public class ResponseParser {
 
     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-    public ByteArrayOutputStream convertToByteArrayOutputStream(Response response) throws IOException {
+    public byte[] convertToByteArray(Response response) throws IOException {
         this.response = response;
         stringifyMetaData();
         byteArrayOutputStream.write(stringifiedMetaData.getBytes());
@@ -57,7 +57,7 @@ public class ResponseParser {
             fileInputStream.read(fileBuffer);
             byteArrayOutputStream.write(fileBuffer);
         }
-       return byteArrayOutputStream;
+       return byteArrayOutputStream.toByteArray();
     }
 
     private void stringifyMetaData() {
