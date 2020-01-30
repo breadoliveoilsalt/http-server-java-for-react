@@ -112,13 +112,8 @@ public class ResponseParserTests {
     }
 
     private File getFileForTest() {
-//        URL urlToFileToWrite = Thread.currentThread().getContextClassLoader().getResource("fileToWriteForTests.txt"); - not work
-        // This is the only thing that works:
         URL urlToFileToWrite = this.getClass().getResource("fileToWriteForTests.txt");
-//        URL urlToFileToWrite = this.getClass().getClassLoader().getResource("fileToWriteForTests.txt");
-        System.out.println("URL --> " + urlToFileToWrite);
         File file = new File(urlToFileToWrite.getPath());
-        System.out.println(file.exists());
         return file;
     }
 
