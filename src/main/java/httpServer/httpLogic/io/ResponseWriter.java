@@ -3,6 +3,7 @@ package httpServer.httpLogic.io;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 public class ResponseWriter {
@@ -13,5 +14,10 @@ public class ResponseWriter {
         writer.flush();
     }
 
+    public void writeToOutputStream(Sokket sokket, byte[] rawByteArrayResponse) throws IOException {
+        OutputStream sokketOutputStream = sokket.getOutputStream();
+        sokketOutputStream.write(rawByteArrayResponse);
+        sokketOutputStream.flush();
+    }
 }
 

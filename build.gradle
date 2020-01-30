@@ -30,6 +30,21 @@ task runAcceptanceTests(type:Exec) {
     commandLine = "./acceptance_tests.sh"
 }
 
+test {
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
+}
+
+// Necessary to solve problem where Intellij sees file to getResource
+// and test but Gradle test doesn't see the file.
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/java/httpServerTests/httpLogicTests/responsesTests/fileToWriteForTests.txt"
+    into "${buildDir}/classes/java/test/httpServerTests/httpLogicTests/responsesTests"
+}
+processTestResources.dependsOn copyTestResources
+
 // Uncomment to compile with warnings
 //allprojects {
 //    gradle.projectsEvaluated {

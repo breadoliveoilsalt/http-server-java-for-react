@@ -1,11 +1,13 @@
 package httpServer.httpLogic.router;
 
+import httpServer.httpLogic.controllers.Controller;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RouterBuilder {
 
-    private final Map<String, Class> routeMap;
+    private final Map<String, Class<Controller>> routeMap;
 
     public RouterBuilder() {
         this.routeMap = new HashMap<>();

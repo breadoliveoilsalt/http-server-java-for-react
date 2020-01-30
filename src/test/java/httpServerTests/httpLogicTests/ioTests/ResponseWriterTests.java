@@ -35,4 +35,14 @@ public class ResponseWriterTests {
         assertEquals(responseToClient, outputStreamToClient.toString());
     }
 
+    @Test
+    public void writeToOutputStreamWritesAByteArrayToTheSokketOutputStream() throws IOException {
+        byte[] responseToClient = ("HTTP/1.1 200 OK" + Whitespace.CRLF).getBytes();
+        OutputStream outputStreamToClient = new ByteArrayOutputStream();
+        sokket.setOutputStream(outputStreamToClient);
+
+        responseWriter.writeToOutputStream(sokket, responseToClient);
+
+        assertEquals(new String(responseToClient), outputStreamToClient.toString());
+    }
 }

@@ -69,7 +69,7 @@ public class ResponseBuilderTests {
 
         Response response = responseBuilder.build();
 
-        assertEquals("A Great Message", response.getBody());
+        assertEquals("A Great Message", response.getStringBody());
     }
 
     @Test public void methodsCanBeChained() {
@@ -90,7 +90,7 @@ public class ResponseBuilderTests {
 
         assertEquals(expectedHeaders, response.getHeaders());
 
-        assertEquals("A Great Message", response.getBody());
+        assertEquals("A Great Message", response.getStringBody());
     }
 
 }

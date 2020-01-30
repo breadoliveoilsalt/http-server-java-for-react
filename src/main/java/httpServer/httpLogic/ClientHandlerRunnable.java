@@ -1,6 +1,7 @@
 package httpServer.httpLogic;
 
 import httpServer.httpLogic.handler.Handler;
+import httpServer.httpLogic.middleware.IndexDotHTMLFileFinder;
 import httpServer.httpLogic.router.Router;
 import httpServer.httpLogic.router.RouterFactory;
 import httpServer.httpLogic.io.RequestReader;
@@ -43,9 +44,13 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Router router = new RouterFactory().buildHTTPServerRouter();
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request clientRequest = new RequestParser().parse(rawClientRequest);
-        Response serverResponse = new Handler(router, logger).handle(clientRequest);
-        String writableResponse = new ResponseParser().stringify(serverResponse);
-        new ResponseWriter().writeToOutputStream(sokket, writableResponse);
+        Response serverResponse = new Response();
+        new IndexDotHTMLFileFinder().handle(clientRequest, serverResponse);
+        if (serverResponse.statusCode == null) {
+            serverResponse = new Handler(router, logger).handle(clientRequest);
+        }
+        byte[] rawResponse = new ResponseParser().convertToByteArray(serverResponse);
+        new ResponseWriter().writeToOutputStream(sokket, rawResponse);
     }
 
 }

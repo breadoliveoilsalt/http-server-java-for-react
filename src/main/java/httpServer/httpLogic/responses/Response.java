@@ -1,25 +1,30 @@
 package httpServer.httpLogic.responses;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Response {
 
-    protected final String httpVersion;
-    protected final String statusCode;
-    protected final String statusMessage;
-    protected final Map<String, String> headers;
-    protected final String body;
+    public String httpVersion;
+    public String statusCode;
+    public String statusMessage;
+    public Map<String, String> headers;
+    public String stringBody;
+    public File file;
+
+    public Response() {}
 
     public Response(String httpVersion,
                     String statusCode,
                     String statusMessage,
                     Map<String, String> headers,
-                    String body) {
+                    String stringBody) {
         this.httpVersion = httpVersion;
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
         this.headers = headers;
-        this.body = body;
+        this.stringBody = stringBody;
     }
 
     public String getHttpVersion() {
@@ -46,8 +51,15 @@ public class Response {
         return headers.get(key);
     }
 
-    public String getBody() {
-        return body;
+    public String getStringBody() {
+        return stringBody;
+    }
+
+    public void addHeader(String key, String value) {
+        if (headers == null) {
+            headers = new HashMap<>();
+        }
+        headers.put(key, value);
     }
 
 }

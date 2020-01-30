@@ -34,7 +34,7 @@ public class ControllerInheritanceTests {
 
         assertTrue(response.getStatusCode() == "200");
         assertTrue(response.hasHeader("TestField", "TestValue"));
-        assertNull(response.getBody());
+        assertNull(response.getStringBody());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ControllerInheritanceTests {
 
         assertTrue(response.getStatusCode() == "405");
         assertTrue(response.hasHeader("Allow", "HEAD, OPTIONS, PUT"));
-        assertNull(response.getBody());
+        assertNull(response.getStringBody());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ControllerInheritanceTests {
 
         assertTrue(response.getStatusCode() == "200");
         assertTrue(response.hasHeader("Allow", "HEAD, GET, OPTIONS"));
-        assertNull(response.getBody());
+        assertNull(response.getStringBody());
     }
 
 }

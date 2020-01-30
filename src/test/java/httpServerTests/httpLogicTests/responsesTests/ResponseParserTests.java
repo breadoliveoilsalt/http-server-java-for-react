@@ -7,6 +7,12 @@ import httpServer.httpLogic.responses.ResponseParser;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+
 import static org.junit.Assert.assertEquals;
 
 public class ResponseParserTests {
@@ -20,14 +26,14 @@ public class ResponseParserTests {
     }
 
     @Test
-    public void stringifyTakesDataFromAResponseObjectAndTurnsItIntoAStringWithTwoCRLFSMarkingTheEndOfTheMetaData() {
+    public void convertToByteArrayConvertsAResponseObjectToAByteArray() throws IOException {
         buildResponseForBasicStringTest();
-
-        String result = responseParser.stringify(responseObject);
-
         String expectedResult = "HTTP/1.1 200 OK" + Whitespace.CRLF + Whitespace.CRLF;
-        assertEquals(expectedResult, result);
-   }
+
+        byte[] result = responseParser.convertToByteArray(responseObject);
+
+        assertEquals(expectedResult, new String(result));
+    }
 
    private void buildResponseForBasicStringTest() {
         responseObject = new Response(
@@ -39,55 +45,85 @@ public class ResponseParserTests {
    }
 
     @Test
-    public void stringifyCanStringifyAResponseObjectsHeadersWithCRLFFollowingEachIntermediaryHeader() {
-        String header1Key = "Content-Length";
-        String header1Value = "0";
-        String header2Key = "Date";
-        String header2Value = "Some Date";
-        buildResponseForHeadersTest(header1Key, header1Value, header2Key, header2Value);
-
-        String result = responseParser.stringify(responseObject);
-
+    public void convertToByteArrayCanConvertAResponseWithHeaders() throws IOException {
+        buildResponseForHeadersTest();
         String expectedResult =
                 "HTTP/1.1 200 OK" + Whitespace.CRLF +
                 "Content-Length: 0" + Whitespace.CRLF +
                 "Date: Some Date" + Whitespace.CRLF +
-                        Whitespace.CRLF;
-        assertEquals(expectedResult, result);
+                Whitespace.CRLF;
+
+        byte[] result = responseParser.convertToByteArray(responseObject);
+
+        assertEquals(expectedResult, new String(result));
     }
 
-    private void buildResponseForHeadersTest(String header1Key, String header1Value, String header2Key, String header2Value ) {
+    private void buildResponseForHeadersTest() {
         ResponseBuilder builder = new ResponseBuilder();
         builder.addOKStatusLine()
-            .addHeader(header1Key, header1Value)
-            .addHeader(header2Key, header2Value);
+            .addHeader("Content-Length", "0")
+            .addHeader("Date", "Some Date");
 
         responseObject = builder.build();
     }
 
-    @Test public void stringifyAddsAMessageBodyIfTheResponseObjectHasABody() {
-        String header1Key = "Content-Length";
-        String header1Value = "5";
-        String body = "Hello";
-        buildResponseForBodyTest(header1Key, header1Value, body);
-
-        String result = responseParser.stringify(responseObject);
+    @Test public void convertToByteArrayAddsAResponse_sStringBody() throws IOException {
+        buildResponseForStringBodyTest();
 
         String expectedResult =
                 "HTTP/1.1 200 OK" + Whitespace.CRLF +
                 "Content-Length: 5" + Whitespace.CRLF +
                         Whitespace.CRLF +
                 "Hello";
-        assertEquals(expectedResult, result);
+
+        byte[] result = responseParser.convertToByteArray(responseObject);
+
+        assertEquals(expectedResult, new String(result));
     }
 
-    private void buildResponseForBodyTest(String header1Key, String header1Value, String body) {
+    private void buildResponseForStringBodyTest() {
         ResponseBuilder builder = new ResponseBuilder();
         builder.addOKStatusLine()
-                .addHeader(header1Key, header1Value)
-                .addBody(body);
+                .addHeader("Content-Length", "5")
+                .addBody("Hello");
 
         responseObject = builder.build();
+    }
+
+    @Test public void convertToByteArrayOutputStreamAddsAResponse_sFile() throws IOException {
+        File fileForTest = getFileForTest();
+        buildResponseForFileTest(fileForTest);
+
+        String rawExpectedMetaData =
+                "HTTP/1.1 200 OK" + Whitespace.CRLF +
+                "Content-Length: " + Long.toString(fileForTest.length()) + Whitespace.CRLF +
+                Whitespace.CRLF;
+
+        ByteArrayOutputStream tempExpectedResultBuffer = new ByteArrayOutputStream();
+        tempExpectedResultBuffer.write(rawExpectedMetaData.getBytes());
+        tempExpectedResultBuffer.write(Files.readAllBytes(fileForTest.toPath()));
+
+        byte[] expectedResult = tempExpectedResultBuffer.toByteArray();
+        tempExpectedResultBuffer.close();
+
+        byte[] result = responseParser.convertToByteArray(responseObject);
+
+        assertEquals(new String(expectedResult), new String(result));
+    }
+
+    private File getFileForTest() {
+        URL urlToFileToWrite = this.getClass().getResource("fileToWriteForTests.txt");
+        File file = new File(urlToFileToWrite.getPath());
+        return file;
+    }
+
+    private void buildResponseForFileTest(File fileForTest) {
+        ResponseBuilder builder = new ResponseBuilder();
+        builder.addOKStatusLine()
+                .addHeader("Content-Length", Long.toString(fileForTest.length()));
+
+        responseObject = builder.build();
+        responseObject.file = fileForTest;
     }
 
 }

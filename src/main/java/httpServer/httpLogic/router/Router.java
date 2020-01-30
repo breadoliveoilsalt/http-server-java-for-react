@@ -1,5 +1,6 @@
 package httpServer.httpLogic.router;
 
+import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.responses.Response;
 
 import java.lang.reflect.Method;
@@ -7,10 +8,10 @@ import java.util.*;
 
 public class Router {
 
-    private final Map<String, Class> routeMap;
+    private final Map<String, Class<Controller>> routeMap;
     private Set<String> recognizedMethods;
 
-    public Router(Map<String, Class> routeMap) {
+    public Router(Map<String, Class<Controller>> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);
     }
 
