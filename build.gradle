@@ -37,6 +37,12 @@ test {
     }
 }
 
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/java/httpServerTests/httpLogicTests/responsesTests"
+    into "${buildDir}/classes/java/test/httpServerTests/httpLogicTests/responsesTests"
+}
+processTestResources.dependsOn copyTestResources
+
 // Uncomment to compile with warnings
 //allprojects {
 //    gradle.projectsEvaluated {
