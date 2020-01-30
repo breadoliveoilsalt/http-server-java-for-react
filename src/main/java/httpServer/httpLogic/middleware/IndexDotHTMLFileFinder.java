@@ -19,7 +19,7 @@ public class IndexDotHTMLFileFinder extends Middleware {
 
     @Override
     public void handle(Request request, Response response) {
-        if (request.getPath() == "/") {
+        if (request.getPath().equals("/")) {
             File file = new File(path + "/index.html");
             if (file.exists()) {
                 response.file = file;
