@@ -56,6 +56,7 @@ public class ResponseParser {
             byte[] fileBuffer = new byte[Math.toIntExact(response.file.length())];
             fileInputStream.read(fileBuffer);
             byteArrayOutputStream.write(fileBuffer);
+            fileInputStream.close();
         }
        return byteArrayOutputStream.toByteArray();
     }

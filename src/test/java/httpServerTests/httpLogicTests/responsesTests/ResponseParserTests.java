@@ -8,7 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
 
 import static org.junit.Assert.assertEquals;
 
@@ -87,20 +90,39 @@ public class ResponseParserTests {
         responseObject = builder.build();
     }
 
-//    @Test public void convertToByteArrayOutputStreamAddsAResponsesFile() throws IOException {
-//        buildResponseForStringBodyTest();
-//
-//        String rawResponseString =
-//                "HTTP/1.1 200 OK" + Whitespace.CRLF +
-//                        "Content-Length: 5" + Whitespace.CRLF +
-//                        Whitespace.CRLF +
-//                        "Hello";
-//
-//        ByteArrayOutputStream expectedResult = new ByteArrayOutputStream();
-//        expectedResult.write(rawResponseString.getBytes());
-//
-//        ByteArrayOutputStream result = responseParser.convertToByteArray(responseObject);
-//
-//        assertEquals(expectedResult.toString(), result.toString());
-//    }
+    @Test public void convertToByteArrayOutputStreamAddsAResponsesFile() throws IOException {
+        File fileForTest = getFileForTest();
+        buildResponseForFileTest(fileForTest);
+
+        String rawExpectedMetaData =
+                "HTTP/1.1 200 OK" + Whitespace.CRLF +
+                "Content-Length: " + Long.toString(fileForTest.length()) + Whitespace.CRLF +
+                Whitespace.CRLF;
+
+        ByteArrayOutputStream tempExpectedResultBuffer = new ByteArrayOutputStream();
+        tempExpectedResultBuffer.write(rawExpectedMetaData.getBytes());
+        tempExpectedResultBuffer.write(Files.readAllBytes(fileForTest.toPath()));
+
+        byte[] expectedResult = tempExpectedResultBuffer.toByteArray();
+        tempExpectedResultBuffer.close();
+
+        byte[] result = responseParser.convertToByteArray(responseObject);
+
+        assertEquals(new String(expectedResult), new String(result));
+    }
+
+    private File getFileForTest() {
+        URL urlToFileToWrite = this.getClass().getResource("fileToWriteForTests.txt");
+        return new File(urlToFileToWrite.getPath());
+    }
+
+    private void buildResponseForFileTest(File fileForTest) {
+        ResponseBuilder builder = new ResponseBuilder();
+        builder.addOKStatusLine()
+                .addHeader("Content-Length", Long.toString(fileForTest.length()));
+
+        responseObject = builder.build();
+        responseObject.file = fileForTest;
+    }
+
 }
