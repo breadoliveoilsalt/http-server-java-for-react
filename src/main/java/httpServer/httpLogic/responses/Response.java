@@ -1,6 +1,7 @@
 package httpServer.httpLogic.responses;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Response {
@@ -55,6 +56,9 @@ public class Response {
     }
 
     public void addHeader(String key, String value) {
+        if (headers == null) {
+            headers = new HashMap<>();
+        }
         headers.put(key, value);
     }
 

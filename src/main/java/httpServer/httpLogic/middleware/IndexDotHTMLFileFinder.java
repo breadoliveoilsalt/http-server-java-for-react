@@ -23,6 +23,7 @@ public class IndexDotHTMLFileFinder extends Middleware {
             File file = new File(path + "/index.html");
             if (file.exists()) {
                 response.file = file;
+                response.httpVersion = "HTTP/1.1";
                 response.statusCode = "200";
                 response.statusMessage = "OK";
                 response.addHeader("Content-Length", Long.toString(file.length()));

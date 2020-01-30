@@ -44,8 +44,11 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Router router = new RouterFactory().buildHTTPServerRouter();
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request clientRequest = new RequestParser().parse(rawClientRequest);
-        Response serverResponse = new Handler(router, logger).handle(clientRequest);
+        Response serverResponse = new Response();
         new IndexDotHTMLFileFinder().handle(clientRequest, serverResponse);
+        if (serverResponse.statusCode == null) {
+            serverResponse = new Handler(router, logger).handle(clientRequest);
+        }
         byte[] rawResponse = new ResponseParser().convertToByteArray(serverResponse);
         new ResponseWriter().writeToOutputStream(sokket, rawResponse);
     }
