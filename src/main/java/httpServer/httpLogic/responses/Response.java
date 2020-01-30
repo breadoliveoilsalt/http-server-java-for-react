@@ -54,4 +54,8 @@ public class Response {
         return stringBody;
     }
 
+    public void addHeader(String key, String value) {
+        headers.put(key, value);
+    }
+
 }

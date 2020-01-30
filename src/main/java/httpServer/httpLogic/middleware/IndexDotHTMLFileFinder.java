@@ -25,6 +25,7 @@ public class IndexDotHTMLFileFinder extends Middleware {
                 response.file = file;
                 response.statusCode = "200";
                 response.statusMessage = "OK";
+                response.addHeader("Content-Length", Long.toString(file.length()));
             }
         } else {
             passToNextMiddleware(request, response);
