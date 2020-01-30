@@ -2,8 +2,8 @@ package httpServer.httpLogic;
 
 import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.middleware.IndexDotHTMLFileFinder;
-import httpServer.httpLogic.router.Router;
-import httpServer.httpLogic.router.RouterFactory;
+import httpServer.router.Router;
+import httpServer.router.RouterFactory;
 import httpServer.httpLogic.io.RequestReader;
 import httpServer.httpLogic.io.ResponseWriter;
 import httpServer.httpLogic.requests.RequestParser;

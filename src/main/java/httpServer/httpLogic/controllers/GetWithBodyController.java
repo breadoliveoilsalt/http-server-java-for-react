@@ -3,7 +3,7 @@ package httpServer.httpLogic.controllers;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.httpLogic.router.Router;
+import httpServer.router.Router;
 
 public class GetWithBodyController extends Controller {
 

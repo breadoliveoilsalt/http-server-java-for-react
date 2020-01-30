@@ -4,7 +4,7 @@ import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.controllers.ExceptionsController;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.router.Router;
+import httpServer.router.Router;
 import httpServer.serverLogger.ServerLogger;
 
 import java.lang.reflect.Constructor;

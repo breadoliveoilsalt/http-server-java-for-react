@@ -4,7 +4,7 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.httpLogic.router.Router;
+import httpServer.router.Router;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

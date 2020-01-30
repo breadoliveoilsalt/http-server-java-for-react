@@ -3,7 +3,7 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.handler.Handler;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.httpLogic.router.Router;
+import httpServer.router.Router;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;

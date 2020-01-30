@@ -1,9 +1,9 @@
-package httpServerTests.httpLogicTests.routerTests;
+package httpServerTests.routerTests;
 
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.httpLogic.router.Router;
-import httpServer.httpLogic.router.RouterBuilder;
+import httpServer.router.Router;
+import httpServer.router.RouterBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

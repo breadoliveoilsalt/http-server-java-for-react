@@ -3,7 +3,7 @@ package httpServerTests.httpLogicTests.controllerTests;
 import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.router.Router;
+import httpServer.router.Router;
 
 public class PathOneTestController extends Controller {
 

@@ -1,4 +1,4 @@
-package httpServer.httpLogic.router;
+package httpServer.router;
 import httpServer.httpLogic.controllers.*;
 
 public class RouterFactory {

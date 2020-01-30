@@ -1,7 +1,7 @@
 package httpServer.httpLogic.controllers;
 
 import httpServer.httpLogic.requests.Request;
-import httpServer.httpLogic.router.Router;
+import httpServer.router.Router;
 
 public class OnlyHeadMethodController extends Controller {
 
