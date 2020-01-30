@@ -2,12 +2,11 @@ package httpServer.httpLogic.controllers;
 
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.router.Router;
 
 public class RedirectController extends Controller {
 
-    public RedirectController(Router router, Request request) {
-       super(router, request);
+    public RedirectController(Request request, Response response) {
+       super(request, response);
     }
 
     public Response get() {

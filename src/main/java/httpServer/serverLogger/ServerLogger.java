@@ -75,7 +75,7 @@ public class ServerLogger {
                     newLine() +
                     host +
                     " made a " +
-                    request.getMethod() +
+                    request.getHTTPMethod() +
                     " request to " +
                     request.getPath() +
                     "." +

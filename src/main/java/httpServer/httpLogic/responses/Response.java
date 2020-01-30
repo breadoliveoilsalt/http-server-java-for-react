@@ -1,5 +1,7 @@
 package httpServer.httpLogic.responses;
 
+import httpServer.httpLogic.controllers.Controller;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +14,8 @@ public class Response {
     public Map<String, String> headers;
     public String stringBody;
     public File file;
+    public Controller controller;
+
 
     public Response() {}
 

@@ -47,7 +47,7 @@ public class RouterTests {
 
     @Test
     public void getAllRecognizedMethodsReturnsASetOfHTTPMethodsToWhichTheControllersWillReturnAResponseCollectively() {
-        Set<String> result = router.getAllRecognizedMethods();
+        Set<String> result = router.getAllRecognizedHTTPMethods();
 
         Set<String> expectedMethods = new HashSet<>(Arrays.asList("get", "post", "delete"));
 

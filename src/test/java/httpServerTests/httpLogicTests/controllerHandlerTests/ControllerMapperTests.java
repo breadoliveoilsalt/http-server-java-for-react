@@ -1,7 +1,7 @@
 package httpServerTests.httpLogicTests.controllerHandlerTests;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.Whitespace;
-import httpServer.httpLogic.controllerHandler.ControllerHandler;
+import httpServer.httpLogic.middleware.ControllerMapper;
 import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.router.Router;
 import httpServer.httpLogic.requests.Request;
@@ -18,13 +18,13 @@ import java.io.OutputStream;
 
 import static org.junit.Assert.*;
 
-public class ControllerHandlerTests {
+public class ControllerMapperTests {
 
     Router router;
     String pathOne;
     ServerLogger logger;
     OutputStream loggerOutputStream;
-    ControllerHandler controllerHandler;
+    ControllerMapper controllerMapper;
 
     @Before
     public void testInit() {
@@ -33,7 +33,7 @@ public class ControllerHandlerTests {
         PathOneTestController.getResponseToReturn = null;
         loggerOutputStream = new ByteArrayOutputStream();
         logger = new ServerLogger(loggerOutputStream);
-        controllerHandler = new ControllerHandler(router, logger);
+        controllerMapper = new ControllerMapper(router, logger);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ControllerHandlerTests {
         Response expectedResponse = new ResponseBuilder().build();
         PathOneTestController.getResponseToReturn = expectedResponse;
 
-        Response result = new ControllerHandler(router, logger).handle(clientRequest);
+        Response result = new ControllerMapper(router, logger).handle(clientRequest);
 
         assertEquals(expectedResponse, result);
     }
@@ -51,7 +51,7 @@ public class ControllerHandlerTests {
     public void handleReturnsA501ResponseWhenTheRouterDoesNotRecognizeTheMethod() throws Exception {
         Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod("BANANAS").build();
 
-        Response result = new ControllerHandler(router, logger).handle(clientRequest);
+        Response result = new ControllerMapper(router, logger).handle(clientRequest);
 
         assertEquals("501", result.getStatusCode());
         assertEquals("Not Implemented", result.getStatusMessage());
@@ -62,7 +62,7 @@ public class ControllerHandlerTests {
     public void handleReturnsA400BadRequestResponseIfARequestIsFlaggedAsUnparsable() throws Exception {
         Request clientRequest = new RequestBuilder().flagAsUnparsable().build();
 
-        Response result = new ControllerHandler(router, logger).handle(clientRequest);
+        Response result = new ControllerMapper(router, logger).handle(clientRequest);
 
         assertEquals("400", result.getStatusCode());
         assertEquals("Bad Request", result.getStatusMessage());
@@ -73,7 +73,7 @@ public class ControllerHandlerTests {
     public void handleReturnsA405MethodNotAllowedResponseIfAMethodIsRecognizedByTheServerButTheRequestedResourceDoesNotImplementTheRequestedMethod() throws Exception {
         Request clientRequest = new RequestBuilder().addPath(pathOne).addMethod(HTTPMethods.PUT).build();
 
-        Response result = new ControllerHandler(router, logger).handle(clientRequest);
+        Response result = new ControllerMapper(router, logger).handle(clientRequest);
 
         assertEquals("405", result.getStatusCode());
         assertEquals("Method Not Allowed", result.getStatusMessage());
@@ -83,7 +83,7 @@ public class ControllerHandlerTests {
     public void handleReturnsA404NotFoundResponseIfTheAMethodIsRecognizedByTheServerButTheResourceDoesNotExist() throws Exception {
         Request clientRequest = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
 
-        Response result = new ControllerHandler(router, logger).handle(clientRequest);
+        Response result = new ControllerMapper(router, logger).handle(clientRequest);
 
         assertEquals("404", result.getStatusCode());
         assertEquals("Not Found", result.getStatusMessage());
@@ -95,7 +95,7 @@ public class ControllerHandlerTests {
         Response response = new ResponseBuilder().addStatusCode("200").build();
         PathOneTestController.getResponseToReturn = response;
 
-        Response result = new ControllerHandler(router, logger).handle(clientRequest);
+        Response result = new ControllerMapper(router, logger).handle(clientRequest);
 
         String expectedLog =
                 Whitespace.DIVIDER +

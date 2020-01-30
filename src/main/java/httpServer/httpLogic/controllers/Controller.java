@@ -4,7 +4,6 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.router.Router;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,12 +12,12 @@ import java.util.Set;
 
 public abstract class Controller {
 
-    protected final Router router;
     protected final Request request;
+    protected final Response response;
 
-    public Controller(Router router, Request request) {
-        this.router = router;
+    public Controller(Request request, Response response) {
         this.request = request;
+        this.response = response;
     }
 
     public Response options() {
