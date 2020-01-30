@@ -61,40 +61,37 @@ public class ResponseParserTests {
     }
 
     private void buildResponseForHeadersTest() {
-        String header1Key = "Content-Length";
-        String header1Value = "0";
-        String header2Key = "Date";
-        String header2Value = "Some Date";
         ResponseBuilder builder = new ResponseBuilder();
         builder.addOKStatusLine()
-            .addHeader(header1Key, header1Value)
-            .addHeader(header2Key, header2Value);
+            .addHeader("Content-Length", "0")
+            .addHeader("Date", "Some Date");
 
         responseObject = builder.build();
     }
 
-//    @Test public void stringifyAddsAMessageBodyIfTheResponseObjectHasABody() {
-//        String header1Key = "Content-Length";
-//        String header1Value = "5";
-//        String body = "Hello";
-//        buildResponseForBodyTest(header1Key, header1Value, body);
-//
-//        String result = responseParser.stringify(responseObject);
-//
-//        String expectedResult =
-//                "HTTP/1.1 200 OK" + Whitespace.CRLF +
-//                "Content-Length: 5" + Whitespace.CRLF +
-//                        Whitespace.CRLF +
-//                "Hello";
-//        assertEquals(expectedResult, result);
-//    }
-//
-//    private void buildResponseForBodyTest(String header1Key, String header1Value, String body) {
-//        ResponseBuilder builder = new ResponseBuilder();
-//        builder.addOKStatusLine()
-//                .addHeader(header1Key, header1Value)
-//                .addBody(body);
-//
-//        responseObject = builder.build();
-//    }
+    @Test public void convertToByteArrayOutputStreamAddsAResponsesStringBody() throws IOException {
+        buildResponseForStringBodyTest();
+
+        String rawResponseString =
+                "HTTP/1.1 200 OK" + Whitespace.CRLF +
+                "Content-Length: 5" + Whitespace.CRLF +
+                        Whitespace.CRLF +
+                "Hello";
+
+        ByteArrayOutputStream expectedResult = new ByteArrayOutputStream();
+        expectedResult.write(rawResponseString.getBytes());
+
+        ByteArrayOutputStream result = responseParser.convertToByteArrayOutputStream(responseObject);
+
+        assertEquals(expectedResult.toString(), result.toString());
+    }
+
+    private void buildResponseForStringBodyTest() {
+        ResponseBuilder builder = new ResponseBuilder();
+        builder.addOKStatusLine()
+                .addHeader("Content-Length", "5")
+                .addBody("Hello");
+
+        responseObject = builder.build();
+    }
 }
