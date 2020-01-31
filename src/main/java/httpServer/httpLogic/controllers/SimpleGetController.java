@@ -11,9 +11,10 @@ public class SimpleGetController extends Controller {
     }
 
     public Response get() {
-        return new ResponseBuilder()
-                .finalizeMetaDataForOKResponse()
-                .build();
+        return response;
+//        return new ResponseBuilder()
+//                .finalizeMetaDataForOKResponse()
+//                .build();
     }
 
 }

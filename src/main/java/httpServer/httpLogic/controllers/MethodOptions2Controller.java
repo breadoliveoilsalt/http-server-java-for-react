@@ -11,21 +11,24 @@ public class MethodOptions2Controller extends Controller {
     }
 
     public Response get() {
-        return new ResponseBuilder()
-                .finalizeMetaDataForOKResponse()
-                .build();
+        return response;
+//        return new ResponseBuilder()
+//                .finalizeMetaDataForOKResponse()
+//                .build();
     }
 
     public Response put() {
-        return new ResponseBuilder()
-                .finalizeMetaDataForOKResponse()
-                .build();
+        return response;
+//        return new ResponseBuilder()
+//                .finalizeMetaDataForOKResponse()
+//                .build();
     }
 
     public Response post() {
-        return new ResponseBuilder()
-                .finalizeMetaDataForOKResponse()
-                .build();
+        return response;
+//        return new ResponseBuilder()
+//                .finalizeMetaDataForOKResponse()
+//                .build();
     }
 
 }

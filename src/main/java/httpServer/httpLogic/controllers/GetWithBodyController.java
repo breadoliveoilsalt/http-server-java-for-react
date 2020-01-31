@@ -11,10 +11,12 @@ public class GetWithBodyController extends Controller {
     }
 
     public Response get() {
-        return new ResponseBuilder()
-               .addBody("Hello World!")
-               .finalizeMetaDataForOKResponse()
-               .build();
+        response.stringBody = "Hello World!";
+        return response;
+//        return new ResponseBuilder()
+//               .addBody("Hello World!")
+//               .finalizeMetaDataForOKResponse()
+//               .build();
     }
 
 }

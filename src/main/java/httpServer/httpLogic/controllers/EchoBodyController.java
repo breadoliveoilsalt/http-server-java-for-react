@@ -11,11 +11,14 @@ public class EchoBodyController extends Controller {
     }
 
     public Response post() {
-        String responseBody = request.getBody();
-        return new ResponseBuilder()
-                .addBody(responseBody)
-                .finalizeMetaDataForOKResponse()
-                .build();
+       response.stringBody = request.getBody();
+       return response;
+
+//        String responseBody = request.getBody();
+//        return new ResponseBuilder()
+//                .addBody(responseBody)
+//                .finalizeMetaDataForOKResponse()
+//                .build();
     }
 
 }
