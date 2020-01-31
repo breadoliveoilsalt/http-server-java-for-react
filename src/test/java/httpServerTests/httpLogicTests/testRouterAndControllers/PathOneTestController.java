@@ -6,14 +6,15 @@ import httpServer.httpLogic.responses.Response;
 
 public class PathOneTestController extends Controller {
 
-    public static Response getResponseToReturn;
+    public static String stringBodyToAddForTest;
 
     public PathOneTestController(Request request, Response response) {
         super(request, response);
     }
 
     public Response get() {
-        return getResponseToReturn;
+        response.stringBody = stringBodyToAddForTest;
+        return response;
     }
 
 }

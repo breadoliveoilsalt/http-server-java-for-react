@@ -38,6 +38,7 @@ public class IndexDotHTMLFileFinder extends Middleware {
             if (file.exists()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
+                // GOT TO MOVE THIS TO HEADER MIDDLEWARE
                 response.addHeader(HTTPHeaders.ContentLength, Long.toString(file.length()));
             }
         }

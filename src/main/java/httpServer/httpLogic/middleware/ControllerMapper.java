@@ -32,6 +32,7 @@ public class ControllerMapper extends Middleware {
                     callControllerMethod();
                 } else {
                     response.statusCode = HTTPStatusCodes.MethodNotAllowed;
+                    // MOVE THIS TO HEADER MIDDLEWARE
                     response.addHeader(HTTPHeaders.Allow, controller.getStringOfRecognizedMethods());
                 }
             }
