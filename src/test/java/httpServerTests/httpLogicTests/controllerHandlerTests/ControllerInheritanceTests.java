@@ -1,4 +1,4 @@
-//package httpServerTests.httpLogicTests.controllerTests;
+//package httpServerTests.httpLogicTests.controllerHandlerTests;
 //
 //import httpServer.httpLogic.requests.Request;
 //import httpServer.httpLogic.requests.RequestBuilder;
