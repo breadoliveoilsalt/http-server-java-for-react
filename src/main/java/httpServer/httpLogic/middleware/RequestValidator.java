@@ -26,22 +26,16 @@ public class RequestValidator extends Middleware {
     private void checkIfValidRequest() {
         if (request.wasUnparsable()) {
             response.statusCode = HTTPStatusCodes.BadRequest;
-//            response.statusMessage = "Bad Request";
-//            response.stringBody = "400 Error: Bad Request Submitted";
             return;
         }
 
         if (requestHasUnrecognizedMethod()) {
             response.statusCode = HTTPStatusCodes.NotImplemented;
-//            response.statusMessage = "Not Implemented";
-//            response.stringBody = "501 Error: Method Not Implemented";
             return;
         }
 
-        // MUST MODIFY THIS CONDITIONAL ONCE I GET CONTROLLER TOGETHER - delete the first check for /
         if (!request.getPath().equals("/") && requestedResourceDoesNotExist()) {
             response.statusCode = HTTPStatusCodes.NotFound;
-//            response.statusMessage = "Not Found";
             return;
         }
     }

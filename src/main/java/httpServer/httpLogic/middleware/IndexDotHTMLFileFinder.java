@@ -1,6 +1,8 @@
 package httpServer.httpLogic.middleware;
 
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
+import httpServer.httpLogic.constants.HTTPStatusMessages;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 
@@ -36,9 +38,7 @@ public class IndexDotHTMLFileFinder extends Middleware {
             if (file.exists()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
-                response.httpVersion = "HTTP/1.1";
-                response.statusMessage = "OK";
-                response.addHeader("Content-Length", Long.toString(file.length()));
+                response.addHeader(HTTPHeaders.ContentLength, Long.toString(file.length()));
             }
         }
     }

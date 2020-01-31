@@ -1,9 +1,6 @@
 package httpServer.httpLogic;
 
-import httpServer.httpLogic.middleware.ControllerMapper;
-import httpServer.httpLogic.middleware.IndexDotHTMLFileFinder;
-import httpServer.httpLogic.middleware.Middleware;
-import httpServer.httpLogic.middleware.RequestValidator;
+import httpServer.httpLogic.middleware.*;
 import httpServer.router.Router;
 import httpServer.router.RouterFactory;
 import httpServer.httpLogic.io.RequestReader;
@@ -50,11 +47,10 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Middleware middlewareStart = new RequestValidator(router);
         middlewareStart
                 .setNext(new IndexDotHTMLFileFinder())
-                .setNext(new ControllerMapper(router));
+                .setNext(new ControllerMapper(router))
+                .setNext(new HTTPVersionInserter())
+                .setNext(new HTTPStatusMessageInserter());
         middlewareStart.handle(request, response);
-//        if (serverResponse.statusCode == null) {
-//            serverResponse = new ControllerHandler(router, logger).handle(clientRequest);
-//        }
         byte[] rawResponse = new ResponseParser().convertToByteArray(response);
         new ResponseWriter().writeToOutputStream(sokket, rawResponse);
     }

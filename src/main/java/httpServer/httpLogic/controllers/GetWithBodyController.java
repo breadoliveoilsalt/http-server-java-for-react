@@ -13,10 +13,6 @@ public class GetWithBodyController extends Controller {
     public Response get() {
         response.stringBody = "Hello World!";
         return response;
-//        return new ResponseBuilder()
-//               .addBody("Hello World!")
-//               .finalizeMetaDataForOKResponse()
-//               .build();
     }
 
 }

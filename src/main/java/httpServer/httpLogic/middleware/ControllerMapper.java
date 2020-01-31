@@ -1,5 +1,6 @@
 package httpServer.httpLogic.middleware;
 
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.requests.Request;
@@ -31,7 +32,7 @@ public class ControllerMapper extends Middleware {
                     callControllerMethod();
                 } else {
                     response.statusCode = HTTPStatusCodes.MethodNotAllowed;
-                    response.addHeader("Allow", controller.getStringOfRecognizedMethods());
+                    response.addHeader(HTTPHeaders.Allow, controller.getStringOfRecognizedMethods());
                 }
             }
             passToNextMiddleware(request, response);
@@ -47,48 +48,8 @@ public class ControllerMapper extends Middleware {
     }
 
     private void callControllerMethod() throws NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
-        Method methodToInvoke = controller.getClass().getMethod(request.getHTTPMethod());
+        Method methodToInvoke = controller.getClass().getMethod(request.getHTTPMethod().toLowerCase());
         methodToInvoke.invoke(controller);
     }
-//    private Response determineResponse() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
-//
-//        if (request.wasUnparsable()) {
-//            return new ExceptionsController().render400Response();
-//        }
-//
-//        if (requestHasUnrecognizedMethod()) {
-//            return new ExceptionsController().render501Response();
-//        }
-//
-//        if (requestedResourceDoesNotExist()) {
-//            return new ExceptionsController().render404Response();
-//        }
-//
-//        mapRequestToController();
-//
-//        if (controllerDoesNotSupportTheMethod()) {
-//            return new ExceptionsController().render405Response(controller);
-//        }
-//
-//        return callControllerMethod();
-//    }
-//
-//    private void populateHandlerFields(Request request) {
-//        this.request = request;
-//        if (!request.wasUnparsable()) {
-//            this.pathRequested = request.getPath();
-//            this.controllerMethodRequested = request.getHTTPMethod().toLowerCase();
-//        }
-//    }
-//
-//
-//
-//    private boolean controllerDoesNotSupportTheMethod() {
-//        return requestHasRecognizedMethod() && !controller.getRecognizedMethods().contains(controllerMethodRequested);
-//    }
-//
-//    private boolean requestedResourceDoesNotExist() {
-//        return !router.getPaths().contains(pathRequested);
-//    }
-//
+
 }

@@ -12,23 +12,14 @@ public class MethodOptions2Controller extends Controller {
 
     public Response get() {
         return response;
-//        return new ResponseBuilder()
-//                .finalizeMetaDataForOKResponse()
-//                .build();
     }
 
     public Response put() {
         return response;
-//        return new ResponseBuilder()
-//                .finalizeMetaDataForOKResponse()
-//                .build();
     }
 
     public Response post() {
         return response;
-//        return new ResponseBuilder()
-//                .finalizeMetaDataForOKResponse()
-//                .build();
     }
 
 }
