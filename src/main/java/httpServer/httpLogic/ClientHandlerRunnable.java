@@ -1,5 +1,6 @@
 package httpServer.httpLogic;
 
+import httpServer.httpLogic.middleware.ControllerMapper;
 import httpServer.httpLogic.middleware.IndexDotHTMLFileFinder;
 import httpServer.httpLogic.middleware.Middleware;
 import httpServer.httpLogic.middleware.RequestValidator;
@@ -47,7 +48,9 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Request request = new RequestParser().parse(rawClientRequest);
         Response response = new Response();
         Middleware middlewareStart = new RequestValidator(router);
-        middlewareStart.setNext(new IndexDotHTMLFileFinder());
+        middlewareStart
+                .setNext(new IndexDotHTMLFileFinder())
+                .setNext(new ControllerMapper(router));
         middlewareStart.handle(request, response);
 //        if (serverResponse.statusCode == null) {
 //            serverResponse = new ControllerHandler(router, logger).handle(clientRequest);

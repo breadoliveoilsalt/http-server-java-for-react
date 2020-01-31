@@ -1,18 +1,20 @@
 package httpServer.httpLogic.middleware;
 
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.controllers.Controller;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.router.Router;
-import httpServer.serverLogger.ServerLogger;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 public class ControllerMapper extends Middleware {
 
     private final Router router;
     private Request request;
     private Response response;
+    private Controller controller;
 
     public ControllerMapper(Router router) {
         this.router = router;
@@ -23,7 +25,14 @@ public class ControllerMapper extends Middleware {
             if (response.hasUndeterminedStatus()) {
                 this.request = request;
                 this.response = response;
-                response.controller = getControllerForPathRequested();
+                getControllerForPathRequested();
+                if (controller.respondsTo(request.getHTTPMethod())) {
+                    response.statusCode = HTTPStatusCodes.OK;
+                    callControllerMethod();
+                } else {
+                    response.statusCode = HTTPStatusCodes.MethodNotAllowed;
+                    response.addHeader("Allow", controller.getStringOfRecognizedMethods());
+                }
             }
             passToNextMiddleware(request, response);
         } catch (Exception e) {
@@ -31,12 +40,16 @@ public class ControllerMapper extends Middleware {
         }
     }
 
-    private Controller getControllerForPathRequested() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+    private void getControllerForPathRequested() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
         Class controllerClass = (Class<Controller>) router.getControllerFor(request.getPath());
         Constructor<Controller> controllerConstructor = controllerClass.getConstructor(Request.class, Response.class);
-        return controllerConstructor.newInstance(request, response);
+        controller = controllerConstructor.newInstance(request, response);
     }
 
+    private void callControllerMethod() throws NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+        Method methodToInvoke = controller.getClass().getMethod(request.getHTTPMethod());
+        methodToInvoke.invoke(controller);
+    }
 //    private Response determineResponse() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
 //
 //        if (request.wasUnparsable()) {
@@ -69,18 +82,6 @@ public class ControllerMapper extends Middleware {
 //    }
 //
 //
-//    private Response callControllerMethod() throws NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
-//        Method methodToInvoke = controllerClass.getMethod(controllerMethodRequested);
-//        return (Response) methodToInvoke.invoke(controller);
-//    }
-//
-//    private boolean requestHasRecognizedMethod() {
-//        return router.getAllRecognizedHTTPMethods().contains(controllerMethodRequested);
-//    }
-//
-//    private boolean requestHasUnrecognizedMethod() {
-//        return !router.getAllRecognizedHTTPMethods().contains(controllerMethodRequested);
-//    }
 //
 //    private boolean controllerDoesNotSupportTheMethod() {
 //        return requestHasRecognizedMethod() && !controller.getRecognizedMethods().contains(controllerMethodRequested);

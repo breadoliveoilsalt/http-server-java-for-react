@@ -41,7 +41,7 @@ public abstract class Controller {
         HashSet<String> parsedMethods = new HashSet<>();
         for (Method method : classMethods) {
             if (method.getReturnType() == Response.class) {
-                parsedMethods.add(method.getName());
+                parsedMethods.add(method.getName().toUpperCase());
             }
         }
         return parsedMethods;
@@ -70,6 +70,10 @@ public abstract class Controller {
             responseToReturn = new ExceptionsController().render405Response(this);
         }
         return responseToReturn;
+    }
+
+    public boolean respondsTo(String httpMethodRequested) {
+       return getRecognizedMethods().contains(httpMethodRequested);
     }
 
 }
