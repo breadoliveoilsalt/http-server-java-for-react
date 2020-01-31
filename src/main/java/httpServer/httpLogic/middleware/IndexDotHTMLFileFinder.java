@@ -1,5 +1,6 @@
 package httpServer.httpLogic.middleware;
 
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 
@@ -21,9 +22,9 @@ public class IndexDotHTMLFileFinder extends Middleware {
 
     @Override
     public void handle(Request request, Response response) {
-        this.request = request;
-        this.response = response;
-        if (response.statusCode == null) {
+        if (response.hasUndeterminedStatus()) {
+            this.request = request;
+            this.response = response;
             checkForIndexDotHtmlRequest();
         }
         passToNextMiddleware(request, response);
@@ -33,11 +34,11 @@ public class IndexDotHTMLFileFinder extends Middleware {
         if (request.getPath().equals("/")) {
             File file = new File(path + "/index.html");
             if (file.exists()) {
+                response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
-//                response.httpVersion = "HTTP/1.1";
-                response.statusCode = "200";
+                response.httpVersion = "HTTP/1.1";
                 response.statusMessage = "OK";
-//                response.addHeader("Content-Length", Long.toString(file.length()));
+                response.addHeader("Content-Length", Long.toString(file.length()));
             }
         }
     }

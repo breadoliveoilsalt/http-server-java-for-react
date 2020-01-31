@@ -19,10 +19,10 @@ public class ControllerMapper extends Middleware {
     }
 
     public void handle(Request request, Response response) {
-        this.request = request;
-        this.response = response;
         try {
-            if (response.statusCode != null) {
+            if (response.hasUndeterminedStatus()) {
+                this.request = request;
+                this.response = response;
                 response.controller = getControllerForPathRequested();
             }
             passToNextMiddleware(request, response);

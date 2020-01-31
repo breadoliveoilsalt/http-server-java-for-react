@@ -1,5 +1,6 @@
 package httpServer.httpLogic.middleware;
 
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.router.Router;
@@ -24,23 +25,23 @@ public class RequestValidator extends Middleware {
 
     private void checkIfValidRequest() {
         if (request.wasUnparsable()) {
-            response.statusCode = "400";
-            response.statusMessage = "Bad Request";
-            response.stringBody = "400 Error: Bad Request Submitted";
+            response.statusCode = HTTPStatusCodes.BadRequest;
+//            response.statusMessage = "Bad Request";
+//            response.stringBody = "400 Error: Bad Request Submitted";
             return;
         }
 
         if (requestHasUnrecognizedMethod()) {
-            response.statusCode = "501";
-            response.statusMessage = "Not Implemented";
-            response.stringBody = "501 Error: Method Not Implemented";
+            response.statusCode = HTTPStatusCodes.NotImplemented;
+//            response.statusMessage = "Not Implemented";
+//            response.stringBody = "501 Error: Method Not Implemented";
             return;
         }
 
         // MUST MODIFY THIS CONDITIONAL ONCE I GET CONTROLLER TOGETHER - delete the first check for /
         if (!request.getPath().equals("/") && requestedResourceDoesNotExist()) {
-            response.statusCode = "404";
-            response.statusMessage = "Not Found";
+            response.statusCode = HTTPStatusCodes.NotFound;
+//            response.statusMessage = "Not Found";
             return;
         }
     }

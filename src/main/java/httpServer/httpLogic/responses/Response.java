@@ -66,4 +66,7 @@ public class Response {
         headers.put(key, value);
     }
 
+    public boolean hasUndeterminedStatus() {
+        return statusCode == null;
+    }
 }
