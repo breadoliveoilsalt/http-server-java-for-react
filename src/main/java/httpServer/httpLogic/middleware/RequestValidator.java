@@ -36,7 +36,7 @@ public class RequestValidator extends Middleware {
             return;
         }
 
-        if (!request.getPath().equals("/") && requestedResourceDoesNotExist()) {
+        if (requestedResourceDoesNotExist()) {
             response.statusCode = HTTPStatusCodes.NotFound;
             return;
         }

@@ -8,6 +8,7 @@ import httpServer.httpLogic.responses.Response;
 import httpServer.router.Router;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ControllerMapper extends Middleware {
@@ -27,14 +28,7 @@ public class ControllerMapper extends Middleware {
                 this.request = request;
                 this.response = response;
                 getControllerForPathRequested();
-                if (controller.respondsTo(request.getHTTPMethod())) {
-                    response.statusCode = HTTPStatusCodes.OK;
-                    callControllerMethod();
-                } else {
-                    response.statusCode = HTTPStatusCodes.MethodNotAllowed;
-                    // MOVE THIS TO HEADER MIDDLEWARE
-                    response.addHeader(HTTPHeaders.Allow, controller.getStringOfRecognizedMethods());
-                }
+                askControllerToRespondToHTTPMethodRequested();
             }
             passToNextMiddleware(request, response);
         } catch (Exception e) {
@@ -46,6 +40,16 @@ public class ControllerMapper extends Middleware {
         Class controllerClass = (Class<Controller>) router.getControllerFor(request.getPath());
         Constructor<Controller> controllerConstructor = controllerClass.getConstructor(Request.class, Response.class);
         controller = controllerConstructor.newInstance(request, response);
+    }
+
+    private void askControllerToRespondToHTTPMethodRequested() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        if (controller.respondsTo(request.getHTTPMethod())) {
+            response.statusCode = HTTPStatusCodes.OK;
+            callControllerMethod();
+        } else {
+            response.statusCode = HTTPStatusCodes.MethodNotAllowed;
+            response.addHeader(HTTPHeaders.Allow, controller.getStringOfRecognizedMethods());
+        }
     }
 
     private void callControllerMethod() throws NoSuchMethodException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
