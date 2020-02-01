@@ -1,6 +1,8 @@
 package httpServer.httpLogic.controllers;
 
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
@@ -21,20 +23,19 @@ public abstract class Controller {
     }
 
     public Response options() {
-        return new ResponseBuilder()
-                .addHeader("Allow", getStringOfRecognizedMethods())
-                .finalizeMetaDataForOKResponse()
-                .build();
-    }
-
-    public Set<String> getRecognizedMethods() {
-        Method[] classMethods = this.getClass().getMethods();
-        return parseMethodsThatReturnResponseObjects(classMethods);
+        response.statusCode = HTTPStatusCodes.OK;
+        response.addHeader(HTTPHeaders.Allow, getStringOfRecognizedMethods());
+        return response;
     }
 
     public String getStringOfRecognizedMethods() {
         Set<String> recognizedMethods = getRecognizedMethods();
         return stringifyRecognizedMethods(recognizedMethods);
+    }
+
+    public Set<String> getRecognizedMethods() {
+        Method[] classMethods = this.getClass().getMethods();
+        return parseMethodsThatReturnResponseObjects(classMethods);
     }
 
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
@@ -58,18 +59,18 @@ public abstract class Controller {
     }
 
     public Response head() {
-        Response responseToReturn;
         try {
-            Method methodToInvoke = this.getClass().getMethod(HTTPMethods.GET.toLowerCase());
-            Response fullResponse = (Response) methodToInvoke.invoke(this);
-            responseToReturn = new ResponseBuilder()
-                    .setHeaders(fullResponse.getHeaders())
-                    .finalizeMetaDataForOKResponse()
-                    .build();
+            subjectResponseToControllerGetMethod();
         } catch (NoSuchMethodException|InvocationTargetException|IllegalAccessException e) {
-            responseToReturn = new ExceptionsController().render405Response(this);
+            response.statusCode = HTTPStatusCodes.MethodNotAllowed;
+            response.addHeader(HTTPHeaders.Allow, this.getStringOfRecognizedMethods());
         }
-        return responseToReturn;
+        return response;
+    }
+
+    public void subjectResponseToControllerGetMethod() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Method methodToInvoke = this.getClass().getMethod(HTTPMethods.GET.toLowerCase());
+        methodToInvoke.invoke(this);
     }
 
     public boolean respondsTo(String httpMethodRequested) {
