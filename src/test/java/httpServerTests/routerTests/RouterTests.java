@@ -49,7 +49,7 @@ public class RouterTests {
     public void getAllRecognizedMethodsReturnsASetOfHTTPMethodsToWhichTheControllersWillReturnAResponseCollectively() {
         Set<String> result = router.getAllRecognizedHTTPMethods();
 
-        Set<String> expectedMethods = new HashSet<>(Arrays.asList("get", "post", "delete"));
+        Set<String> expectedMethods = new HashSet<>(Arrays.asList("GET", "POST", "DELETE"));
 
         assertEquals(expectedMethods, result);
         assertFalse(result.contains("RANDOMVOIDFUNCTION"));
