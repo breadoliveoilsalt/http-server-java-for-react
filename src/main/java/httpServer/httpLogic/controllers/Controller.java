@@ -5,7 +5,6 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -1,25 +1,25 @@
 package httpServer.httpLogic.middleware;
 
 import httpServer.httpLogic.constants.HTTPHeaders;
+import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
-import httpServer.httpLogic.constants.HTTPStatusMessages;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 
 import java.io.File;
 
-public class IndexDotHTMLFileFinder extends Middleware {
+public class FileFinder extends Middleware {
 
-    private String path;
+    private String basePath;
     private Request request;
     private Response response;
 
-    public IndexDotHTMLFileFinder() {
-        this.path = System.getProperty("user.dir");
+    public FileFinder() {
+        this.basePath = System.getProperty("user.dir");
     }
 
-    public IndexDotHTMLFileFinder(String path) {
-       this.path = path;
+    public FileFinder(String basePath) {
+       this.basePath = basePath;
     }
 
     @Override
@@ -27,14 +27,14 @@ public class IndexDotHTMLFileFinder extends Middleware {
         if (response.hasUndeterminedStatus()) {
             this.request = request;
             this.response = response;
-            checkForIndexDotHtmlRequest();
+            checkForFile();
         }
         passToNextMiddleware(request, response);
     }
 
-    private void checkForIndexDotHtmlRequest() {
-        if (request.getPath().equals("/")) {
-            File file = new File(path + "/index.html");
+    private void checkForFile() {
+        if (request.getHTTPMethod().equals(HTTPMethods.GET)) {
+            File file = new File(basePath + request.getPath());
             if (file.exists()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
@@ -44,8 +44,8 @@ public class IndexDotHTMLFileFinder extends Middleware {
         }
     }
 
-    public String getPath() {
-        return path;
+    public String getBasePath() {
+        return basePath;
     }
 
 }
