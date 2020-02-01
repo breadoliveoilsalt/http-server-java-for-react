@@ -31,7 +31,7 @@ public class FileFinderTests {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
-    public void handleAssignsAnFileToAResponse_sFileFieldIfAPathMatchesAFileWithAGetRequest() throws IOException {
+    public void handleAssignsAFileToAResponse_sFileFieldIfAPathMatchesAFileWithAGetRequest() throws IOException {
         tempFolder.newFile("index.html");
         String basePath = tempFolder.getRoot().getPath();
 
@@ -40,6 +40,19 @@ public class FileFinderTests {
         fileFinder.handle(request, response);
 
         assertEquals("index.html", response.file.getName());
+    }
+
+    @Test
+    public void handleDoesNotAssignAFileToAResponse_sFileFieldIfTheRequestIsNotAGETRequest() throws IOException {
+        request = new RequestBuilder().addPath("/index.html").addMethod(HTTPMethods.POST).build();
+        tempFolder.newFile("index.html");
+        String basePath = tempFolder.getRoot().getPath();
+
+        assertNull(response.file);
+        fileFinder = new FileFinder(basePath);
+        fileFinder.handle(request, response);
+
+        assertNull(response.file);
     }
 
     @Test
