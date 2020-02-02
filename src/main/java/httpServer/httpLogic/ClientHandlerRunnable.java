@@ -48,7 +48,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         middlewareStart
                 .setNext(new FileFinder())
                 .setNext(new ControllerMapper(router))
-                .setNext(new ResourceFoundValidatorFollowingControllers())
+                .setNext(new ResourceFoundValidator())
                 .setNext(new HTTPVersionInserter())
                 .setNext(new HTTPStatusMessageInserter());
         middlewareStart.handle(request, response);
