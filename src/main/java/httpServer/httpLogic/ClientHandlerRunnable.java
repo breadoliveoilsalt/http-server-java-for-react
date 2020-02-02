@@ -1,6 +1,6 @@
 package httpServer.httpLogic;
 
-import httpServer.httpLogic.middleware.*;
+import httpServer.httpLogic.middlewareConfig.ResponseBuildingMiddleware;
 import httpServer.router.Router;
 import httpServer.router.RouterFactory;
 import httpServer.httpLogic.io.RequestReader;
@@ -44,15 +44,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request request = new RequestParser().parse(rawClientRequest);
         Response response = new Response();
-        Middleware middlewareStart = new RequestValidator(router);
-        middlewareStart
-                .setNext(new FileFinder())
-                .setNext(new ControllerMapper(router))
-                .setNext(new ResourceFoundValidator())
-                .setNext(new HTTPVersionInserter())
-                .setNext(new HTTPStatusMessageInserter())
-                .setNext(new ContentLengthInserter());
-        middlewareStart.handle(request, response);
+        new ResponseBuildingMiddleware().runWithBasicConfig(router, request, response);
         byte[] rawResponse = new ResponseParser().convertToByteArray(response);
         new ResponseWriter().writeToOutputStream(sokket, rawResponse);
     }
