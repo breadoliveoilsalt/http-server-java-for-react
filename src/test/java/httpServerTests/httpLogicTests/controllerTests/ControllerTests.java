@@ -1,4 +1,4 @@
-package httpServerTests.httpLogicTests.controllerrTests;
+package httpServerTests.httpLogicTests.controllerTests;
 
 import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPStatusCodes;

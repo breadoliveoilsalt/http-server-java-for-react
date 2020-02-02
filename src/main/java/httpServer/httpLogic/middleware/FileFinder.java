@@ -39,8 +39,6 @@ public class FileFinder extends Middleware {
             if (file.exists() && file.isFile()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
-                // GOT TO MOVE THIS TO HEADER MIDDLEWARE
-                response.addHeader(HTTPHeaders.ContentLength, Long.toString(file.length()));
             }
         }
     }

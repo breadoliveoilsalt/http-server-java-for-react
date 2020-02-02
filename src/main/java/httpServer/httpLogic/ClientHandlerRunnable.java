@@ -50,7 +50,8 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
                 .setNext(new ControllerMapper(router))
                 .setNext(new ResourceFoundValidator())
                 .setNext(new HTTPVersionInserter())
-                .setNext(new HTTPStatusMessageInserter());
+                .setNext(new HTTPStatusMessageInserter())
+                .setNext(new ContentLengthInserter());
         middlewareStart.handle(request, response);
         byte[] rawResponse = new ResponseParser().convertToByteArray(response);
         new ResponseWriter().writeToOutputStream(sokket, rawResponse);
