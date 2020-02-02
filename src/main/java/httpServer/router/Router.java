@@ -15,7 +15,7 @@ public class Router {
         this.routeMap = Collections.unmodifiableMap(routeMap);
     }
 
-    public Class getControllerFor(String path) {
+    public Class<Controller> getControllerFor(String path) {
        return routeMap.get(path);
     }
 

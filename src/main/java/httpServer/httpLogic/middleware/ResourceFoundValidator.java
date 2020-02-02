@@ -11,5 +11,6 @@ public class ResourceFoundValidator extends Middleware {
        if (response.hasUndeterminedStatus()) {
            response.statusCode = HTTPStatusCodes.NotFound;
        }
+       passToNextMiddleware(request, response);
     }
 }

@@ -7,8 +7,18 @@ import httpServer.httpLogic.responses.Response;
 
 public class HTTPStatusMessageInserter extends Middleware {
 
+    private Request request;
+    private Response response;
+
     @Override
     public void handle(Request request, Response response) {
+        this.request = request;
+        this.response = response;
+        addStatusMessage();
+        passToNextMiddleware(request, response);
+    }
+
+    private void addStatusMessage() {
         switch (response.statusCode) {
             case HTTPStatusCodes.OK:
                 response.statusMessage = HTTPStatusMessages.OK;
@@ -31,5 +41,4 @@ public class HTTPStatusMessageInserter extends Middleware {
         }
 
     }
-
 }

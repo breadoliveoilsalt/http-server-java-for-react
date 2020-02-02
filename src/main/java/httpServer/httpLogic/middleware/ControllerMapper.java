@@ -37,7 +37,7 @@ public class ControllerMapper extends Middleware {
     }
 
     private void getControllerForPathRequested() throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
-        Class controllerClass = (Class<Controller>) router.getControllerFor(request.getPath());
+        Class<Controller> controllerClass = router.getControllerFor(request.getPath());
         Constructor<Controller> controllerConstructor = controllerClass.getConstructor(Request.class, Response.class);
         controller = controllerConstructor.newInstance(request, response);
     }
@@ -45,7 +45,9 @@ public class ControllerMapper extends Middleware {
     private void askControllerToRespondToHTTPMethodRequested() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (controller.respondsTo(request.getHTTPMethod())) {
             callControllerMethod();
-            response.statusCode = HTTPStatusCodes.OK;
+            if (response.hasUndeterminedStatus()) {
+                response.statusCode = HTTPStatusCodes.OK;
+            }
         } else {
             response.statusCode = HTTPStatusCodes.MethodNotAllowed;
             response.addHeader(HTTPHeaders.Allow, controller.getStringOfRecognizedMethods());
