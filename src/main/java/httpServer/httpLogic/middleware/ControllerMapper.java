@@ -44,8 +44,8 @@ public class ControllerMapper extends Middleware {
 
     private void askControllerToRespondToHTTPMethodRequested() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (controller.respondsTo(request.getHTTPMethod())) {
-            response.statusCode = HTTPStatusCodes.OK;
             callControllerMethod();
+            response.statusCode = HTTPStatusCodes.OK;
         } else {
             response.statusCode = HTTPStatusCodes.MethodNotAllowed;
             response.addHeader(HTTPHeaders.Allow, controller.getStringOfRecognizedMethods());

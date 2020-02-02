@@ -5,7 +5,7 @@ import java.util.Map;
 public class Request {
 
     private final String httpMethod;
-    private final String path;
+    private String path;
     private final float httpVersion;
     private final Map<String, String> headers;
     private final String body;
@@ -32,6 +32,10 @@ public class Request {
 
     public String getPath() {
         return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public float getHTTPVersion() {
