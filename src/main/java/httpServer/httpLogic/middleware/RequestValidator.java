@@ -35,11 +35,6 @@ public class RequestValidator extends Middleware {
             response.statusCode = HTTPStatusCodes.NotImplemented;
             return;
         }
-
-        if (requestedResourceDoesNotExist()) {
-            response.statusCode = HTTPStatusCodes.NotFound;
-            return;
-        }
     }
 
     private boolean requestHasRecognizedMethod() {
@@ -50,11 +45,5 @@ public class RequestValidator extends Middleware {
         return !requestHasRecognizedMethod();
     }
 
-    private boolean requestedResourceExists() {
-        return router.getPaths().contains(request.getPath());
-    }
 
-    private boolean requestedResourceDoesNotExist() {
-        return !requestedResourceExists();
-    }
 }

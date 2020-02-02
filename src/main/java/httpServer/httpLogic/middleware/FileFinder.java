@@ -35,10 +35,7 @@ public class FileFinder extends Middleware {
     private void checkForFile() {
         if (request.getHTTPMethod().equals(HTTPMethods.GET)) {
             File file = new File(basePath + request.getPath());
-            System.out.println("Looking for file...");
-
             if (file.exists() && file.isFile()) {
-                System.out.println("File Found");
                 response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
             }

@@ -3,11 +3,11 @@ package httpServerTests.httpLogicTests.middlewareTests;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.RequestValidator;
+import httpServer.httpLogic.middleware.ResourcePathValidator;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
 import httpServer.router.Router;
-import httpServerTests.httpLogicTests.testRouterAndControllers.TestPaths;
 import httpServerTests.httpLogicTests.testRouterAndControllers.TestRouterFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,41 +15,27 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class RequestValidatorTests {
+public class ResourcePathValidatorTests {
 
-    private RequestValidator requestValidator;
+    private ResourcePathValidator resourcePathValidator;
     private Request request;
     private Response response;
 
     @Before
     public void testInit() {
         Router testRouter = TestRouterFactory.buildWithPathOneAndPathTwoTestControllers();
-        requestValidator = new RequestValidator(testRouter);
+        resourcePathValidator = new ResourcePathValidator(testRouter);
         response = new Response();
     }
 
     @Test
-    public void handleAddsABadRequestStatusCodeToARequestIfARequestIsFlaggedAsUnparsable() {
-        request = new RequestBuilder().flagAsUnparsable().build();
+    public void handleAddsANotFoundStatusCodeWhenTheResourceRequestedDoesNotExist() {
+        request = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
 
         assertNull(response.statusCode);
+        resourcePathValidator.handle(request, response);
 
-        requestValidator.handle(request, response);
-
-        assertEquals(HTTPStatusCodes.BadRequest, response.statusCode);
+        assertEquals(HTTPStatusCodes.NotFound, response.statusCode);
     }
-
-
-    @Test
-    public void handleAddsANotImplementedStatusCodeWhenTheRouterDoesNotRecognizeTheMethodRequestedByTheClient() {
-        request = new RequestBuilder().addPath(TestPaths.pathOne).addMethod("BANANAS").build();
-
-        assertNull(response.statusCode);
-
-        requestValidator.handle(request, response);
-
-        assertEquals(HTTPStatusCodes.NotImplemented, response.statusCode);
-    }
-
 
 }
