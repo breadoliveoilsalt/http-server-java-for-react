@@ -45,6 +45,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
         Request request = new RequestParser().parse(rawClientRequest);
         Response response = new Response();
         new ResponseBuildingMiddleware().runWithBasicConfig(router, request, response);
+        logger.logRequestAndResponse(request, response);
         byte[] rawResponse = new ResponseParser().convertToByteArray(response);
         new ResponseWriter().writeToOutputStream(sokket, rawResponse);
     }
