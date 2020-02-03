@@ -47,7 +47,7 @@ public class RequestParserTests {
 
         Request request = requestParser.parse(rawClientRequest);
 
-        assertEquals("GET", request.getMethod());
+        assertEquals("GET", request.getHTTPMethod());
     }
 
     @Test

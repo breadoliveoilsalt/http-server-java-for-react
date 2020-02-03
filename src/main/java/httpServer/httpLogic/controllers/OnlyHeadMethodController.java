@@ -1,11 +1,11 @@
 package httpServer.httpLogic.controllers;
 
 import httpServer.httpLogic.requests.Request;
-import httpServer.httpLogic.router.Router;
+import httpServer.httpLogic.responses.Response;
 
 public class OnlyHeadMethodController extends Controller {
 
-    public OnlyHeadMethodController(Router router, Request request) {
-        super(router, request);
+    public OnlyHeadMethodController(Request request, Response response) {
+        super(request, response);
     }
 }

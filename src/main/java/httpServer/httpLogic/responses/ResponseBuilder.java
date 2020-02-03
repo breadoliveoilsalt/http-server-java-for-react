@@ -10,7 +10,7 @@ public class ResponseBuilder {
     private String statusCode;
     private String statusMessage;
     private Map<String, String> headers;
-    private String body;
+    private String stringBody;
 
     public ResponseBuilder addStatusCode(String code) {
         statusCode = code;
@@ -42,10 +42,10 @@ public class ResponseBuilder {
     }
 
     public ResponseBuilder addBody(String body) {
-        if (this.body == null) {
-            this.body = "";
+        if (this.stringBody == null) {
+            this.stringBody = "";
         }
-        this.body += body;
+        this.stringBody += body;
         return this;
     }
 
@@ -56,7 +56,7 @@ public class ResponseBuilder {
     }
 
     public ResponseBuilder addContentLength() {
-        if (body != null) {
+        if (stringBody != null) {
             calculateContentLength();
         } else {
             addHeader("Content-Length", "0");
@@ -65,13 +65,13 @@ public class ResponseBuilder {
     }
 
     private void calculateContentLength() {
-        byte[] responseBodyBytes = body.getBytes(StandardCharsets.UTF_8);
+        byte[] responseBodyBytes = stringBody.getBytes(StandardCharsets.UTF_8);
         String contentLength = String.valueOf(responseBodyBytes.length);
         addHeader("Content-Length", contentLength);
     }
 
     public Response build() {
-        return new Response(httpVersion, statusCode, statusMessage, headers, body);
+        return new Response(httpVersion, statusCode, statusMessage, headers, stringBody);
     }
 
 }

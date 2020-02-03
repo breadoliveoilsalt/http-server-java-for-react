@@ -1,9 +1,9 @@
-package httpServerTests.httpLogicTests.routerTests;
+package httpServerTests.routerTests;
 
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.httpLogic.router.Router;
-import httpServer.httpLogic.router.RouterBuilder;
+import httpServer.router.Router;
+import httpServer.router.RouterBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 
 public class RouterTests {
 
-    class Path1Controller {
+    static class Path1Controller {
         public Response get() {
             return new ResponseBuilder().build();
         }
@@ -26,7 +26,7 @@ public class RouterTests {
 
     }
 
-    class Path2Controller {
+    static class Path2Controller {
         public Response delete() {
             return new ResponseBuilder().build();
         }
@@ -47,9 +47,9 @@ public class RouterTests {
 
     @Test
     public void getAllRecognizedMethodsReturnsASetOfHTTPMethodsToWhichTheControllersWillReturnAResponseCollectively() {
-        Set<String> result = router.getAllRecognizedMethods();
+        Set<String> result = router.getAllRecognizedHTTPMethods();
 
-        Set<String> expectedMethods = new HashSet<>(Arrays.asList("get", "post", "delete"));
+        Set<String> expectedMethods = new HashSet<>(Arrays.asList("GET", "POST", "DELETE"));
 
         assertEquals(expectedMethods, result);
         assertFalse(result.contains("RANDOMVOIDFUNCTION"));

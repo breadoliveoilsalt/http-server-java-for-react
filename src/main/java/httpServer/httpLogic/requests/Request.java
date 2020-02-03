@@ -4,21 +4,21 @@ import java.util.Map;
 
 public class Request {
 
-    private final String method;
-    private final String path;
+    private final String httpMethod;
+    private String path;
     private final float httpVersion;
     private final Map<String, String> headers;
     private final String body;
     private final boolean wasParsable;
 
     public Request(
-            String method,
+            String httpMethod,
             String path,
             float httpVersion,
             Map<String, String> headers,
             String body,
             boolean wasParsable) {
-        this.method = method;
+        this.httpMethod = httpMethod;
         this.path = path;
         this.httpVersion = httpVersion;
         this.headers = headers;
@@ -26,12 +26,16 @@ public class Request {
         this.wasParsable = wasParsable;
     }
 
-    public String getMethod() {
-        return method;
+    public String getHTTPMethod() {
+        return httpMethod;
     }
 
     public String getPath() {
         return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public float getHTTPVersion() {

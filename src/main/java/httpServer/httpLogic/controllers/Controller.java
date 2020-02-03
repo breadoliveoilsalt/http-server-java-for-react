@@ -1,10 +1,10 @@
 package httpServer.httpLogic.controllers;
 
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseBuilder;
-import httpServer.httpLogic.router.Router;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,24 +13,18 @@ import java.util.Set;
 
 public abstract class Controller {
 
-    protected final Router router;
     protected final Request request;
+    protected final Response response;
 
-    public Controller(Router router, Request request) {
-        this.router = router;
+    public Controller(Request request, Response response) {
         this.request = request;
+        this.response = response;
     }
 
     public Response options() {
-        return new ResponseBuilder()
-                .addHeader("Allow", getStringOfRecognizedMethods())
-                .finalizeMetaDataForOKResponse()
-                .build();
-    }
-
-    public Set<String> getRecognizedMethods() {
-        Method[] classMethods = this.getClass().getMethods();
-        return parseMethodsThatReturnResponseObjects(classMethods);
+        response.statusCode = HTTPStatusCodes.OK;
+        response.addHeader(HTTPHeaders.Allow, getStringOfRecognizedMethods());
+        return response;
     }
 
     public String getStringOfRecognizedMethods() {
@@ -38,11 +32,16 @@ public abstract class Controller {
         return stringifyRecognizedMethods(recognizedMethods);
     }
 
+    public Set<String> getRecognizedMethods() {
+        Method[] classMethods = this.getClass().getMethods();
+        return parseMethodsThatReturnResponseObjects(classMethods);
+    }
+
     private Set<String> parseMethodsThatReturnResponseObjects(Method[] classMethods) {
         HashSet<String> parsedMethods = new HashSet<>();
         for (Method method : classMethods) {
             if (method.getReturnType() == Response.class) {
-                parsedMethods.add(method.getName());
+                parsedMethods.add(method.getName().toUpperCase());
             }
         }
         return parsedMethods;
@@ -59,18 +58,22 @@ public abstract class Controller {
     }
 
     public Response head() {
-        Response responseToReturn;
         try {
-            Method methodToInvoke = this.getClass().getMethod(HTTPMethods.GET.toLowerCase());
-            Response fullResponse = (Response) methodToInvoke.invoke(this);
-            responseToReturn = new ResponseBuilder()
-                    .setHeaders(fullResponse.getHeaders())
-                    .finalizeMetaDataForOKResponse()
-                    .build();
+            subjectResponseToControllerGetMethod();
         } catch (NoSuchMethodException|InvocationTargetException|IllegalAccessException e) {
-            responseToReturn = new ExceptionsController().render405Response(this);
+            response.statusCode = HTTPStatusCodes.MethodNotAllowed;
+            response.addHeader(HTTPHeaders.Allow, this.getStringOfRecognizedMethods());
         }
-        return responseToReturn;
+        return response;
+    }
+
+    public void subjectResponseToControllerGetMethod() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Method methodToInvoke = this.getClass().getMethod(HTTPMethods.GET.toLowerCase());
+        methodToInvoke.invoke(this);
+    }
+
+    public boolean respondsTo(String httpMethodRequested) {
+       return getRecognizedMethods().contains(httpMethodRequested);
     }
 
 }

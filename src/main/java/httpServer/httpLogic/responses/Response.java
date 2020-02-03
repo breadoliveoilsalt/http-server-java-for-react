@@ -1,5 +1,7 @@
 package httpServer.httpLogic.responses;
 
+import httpServer.httpLogic.controllers.Controller;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +14,7 @@ public class Response {
     public Map<String, String> headers;
     public String stringBody;
     public File file;
+    public Controller controller;
 
     public Response() {}
 
@@ -47,10 +50,6 @@ public class Response {
         return headers.get(key).equals(value);
     }
 
-    public String getHeaderValueFor(String key) {
-        return headers.get(key);
-    }
-
     public String getStringBody() {
         return stringBody;
     }
@@ -62,4 +61,7 @@ public class Response {
         headers.put(key, value);
     }
 
+    public boolean hasUndeterminedStatusCode() {
+        return statusCode == null;
+    }
 }

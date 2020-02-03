@@ -31,7 +31,7 @@ public class RequestBuilderTests {
     public void addMethodAddsAMethodToTheBuiltRequest() {
         Request request = requestBuilder.addMethod("POST").build();
 
-        assertEquals("POST", request.getMethod());
+        assertEquals("POST", request.getHTTPMethod());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class RequestBuilderTests {
                 .addBody("Hello World")
                 .build();
 
-        assertEquals(HTTPMethods.GET, request.getMethod());
+        assertEquals(HTTPMethods.GET, request.getHTTPMethod());
         assertEquals("/simple_get", request.getPath());
 
         Map<String, String> expectedHeader = new HashMap<>();
