@@ -1,17 +1,19 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
+import httpServer.httpLogic.constants.ContentTypes;
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.middleware.ContentTypeInserter;
+import httpServer.httpLogic.middleware.FileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
-import httpServerTests.httpLogicTests.testRouterAndControllers.TestPaths;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ContentTypeInserterTests {
 
@@ -38,5 +40,23 @@ public class ContentTypeInserterTests {
 
         assertTrue(nextMiddleware.handleWasCalled);
     }
+
+    @Test
+    public void handleAddsTextPlainContentTypeIfThereIsAStringBody() {
+        response.stringBody = "Some text";
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, ContentTypes.TextPlain));
+    }
+
+    // Add one for txt
+
+//        tempFolder.newFile("index.html");
+//        String basePath = tempFolder.getRoot().getPath();
+//
+//        assertNull(response.file);
+//        fileFinder = new FileFinder(basePath);
+//        fileFinder.handle(request, response);
 
 }
