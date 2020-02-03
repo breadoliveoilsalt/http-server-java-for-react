@@ -11,7 +11,7 @@ public class ResponseParser {
     private Response response;
     private String stringifiedMetaData;
 
-    private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
     public byte[] convertToByteArray(Response response) throws IOException {
         this.response = response;

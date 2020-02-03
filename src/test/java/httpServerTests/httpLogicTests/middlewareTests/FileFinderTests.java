@@ -6,7 +6,6 @@ import httpServer.httpLogic.middleware.FileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
-import httpServerTests.httpLogicTests.testRouterAndControllers.TestPaths;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,8 +49,8 @@ public class FileFinderTests {
     @Test
     public void handleCanFindANestedFile() throws IOException {
         File testSubDirectory = tempFolder.newFolder("testSubDirectory");
-        Path pathtoTempIndexFile = Paths.get(testSubDirectory.getPath() + "/index.html");
-        Files.createFile(pathtoTempIndexFile);
+        Path pathToTempIndexFile = Paths.get(testSubDirectory.getPath() + "/index.html");
+        Files.createFile(pathToTempIndexFile);
         request = new RequestBuilder().addPath("/testSubDirectory/index.html").addMethod(HTTPMethods.GET).build();
 
         assertNull(response.file);

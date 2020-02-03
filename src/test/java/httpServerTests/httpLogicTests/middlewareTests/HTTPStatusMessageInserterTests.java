@@ -2,7 +2,6 @@ package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.constants.HTTPStatusMessages;
-import httpServer.httpLogic.middleware.FileFinder;
 import httpServer.httpLogic.middleware.HTTPStatusMessageInserter;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;

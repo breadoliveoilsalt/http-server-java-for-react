@@ -28,12 +28,8 @@ public class RequestValidator extends Middleware {
     private void checkIfValidRequest() {
         if (request.wasUnparsable()) {
             response.statusCode = HTTPStatusCodes.BadRequest;
-            return;
-        }
-
-        if (requestHasUnrecognizedMethod()) {
+        } else if (requestHasUnrecognizedMethod()) {
             response.statusCode = HTTPStatusCodes.NotImplemented;
-            return;
         }
     }
 

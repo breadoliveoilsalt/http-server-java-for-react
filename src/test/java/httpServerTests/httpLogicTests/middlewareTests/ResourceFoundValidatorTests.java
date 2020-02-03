@@ -3,7 +3,6 @@ package httpServerTests.httpLogicTests.middlewareTests;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.ResourceFoundValidator;
-import httpServer.httpLogic.middleware.ResourcePathValidator;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;

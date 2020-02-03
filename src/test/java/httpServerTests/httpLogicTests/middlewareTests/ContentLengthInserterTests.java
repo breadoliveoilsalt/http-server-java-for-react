@@ -3,8 +3,6 @@ package httpServerTests.httpLogicTests.middlewareTests;
 import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.middleware.ContentLengthInserter;
-import httpServer.httpLogic.middleware.FileFinder;
-import httpServer.httpLogic.middleware.Middleware;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -37,7 +35,7 @@ public class ContentLengthInserterTests {
     }
 
     @Test
-    public void handleAddsAHeaderWithTheContentLengthOfAResonse_sFile() throws IOException {
+    public void handleAddsAHeaderWithTheContentLengthOfAResponse_sFile() throws IOException {
         File responseFile = tempFolder.newFile("index.html");
         String responseFileText = "0123456789";
         Files.write(Paths.get(responseFile.getPath()), responseFileText.getBytes());
