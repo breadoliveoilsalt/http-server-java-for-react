@@ -7,6 +7,7 @@ public class HTTPContentTypes {
     public static final String TextCSS = "text/css";
     public static final String TextJavaScript = "text/javascript";
     public static final String ApplicationJSON = "application/json";
+    public static final String ApplicationPDF = "application/pdf";
 
 
 }

@@ -7,4 +7,5 @@ public class FileExtensions {
     public static final String CSSExtension = "css";
     public static final String JSExtension = "js";
     public static final String JSONExtension = "json";
+    public static final String PDFExtension = "pdf";
 }

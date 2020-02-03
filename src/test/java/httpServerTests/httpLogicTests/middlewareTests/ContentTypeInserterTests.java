@@ -118,11 +118,22 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ApplicationJSON));
     }
+
+    @Test
+    public void handleAddsApplicationPDFContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAPDFFile() throws IOException {
+        String fileName = "pdfFile.pdf";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ApplicationPDF));
+    }
 //X HTML (.htm, .html)
 //X CSS (.css)
 //X Javascript (.js)
-//- JSON (.json)
-//- Plan text (.txt)
+//X JSON (.json)
+//X Plan text (.txt)
 //- PDF Document (.pdf)
 //- Images (.jpg, .png, .gif)
 //- Audio (.mp3, .wav)
