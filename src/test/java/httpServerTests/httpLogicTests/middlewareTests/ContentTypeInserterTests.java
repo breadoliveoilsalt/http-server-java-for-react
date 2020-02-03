@@ -96,8 +96,19 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextCSS));
     }
+
+    @Test
+    public void handleAddsTextJavaScriptContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJSFile() throws IOException {
+        String fileName = "javaScriptFile.js";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextJavaScript));
+    }
 //X HTML (.htm, .html)
-//- CSS (.css)
+//X CSS (.css)
 //- Javascript (.js)
 //- JSON (.json)
 //- Plan text (.txt)
