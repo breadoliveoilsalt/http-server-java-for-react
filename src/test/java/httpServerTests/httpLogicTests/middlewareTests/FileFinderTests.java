@@ -11,7 +11,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
@@ -36,6 +40,21 @@ public class FileFinderTests {
         String basePath = tempFolder.getRoot().getPath();
 
         assertNull(response.file);
+        fileFinder = new FileFinder(basePath);
+        fileFinder.handle(request, response);
+
+        assertEquals("index.html", response.file.getName());
+    }
+
+    @Test
+    public void handleCanFindANestedFile() throws IOException {
+        File testSubDirectory = tempFolder.newFolder("testSubDirectory");
+        Path pathtoTempIndexFile = Paths.get(testSubDirectory.getPath() + "/index.html");
+        Files.createFile(pathtoTempIndexFile);
+        request = new RequestBuilder().addPath("/testSubDirectory/index.html").addMethod(HTTPMethods.GET).build();
+
+        assertNull(response.file);
+        String basePath = tempFolder.getRoot().getPath();
         fileFinder = new FileFinder(basePath);
         fileFinder.handle(request, response);
 
