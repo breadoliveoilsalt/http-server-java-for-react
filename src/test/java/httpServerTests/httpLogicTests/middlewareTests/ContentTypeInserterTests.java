@@ -64,4 +64,23 @@ public class ContentTypeInserterTests {
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain));
     }
 
+    @Test
+    public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAHTMLFile() throws IOException {
+        String fileName = "htmlFile.html";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
+    }
+//- HTML (.htm, .html)
+//- CSS (.css)
+//- Javascript (.js)
+//- JSON (.json)
+//- Plan text (.txt)
+//- PDF Document (.pdf)
+//- Images (.jpg, .png, .gif)
+//- Audio (.mp3, .wav)
+//- Video (.mov, .mp4)
 }

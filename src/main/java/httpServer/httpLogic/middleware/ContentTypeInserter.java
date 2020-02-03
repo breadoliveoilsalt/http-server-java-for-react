@@ -16,7 +16,8 @@ public class ContentTypeInserter extends Middleware {
     private Map<String, String> fileExtensionToContentTypeMap = new HashMap<>();
 
     public ContentTypeInserter() {
-        fileExtensionToContentTypeMap.put(FileExtensions.TextFileExtension, HTTPContentTypes.TextPlain);
+        fileExtensionToContentTypeMap.put(FileExtensions.TextExtension, HTTPContentTypes.TextPlain);
+        fileExtensionToContentTypeMap.put(FileExtensions.HTMLExtension, HTTPContentTypes.TextHTML);
     }
 
     @Override
@@ -36,10 +37,6 @@ public class ContentTypeInserter extends Middleware {
         return response.statusCode.equals(HTTPStatusCodes.OK);
     }
 
-//    private void addTextPlainContentType() {
-//        response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain);
-//    }
-
     public void assignContentTypeBasedOnFileExtension() {
         String fileExtension = getFileExtension();
         String contentType = fileExtensionToContentTypeMap.get(fileExtension);
@@ -53,6 +50,5 @@ public class ContentTypeInserter extends Middleware {
 
     private void addContentTypeHeader(String contentType) {
         response.addHeader(HTTPHeaders.ContentType, contentType);
-
     }
 }
