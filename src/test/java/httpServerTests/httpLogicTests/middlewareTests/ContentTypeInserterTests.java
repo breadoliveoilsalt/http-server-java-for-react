@@ -12,6 +12,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class ContentTypeInserterTests {
@@ -27,6 +30,7 @@ public class ContentTypeInserterTests {
     public void testInit() {
         request = new RequestBuilder().build();
         response = new Response();
+        response.statusCode = HTTPStatusCodes.OK;
         contentTypeInserter = new ContentTypeInserter();
     }
 
@@ -42,7 +46,6 @@ public class ContentTypeInserterTests {
 
     @Test
     public void handleAddsTextPlainContentTypeToAnOKResponseIfThereIsAStringBody() {
-        response.statusCode = HTTPStatusCodes.OK;
         response.stringBody = "Some text";
 
         contentTypeInserter.handle(request, response);
@@ -50,13 +53,15 @@ public class ContentTypeInserterTests {
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain));
     }
 
-    // Add one for txt
+    @Test
+    public void handleAddsTextPlainContentTypeToAnOKResponseIfTheResponseIsAssociatedWithATxtFile() throws IOException {
+        String textFileName = "textFile.txt";
+        File textFile = tempFolder.newFile(textFileName);
+        response.file = textFile;
 
-//        tempFolder.newFile("index.html");
-//        String basePath = tempFolder.getRoot().getPath();
-//
-//        assertNull(response.file);
-//        fileFinder = new FileFinder(basePath);
-//        fileFinder.handle(request, response);
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain));
+    }
 
 }
