@@ -1,6 +1,6 @@
 package httpServer.httpLogic.constants;
 
-public class ContentTypes {
+public class HTTPContentTypes {
 
     public final static String TextPlain = "text/plain";
 

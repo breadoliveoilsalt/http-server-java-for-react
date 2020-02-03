@@ -1,10 +1,9 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
-import httpServer.httpLogic.constants.ContentTypes;
+import httpServer.httpLogic.constants.HTTPContentTypes;
 import httpServer.httpLogic.constants.HTTPHeaders;
-import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.ContentTypeInserter;
-import httpServer.httpLogic.middleware.FileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -42,12 +41,13 @@ public class ContentTypeInserterTests {
     }
 
     @Test
-    public void handleAddsTextPlainContentTypeIfThereIsAStringBody() {
+    public void handleAddsTextPlainContentTypeToAnOKResponseIfThereIsAStringBody() {
+        response.statusCode = HTTPStatusCodes.OK;
         response.stringBody = "Some text";
 
         contentTypeInserter.handle(request, response);
 
-        assertTrue(response.hasHeader(HTTPHeaders.ContentType, ContentTypes.TextPlain));
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain));
     }
 
     // Add one for txt
