@@ -16,7 +16,7 @@ public class ContentTypeInserter extends Middleware {
     private Map<String, String> fileExtensionToContentTypeMap = new HashMap<>();
 
     public ContentTypeInserter() {
-        populatefileExtensionToContentTypeMap();
+        populateFileExtensionToContentTypeMap();
     }
 
     @Override
@@ -50,13 +50,14 @@ public class ContentTypeInserter extends Middleware {
     private void addContentTypeHeader(String contentType) {
         response.addHeader(HTTPHeaders.ContentType, contentType);
     }
-    
-    private void populatefileExtensionToContentTypeMap() {
+
+    private void populateFileExtensionToContentTypeMap() {
         fileExtensionToContentTypeMap.put(FileExtensions.TextExtension, HTTPContentTypes.TextPlain);
         fileExtensionToContentTypeMap.put(FileExtensions.HTMLExtension, HTTPContentTypes.TextHTML);
         fileExtensionToContentTypeMap.put(FileExtensions.HTMExtension, HTTPContentTypes.TextHTML);
         fileExtensionToContentTypeMap.put(FileExtensions.CSSExtension, HTTPContentTypes.TextCSS);
         fileExtensionToContentTypeMap.put(FileExtensions.JSExtension, HTTPContentTypes.TextJavaScript);
+        fileExtensionToContentTypeMap.put(FileExtensions.JSONExtension, HTTPContentTypes.ApplicationJSON);
     }
 
 }

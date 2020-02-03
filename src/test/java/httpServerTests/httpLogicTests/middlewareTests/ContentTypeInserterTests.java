@@ -107,9 +107,20 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextJavaScript));
     }
+
+    @Test
+    public void handleAddsApplicationJSONContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJSONFile() throws IOException {
+        String fileName = "jsonFile.json";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ApplicationJSON));
+    }
 //X HTML (.htm, .html)
 //X CSS (.css)
-//- Javascript (.js)
+//X Javascript (.js)
 //- JSON (.json)
 //- Plan text (.txt)
 //- PDF Document (.pdf)
