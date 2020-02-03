@@ -206,7 +206,18 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.VideoMP4));
     }
-//- Video (.mov, .mp4)
+
+    @Test
+    public void handleAddsVideoQuickTimeContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAMOVFile() throws IOException {
+        String fileName = "movFile.mov";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.VideoQuickTime));
+    }
+//X Video (.mov, .mp4)
 //X HTML (.htm, .html)
 //X CSS (.css)
 //X Javascript (.js)

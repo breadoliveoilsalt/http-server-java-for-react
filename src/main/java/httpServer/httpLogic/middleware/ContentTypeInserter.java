@@ -66,6 +66,7 @@ public class ContentTypeInserter extends Middleware {
         fileExtensionToContentTypeMap.put(FileExtensions.WAVExtension, HTTPContentTypes.AudioWAV);
         fileExtensionToContentTypeMap.put(FileExtensions.MP3Extension, HTTPContentTypes.AudioMPEG);
         fileExtensionToContentTypeMap.put(FileExtensions.MP4Extension, HTTPContentTypes.VideoMP4);
+        fileExtensionToContentTypeMap.put(FileExtensions.MOVExtension, HTTPContentTypes.VideoQuickTime);
     }
 
 }

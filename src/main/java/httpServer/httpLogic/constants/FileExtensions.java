@@ -15,5 +15,5 @@ public class FileExtensions {
     public static final String WAVExtension = "wav";
     public static final String MP3Extension = "mp3";
     public static final String MP4Extension = "mp4";
-
+    public static final String MOVExtension = "mov";
 }

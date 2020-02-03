@@ -14,6 +14,7 @@ public class HTTPContentTypes {
     public static final String AudioWAV = "audio/wav";
     public static final String AudioMPEG = "audio/mpeg";
     public static final String VideoMP4  = "video/mp4";
+    public static final String VideoQuickTime  = "video/quicktime";
 
 }
 
