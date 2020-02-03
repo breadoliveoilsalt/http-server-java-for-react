@@ -74,6 +74,17 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
     }
+
+    @Test
+    public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAHTMFile() throws IOException {
+        String fileName = "htmFile.htm";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
+    }
 //- HTML (.htm, .html)
 //- CSS (.css)
 //- Javascript (.js)
