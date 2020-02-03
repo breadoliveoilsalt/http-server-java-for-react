@@ -17,7 +17,7 @@ public class ResourcePathValidator extends Middleware {
     @Override
     public void handle(Request request, Response response) {
         this.request = request;
-        if (response.hasUndeterminedStatus() && requestedPathDoesNotExist()) {
+        if (response.hasUndeterminedStatusCode() && requestedPathDoesNotExist()) {
             response.statusCode = HTTPStatusCodes.NotFound;
         }
         passToNextMiddleware(request, response);

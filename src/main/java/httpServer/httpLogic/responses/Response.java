@@ -16,7 +16,6 @@ public class Response {
     public File file;
     public Controller controller;
 
-
     public Response() {}
 
     public Response(String httpVersion,
@@ -51,10 +50,6 @@ public class Response {
         return headers.get(key).equals(value);
     }
 
-    public String getHeaderValueFor(String key) {
-        return headers.get(key);
-    }
-
     public String getStringBody() {
         return stringBody;
     }
@@ -66,7 +61,7 @@ public class Response {
         headers.put(key, value);
     }
 
-    public boolean hasUndeterminedStatus() {
+    public boolean hasUndeterminedStatusCode() {
         return statusCode == null;
     }
 }

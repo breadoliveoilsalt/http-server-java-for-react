@@ -23,7 +23,7 @@ public class FileFinder extends Middleware {
 
     @Override
     public void handle(Request request, Response response) {
-        if (response.hasUndeterminedStatus()) {
+        if (response.hasUndeterminedStatusCode()) {
             this.request = request;
             this.response = response;
             checkForFile();

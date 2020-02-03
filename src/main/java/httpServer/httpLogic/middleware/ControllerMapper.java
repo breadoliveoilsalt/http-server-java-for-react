@@ -24,7 +24,7 @@ public class ControllerMapper extends Middleware {
 
     public void handle(Request request, Response response) {
         try {
-            if (response.hasUndeterminedStatus()) {
+            if (response.hasUndeterminedStatusCode()) {
                 this.request = request;
                 this.response = response;
                 getControllerForPathRequested();
@@ -45,7 +45,7 @@ public class ControllerMapper extends Middleware {
     private void askControllerToRespondToHTTPMethodRequested() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (controller.respondsTo(request.getHTTPMethod())) {
             callControllerMethod();
-            if (response.hasUndeterminedStatus()) {
+            if (response.hasUndeterminedStatusCode()) {
                 response.statusCode = HTTPStatusCodes.OK;
             }
         } else {

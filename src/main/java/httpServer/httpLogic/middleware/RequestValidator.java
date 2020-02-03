@@ -19,7 +19,7 @@ public class RequestValidator extends Middleware {
     public void handle(Request request, Response response) {
         this.request = request;
         this.response = response;
-        if (response.hasUndeterminedStatus()) {
+        if (response.hasUndeterminedStatusCode()) {
             checkIfValidRequest();
         }
         passToNextMiddleware(request, response);
