@@ -65,7 +65,7 @@ public class ContentTypeInserterTests {
     }
 
     @Test
-    public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAHTMLFile() throws IOException {
+    public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAnHTMLFile() throws IOException {
         String fileName = "htmlFile.html";
         File file = tempFolder.newFile(fileName);
         response.file = file;
@@ -76,7 +76,7 @@ public class ContentTypeInserterTests {
     }
 
     @Test
-    public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAHTMFile() throws IOException {
+    public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAnHTMFile() throws IOException {
         String fileName = "htmFile.htm";
         File file = tempFolder.newFile(fileName);
         response.file = file;
@@ -217,13 +217,5 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.VideoQuickTime));
     }
-//X Video (.mov, .mp4)
-//X HTML (.htm, .html)
-//X CSS (.css)
-//X Javascript (.js)
-//X JSON (.json)
-//X Plan text (.txt)
-//X PDF Document (.pdf)
-//X Images (.jpg, .png, .gif)
-//X Audio (.mp3, .wav)
+
 }

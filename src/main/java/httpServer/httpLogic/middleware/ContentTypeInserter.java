@@ -13,7 +13,7 @@ import java.util.Map;
 public class ContentTypeInserter extends Middleware {
 
     private Response response;
-    private Map<String, String> fileExtensionToContentTypeMap = new HashMap<>();
+    private Map<String, String> fileExtensionToContentTypeMap;
 
     public ContentTypeInserter() {
         populateFileExtensionToContentTypeMap();
@@ -23,11 +23,7 @@ public class ContentTypeInserter extends Middleware {
     public void handle(Request request, Response response) {
         this.response = response;
         if (responseHasOKStatusCode()) {
-            if (response.stringBody != null) {
-                addContentTypeHeader(HTTPContentTypes.TextPlain);
-            } else if (response.file != null) {
-                assignContentTypeBasedOnFileExtension();
-            }
+            examineStringBodyOrFileForContentType();
         }
         passToNextMiddleware(request, response);
     }
@@ -36,7 +32,28 @@ public class ContentTypeInserter extends Middleware {
         return response.statusCode.equals(HTTPStatusCodes.OK);
     }
 
-    public void assignContentTypeBasedOnFileExtension() {
+    private void examineStringBodyOrFileForContentType() {
+        if (response.stringBody != null || response.file != null) {
+            assignDefaultContentType();
+            checkForFileToUpdateContentType();
+        }
+    }
+
+    private void assignDefaultContentType() {
+        addContentTypeHeader(HTTPContentTypes.TextPlain);
+    }
+
+    private void checkForFileToUpdateContentType() {
+        if (response.file != null) {
+            try {
+                assignContentTypeBasedOnFileExtension();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void assignContentTypeBasedOnFileExtension() {
         String fileExtension = getFileExtension();
         String contentType = fileExtensionToContentTypeMap.get(fileExtension);
         addContentTypeHeader(contentType);
@@ -52,6 +69,7 @@ public class ContentTypeInserter extends Middleware {
     }
 
     private void populateFileExtensionToContentTypeMap() {
+        fileExtensionToContentTypeMap = new HashMap<>();
         fileExtensionToContentTypeMap.put(FileExtensions.TextExtension, HTTPContentTypes.TextPlain);
         fileExtensionToContentTypeMap.put(FileExtensions.HTMLExtension, HTTPContentTypes.TextHTML);
         fileExtensionToContentTypeMap.put(FileExtensions.HTMExtension, HTTPContentTypes.TextHTML);
