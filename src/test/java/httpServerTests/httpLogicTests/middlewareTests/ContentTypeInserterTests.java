@@ -129,13 +129,25 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ApplicationPDF));
     }
+
+
+    @Test
+    public void handleAddsImageJPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJPGFile() throws IOException {
+        String fileName = "jpgFile.jpg";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ImageJPEG));
+    }
+//- Images (.jpg, .png, .gif)
+//- Audio (.mp3, .wav)
+//- Video (.mov, .mp4)
 //X HTML (.htm, .html)
 //X CSS (.css)
 //X Javascript (.js)
 //X JSON (.json)
 //X Plan text (.txt)
-//- PDF Document (.pdf)
-//- Images (.jpg, .png, .gif)
-//- Audio (.mp3, .wav)
-//- Video (.mov, .mp4)
+//X PDF Document (.pdf)
 }
