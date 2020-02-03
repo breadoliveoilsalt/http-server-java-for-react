@@ -1,6 +1,7 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.middleware.ContentTypeInserter;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
