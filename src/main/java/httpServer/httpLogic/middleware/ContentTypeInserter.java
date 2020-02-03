@@ -24,11 +24,9 @@ public class ContentTypeInserter extends Middleware {
         this.response = response;
         if (responseHasOKStatusCode()) {
             if (response.stringBody != null) {
-                addTextPlainContentType();
+                addContentTypeHeader(HTTPContentTypes.TextPlain);
             } else if (response.file != null) {
-                String fileName = response.file.getName();
-                String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
-                response.addHeader(HTTPHeaders.ContentType, fileExtensionToContentTypeMap.get(fileExtension));
+                assignContentTypeBasedOnFileExtension();
             }
         }
         passToNextMiddleware(request, response);
@@ -38,8 +36,23 @@ public class ContentTypeInserter extends Middleware {
         return response.statusCode.equals(HTTPStatusCodes.OK);
     }
 
-    private void addTextPlainContentType() {
-        response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain);
+//    private void addTextPlainContentType() {
+//        response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextPlain);
+//    }
+
+    public void assignContentTypeBasedOnFileExtension() {
+        String fileExtension = getFileExtension();
+        String contentType = fileExtensionToContentTypeMap.get(fileExtension);
+        addContentTypeHeader(contentType);
     }
 
+    private String getFileExtension() {
+        String fileName = response.file.getName();
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    private void addContentTypeHeader(String contentType) {
+        response.addHeader(HTTPHeaders.ContentType, contentType);
+
+    }
 }
