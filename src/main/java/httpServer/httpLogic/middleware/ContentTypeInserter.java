@@ -19,6 +19,7 @@ public class ContentTypeInserter extends Middleware {
         fileExtensionToContentTypeMap.put(FileExtensions.TextExtension, HTTPContentTypes.TextPlain);
         fileExtensionToContentTypeMap.put(FileExtensions.HTMLExtension, HTTPContentTypes.TextHTML);
         fileExtensionToContentTypeMap.put(FileExtensions.HTMExtension, HTTPContentTypes.TextHTML);
+        fileExtensionToContentTypeMap.put(FileExtensions.CSSExtension, HTTPContentTypes.TextCSS);
     }
 
     @Override

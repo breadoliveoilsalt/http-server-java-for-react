@@ -85,7 +85,18 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
     }
-//- HTML (.htm, .html)
+
+    @Test
+    public void handleAddsTextCSSContentTypeToAnOKResponseIfTheResponseIsAssociatedWithACSSFile() throws IOException {
+        String fileName = "cssFile.css";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextCSS));
+    }
+//X HTML (.htm, .html)
 //- CSS (.css)
 //- Javascript (.js)
 //- JSON (.json)
