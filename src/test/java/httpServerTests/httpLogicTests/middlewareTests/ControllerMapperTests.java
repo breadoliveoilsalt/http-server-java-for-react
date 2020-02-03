@@ -1,22 +1,16 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
-import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.middleware.ControllerMapper;
-import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.router.Router;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
-import httpServer.serverLogger.ServerLogger;
 import httpServerTests.httpLogicTests.testRouterAndControllers.PathOneTestController;
 import httpServerTests.httpLogicTests.testRouterAndControllers.TestPaths;
 import httpServerTests.httpLogicTests.testRouterAndControllers.TestRouterFactory;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
 import static org.junit.Assert.*;
 

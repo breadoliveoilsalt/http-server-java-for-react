@@ -7,7 +7,7 @@ import httpServer.router.Router;
 
 public class ResourcePathValidator extends Middleware {
 
-    private Router router;
+    private final Router router;
     private Request request;
 
     public ResourcePathValidator(Router router) {

@@ -1,6 +1,5 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
-import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.RequestValidator;
 import httpServer.httpLogic.requests.Request;

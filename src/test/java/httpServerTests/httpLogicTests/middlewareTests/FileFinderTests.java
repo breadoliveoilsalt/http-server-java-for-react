@@ -94,7 +94,7 @@ public class FileFinderTests {
     }
 
     @Test
-    public void handleDoesNotChangeTheStatusCodeIfTheFileDoesNotExists() throws IOException {
+    public void handleDoesNotChangeTheStatusCodeIfTheFileDoesNotExists() {
         request = new RequestBuilder().addPath("/index.html").addMethod(HTTPMethods.GET).build();
         String basePath = tempFolder.getRoot().getPath();
 

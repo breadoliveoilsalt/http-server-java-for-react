@@ -1,6 +1,5 @@
 package httpServer.httpLogic.middleware;
 
-import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
@@ -10,7 +9,7 @@ import java.io.File;
 
 public class FileFinder extends Middleware {
 
-    private String basePath;
+    private final String basePath;
     private Request request;
     private Response response;
 

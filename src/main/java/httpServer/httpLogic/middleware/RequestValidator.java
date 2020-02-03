@@ -7,7 +7,7 @@ import httpServer.router.Router;
 
 public class RequestValidator extends Middleware {
 
-    private Router router;
+    private final Router router;
     private Request request;
     private Response response;
 

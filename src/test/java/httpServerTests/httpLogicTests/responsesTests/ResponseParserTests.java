@@ -96,7 +96,7 @@ public class ResponseParserTests {
 
         String rawExpectedMetaData =
                 "HTTP/1.1 200 OK" + Whitespace.CRLF +
-                "Content-Length: " + Long.toString(fileForTest.length()) + Whitespace.CRLF +
+                "Content-Length: " + fileForTest.length() + Whitespace.CRLF +
                 Whitespace.CRLF;
 
         ByteArrayOutputStream tempExpectedResultBuffer = new ByteArrayOutputStream();
@@ -113,8 +113,7 @@ public class ResponseParserTests {
 
     private File getFileForTest() {
         URL urlToFileToWrite = this.getClass().getResource("fileToWriteForTests.txt");
-        File file = new File(urlToFileToWrite.getPath());
-        return file;
+        return new File(urlToFileToWrite.getPath());
     }
 
     private void buildResponseForFileTest(File fileForTest) {

@@ -2,7 +2,6 @@ package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
-import httpServer.httpLogic.middleware.RequestValidator;
 import httpServer.httpLogic.middleware.ResourcePathValidator;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
@@ -18,7 +17,6 @@ import static org.junit.Assert.assertNull;
 public class ResourcePathValidatorTests {
 
     private ResourcePathValidator resourcePathValidator;
-    private Request request;
     private Response response;
 
     @Before
@@ -30,7 +28,7 @@ public class ResourcePathValidatorTests {
 
     @Test
     public void handleAddsANotFoundStatusCodeWhenTheResourceRequestedDoesNotExist() {
-        request = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
+        Request request = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
 
         assertNull(response.statusCode);
         resourcePathValidator.handle(request, response);

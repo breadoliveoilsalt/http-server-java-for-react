@@ -16,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 
 public class RouterTests {
 
-    class Path1Controller {
+    static class Path1Controller {
         public Response get() {
             return new ResponseBuilder().build();
         }
@@ -26,7 +26,7 @@ public class RouterTests {
 
     }
 
-    class Path2Controller {
+    static class Path2Controller {
         public Response delete() {
             return new ResponseBuilder().build();
         }
