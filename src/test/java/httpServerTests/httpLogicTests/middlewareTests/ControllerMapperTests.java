@@ -59,6 +59,17 @@ public class ControllerMapperTests {
         controllerMapper.handle(request, response);
 
         assertEquals(HTTPStatusCodes.MethodNotAllowed, response.statusCode);
+
     }
 
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        controllerMapper.setNext(nextMiddleware);
+        request = new RequestBuilder().addPath(TestPaths.pathOne).addMethod(HTTPMethods.PUT).build();
+
+        controllerMapper.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
+    }
 }

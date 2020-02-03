@@ -4,6 +4,7 @@ import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.middleware.ContentLengthInserter;
 import httpServer.httpLogic.middleware.FileFinder;
+import httpServer.httpLogic.middleware.Middleware;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -23,8 +24,7 @@ public class ContentLengthInserterTests {
 
     private Request request;
     private Response response;
-    private FileFinder fileFinder;
-
+    private ContentLengthInserter contentLengthInserter;
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
@@ -33,6 +33,7 @@ public class ContentLengthInserterTests {
     public void testInit() {
         request = new RequestBuilder().addPath("/index.html").addMethod(HTTPMethods.GET).build();
         response = new Response();
+        contentLengthInserter = new ContentLengthInserter();
     }
 
     @Test
@@ -42,7 +43,7 @@ public class ContentLengthInserterTests {
         Files.write(Paths.get(responseFile.getPath()), responseFileText.getBytes());
         response.file = responseFile;
 
-        new ContentLengthInserter().handle(request, response);
+        contentLengthInserter.handle(request, response);
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentLength, "10"));
     }
@@ -51,15 +52,26 @@ public class ContentLengthInserterTests {
     public void handleAddsAHeaderWithTheContentLengthOfAResponse_sStringBody() {
         response.stringBody = "0123456789";
 
-        new ContentLengthInserter().handle(request, response);
+        contentLengthInserter.handle(request, response);
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentLength, "10"));
     }
 
     @Test
     public void handleAddsAHeaderWithTheContentLengthOfZeroIfThereIsNoFileOrStringBodyToTheResponse() {
-        new ContentLengthInserter().handle(request, response);
+        contentLengthInserter.handle(request, response);
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentLength, "0"));
     }
+
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        contentLengthInserter.setNext(nextMiddleware);
+
+        contentLengthInserter.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
+    }
+
 }

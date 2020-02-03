@@ -2,6 +2,7 @@ package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.constants.HTTPStatusMessages;
+import httpServer.httpLogic.middleware.FileFinder;
 import httpServer.httpLogic.middleware.HTTPStatusMessageInserter;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
@@ -9,8 +10,7 @@ import httpServer.httpLogic.responses.Response;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class HTTPStatusMessageInserterTests {
 
@@ -48,5 +48,16 @@ public class HTTPStatusMessageInserterTests {
         response.statusCode = HTTPStatusCodes.NotFound;
         messageInserter.handle(placeHolderRequest, response);
         assertEquals(HTTPStatusMessages.NotFound, response.statusMessage);
+    }
+
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        response.statusCode = HTTPStatusCodes.OK;
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        messageInserter.setNext(nextMiddleware);
+
+        messageInserter.handle(placeHolderRequest, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
     }
 }

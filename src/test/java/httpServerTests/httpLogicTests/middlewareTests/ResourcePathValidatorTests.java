@@ -11,12 +11,12 @@ import httpServerTests.httpLogicTests.testRouterAndControllers.TestRouterFactory
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class ResourcePathValidatorTests {
 
     private ResourcePathValidator resourcePathValidator;
+    private Request request;
     private Response response;
 
     @Before
@@ -28,12 +28,23 @@ public class ResourcePathValidatorTests {
 
     @Test
     public void handleAddsANotFoundStatusCodeWhenTheResourceRequestedDoesNotExist() {
-        Request request = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
+        request = new RequestBuilder().addPath("/non_existent_path").addMethod(HTTPMethods.GET).build();
 
         assertNull(response.statusCode);
         resourcePathValidator.handle(request, response);
 
         assertEquals(HTTPStatusCodes.NotFound, response.statusCode);
+    }
+
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        resourcePathValidator.setNext(nextMiddleware);
+        request = new RequestBuilder().build();
+
+        resourcePathValidator.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
     }
 
 }

@@ -11,8 +11,7 @@ import httpServerTests.httpLogicTests.testRouterAndControllers.TestRouterFactory
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class RequestValidatorTests {
 
@@ -50,5 +49,15 @@ public class RequestValidatorTests {
         assertEquals(HTTPStatusCodes.NotImplemented, response.statusCode);
     }
 
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        request = new RequestBuilder().build();
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        requestValidator.setNext(nextMiddleware);
+
+        requestValidator.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
+    }
 
 }

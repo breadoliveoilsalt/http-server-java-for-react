@@ -6,6 +6,7 @@ import httpServer.httpLogic.middleware.FileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
+import httpServerTests.httpLogicTests.testRouterAndControllers.TestPaths;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -103,5 +104,16 @@ public class FileFinderTests {
         fileFinder.handle(request, response);
 
         assertNull(response.statusCode);
+    }
+
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        fileFinder = new FileFinder();
+        fileFinder.setNext(nextMiddleware);
+
+        fileFinder.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
     }
 }
