@@ -9,4 +9,5 @@ public class FileExtensions {
     public static final String JSONExtension = "json";
     public static final String PDFExtension = "pdf";
     public static final String JPGExtension = "jpg";
+    public static final String JPEGExtension = "jpeg";
 }

@@ -130,10 +130,20 @@ public class ContentTypeInserterTests {
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ApplicationPDF));
     }
 
-
     @Test
     public void handleAddsImageJPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJPGFile() throws IOException {
         String fileName = "jpgFile.jpg";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ImageJPEG));
+    }
+
+    @Test
+    public void handleAddsImageJPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJPEGFile() throws IOException {
+        String fileName = "jpegFile.jpeg";
         File file = tempFolder.newFile(fileName);
         response.file = file;
 
