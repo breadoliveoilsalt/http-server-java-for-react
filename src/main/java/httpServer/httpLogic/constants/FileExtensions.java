@@ -12,4 +12,5 @@ public class FileExtensions {
     public static final String JPEGExtension = "jpeg";
     public static final String PNGExtension = "png";
     public static final String GIFExtension = "gif";
+    public static final String WAVExtension = "wav";
 }

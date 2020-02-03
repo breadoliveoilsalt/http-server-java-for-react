@@ -173,7 +173,17 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ImageGIF));
     }
-//X Images (.jpg, .png, .gif)
+
+    @Test
+    public void handleAddsAudioWAVContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAWAVFile() throws IOException {
+        String fileName = "wavFile.wav";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.AudioWAV));
+    }
 //- Audio (.mp3, .wav)
 //- Video (.mov, .mp4)
 //X HTML (.htm, .html)
@@ -182,4 +192,5 @@ public class ContentTypeInserterTests {
 //X JSON (.json)
 //X Plan text (.txt)
 //X PDF Document (.pdf)
+//X Images (.jpg, .png, .gif)
 }

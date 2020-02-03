@@ -63,6 +63,7 @@ public class ContentTypeInserter extends Middleware {
         fileExtensionToContentTypeMap.put(FileExtensions.JPEGExtension, HTTPContentTypes.ImageJPEG);
         fileExtensionToContentTypeMap.put(FileExtensions.PNGExtension, HTTPContentTypes.ImagePNG);
         fileExtensionToContentTypeMap.put(FileExtensions.GIFExtension, HTTPContentTypes.ImageGIF);
+        fileExtensionToContentTypeMap.put(FileExtensions.WAVExtension, HTTPContentTypes.AudioWAV);
     }
 
 }
