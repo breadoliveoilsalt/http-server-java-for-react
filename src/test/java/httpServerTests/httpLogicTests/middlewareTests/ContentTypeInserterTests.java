@@ -184,6 +184,17 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.AudioWAV));
     }
+
+    @Test
+    public void handleAddsAudioMPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAMP3File() throws IOException {
+        String fileName = "mp3File.mp3";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.AudioMPEG));
+    }
 //- Audio (.mp3, .wav)
 //- Video (.mov, .mp4)
 //X HTML (.htm, .html)

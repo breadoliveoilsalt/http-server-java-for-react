@@ -12,6 +12,7 @@ public class HTTPContentTypes {
     public static final String ImagePNG = "image/png";
     public static final String ImageGIF = "image/gif";
     public static final String AudioWAV = "audio/wav";
+    public static final String AudioMPEG = "audio/mpeg";
 
 }
 
