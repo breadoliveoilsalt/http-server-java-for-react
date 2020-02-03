@@ -151,7 +151,29 @@ public class ContentTypeInserterTests {
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ImageJPEG));
     }
-//- Images (.jpg, .png, .gif)
+
+    @Test
+    public void handleAddsImagePNGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAPNGFile() throws IOException {
+        String fileName = "pngFile.png";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ImagePNG));
+    }
+
+    @Test
+    public void handleAddsImageGIFContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAGIFFile() throws IOException {
+        String fileName = "gifFile.gif";
+        File file = tempFolder.newFile(fileName);
+        response.file = file;
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.ImageGIF));
+    }
+//X Images (.jpg, .png, .gif)
 //- Audio (.mp3, .wav)
 //- Video (.mov, .mp4)
 //X HTML (.htm, .html)

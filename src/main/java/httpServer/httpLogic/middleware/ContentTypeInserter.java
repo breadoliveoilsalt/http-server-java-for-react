@@ -61,6 +61,8 @@ public class ContentTypeInserter extends Middleware {
         fileExtensionToContentTypeMap.put(FileExtensions.PDFExtension, HTTPContentTypes.ApplicationPDF);
         fileExtensionToContentTypeMap.put(FileExtensions.JPGExtension, HTTPContentTypes.ImageJPEG);
         fileExtensionToContentTypeMap.put(FileExtensions.JPEGExtension, HTTPContentTypes.ImageJPEG);
+        fileExtensionToContentTypeMap.put(FileExtensions.PNGExtension, HTTPContentTypes.ImagePNG);
+        fileExtensionToContentTypeMap.put(FileExtensions.GIFExtension, HTTPContentTypes.ImageGIF);
     }
 
 }

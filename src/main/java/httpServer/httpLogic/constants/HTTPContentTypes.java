@@ -9,6 +9,8 @@ public class HTTPContentTypes {
     public static final String ApplicationJSON = "application/json";
     public static final String ApplicationPDF = "application/pdf";
     public static final String ImageJPEG = "image/jpeg";
-
+    public static final String ImagePNG = "image/png";
+    public static final String ImageGIF = "image/gif";
 
 }
+
