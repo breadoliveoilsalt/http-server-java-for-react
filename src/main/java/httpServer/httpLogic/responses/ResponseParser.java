@@ -9,16 +9,38 @@ import java.io.IOException;
 public class ResponseParser {
 
     private Response response;
-    private String stringifiedResponse;
     private String stringifiedMetaData;
 
-    public String stringify(Response response) {
+    private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+    public byte[] convertToByteArray(Response response) throws IOException {
         this.response = response;
+        writeMetaData();
+        writeBody();
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    private void writeBody() throws IOException {
+        if (response.stringBody != null) {
+            byteArrayOutputStream.write(response.stringBody.getBytes());
+        } else if (response.file != null) {
+            FileInputStream fileInputStream = new FileInputStream(response.file);
+            byte[] fileBuffer = new byte[Math.toIntExact(response.file.length())];
+            fileInputStream.read(fileBuffer);
+            byteArrayOutputStream.write(fileBuffer);
+            fileInputStream.close();
+        }
+    }
+
+    private void writeMetaData() throws IOException {
+        stringifyMetaData();
+        byteArrayOutputStream.write(stringifiedMetaData.getBytes());
+    }
+
+    private void stringifyMetaData() {
         stringifyStatusLine();
         stringifyHeaders();
         stringifyEndOfMetaData();
-        stringifyBody();
-        return stringifiedResponse;
     }
 
     private void stringifyStatusLine() {
@@ -35,36 +57,6 @@ public class ResponseParser {
 
     private void stringifyEndOfMetaData() {
         stringifiedMetaData += Whitespace.CRLF;
-    }
-
-    private void stringifyBody() {
-       if (response.getStringBody() != null) {
-           stringifiedResponse += response.stringBody;
-       }
-    }
-
-    private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-    public byte[] convertToByteArray(Response response) throws IOException {
-        this.response = response;
-        stringifyMetaData();
-        byteArrayOutputStream.write(stringifiedMetaData.getBytes());
-        if (response.getStringBody() != null) {
-            byteArrayOutputStream.write(response.getStringBody().getBytes());
-        } else if (response.file != null) {
-            FileInputStream fileInputStream = new FileInputStream(response.file);
-            byte[] fileBuffer = new byte[Math.toIntExact(response.file.length())];
-            fileInputStream.read(fileBuffer);
-            byteArrayOutputStream.write(fileBuffer);
-            fileInputStream.close();
-        }
-       return byteArrayOutputStream.toByteArray();
-    }
-
-    private void stringifyMetaData() {
-        stringifyStatusLine();
-        stringifyHeaders();
-        stringifyEndOfMetaData();
     }
 
 }
