@@ -1,6 +1,8 @@
 package httpServer.serverSocketLogic.factory;
 
 import httpServer.httpLogic.ClientHandlerRunnable;
+import httpServer.router.Router;
+import httpServer.router.RouterFactory;
 import httpServer.serverSocketLogic.*;
 import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.*;
@@ -22,6 +24,10 @@ public class HTTPServerAppFactory implements AppFactory {
 
     public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
         return new ClientHandlerRunnable(sokket, logger);
+    }
+
+    public Router createRouter() {
+        return new RouterFactory().buildHTTPServerRouter();
     }
 
 }

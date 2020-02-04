@@ -1,5 +1,6 @@
 package httpServerTests.serverSocketLogicTests.factoryForTests;
 
+import httpServer.router.Router;
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
 import httpServer.serverLogger.ServerLogger;
@@ -16,6 +17,12 @@ public class MockAppFactory implements AppFactory {
     }
     public int callCountForCreateServerSokket = 0;
 
+    @Override
+    public ServerSokket createServerSokketListeningAtPort(int port) {
+        callCountForCreateServerSokket += 1;
+        return serverSokket;
+    }
+
     private HTTPServerListeningLoop HTTPServerListeningLoop;
     public MockAppFactory setHTTPServerListeningLoopToReturn(HTTPServerListeningLoop HTTPServerListeningLoop) {
         this.HTTPServerListeningLoop = HTTPServerListeningLoop;
@@ -23,12 +30,24 @@ public class MockAppFactory implements AppFactory {
     }
     public int callCountForCreateHTTPServerListeningLoop = 0;
 
+    @Override
+    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) {
+        callCountForCreateHTTPServerListeningLoop += 1;
+        return HTTPServerListeningLoop;
+    }
+
     private Runnable clientHandlerRunnable;
     public MockAppFactory setClientHandlerRunnableToReturn(Runnable clientInitRunnable) {
         this.clientHandlerRunnable = clientInitRunnable;
         return this;
     }
     public int callCountForCreateClientHandlerRunnable = 0;
+
+    @Override
+    public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
+        callCountForCreateClientHandlerRunnable += 1;
+        return clientHandlerRunnable;
+    }
 
     public int callCountForCreateThreadFor = 0;
 
@@ -39,27 +58,18 @@ public class MockAppFactory implements AppFactory {
     }
 
     @Override
-    public ServerSokket createServerSokketListeningAtPort(int port) {
-        callCountForCreateServerSokket += 1;
-        return serverSokket;
-    }
-
-    @Override
     public Thread createThreadFor(Runnable runnable) {
         callCountForCreateThreadFor += 1;
         return testableThreadToReturn.establishWithRunnable(runnable);
     }
 
-    @Override
-    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) {
-        callCountForCreateHTTPServerListeningLoop += 1;
-        return HTTPServerListeningLoop;
-    }
+    public int callCountForCreateRouter = 0;
+    private Router router;
 
     @Override
-    public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
-        callCountForCreateClientHandlerRunnable += 1;
-        return clientHandlerRunnable;
+    public Router createRouter() {
+        callCountForCreateRouter += 1;
+        return router;
     }
 
 }
