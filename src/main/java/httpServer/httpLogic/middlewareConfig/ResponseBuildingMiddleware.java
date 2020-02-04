@@ -17,7 +17,8 @@ public class ResponseBuildingMiddleware {
             .setNext(new ResourceFoundValidator())
             .setNext(new HTTPVersionInserter())
             .setNext(new HTTPStatusMessageInserter())
-            .setNext(new ContentLengthInserter());
+            .setNext(new ContentLengthInserter())
+            .setNext(new ContentTypeInserter());
 
         middlewareHead.handle(request, response);
     }

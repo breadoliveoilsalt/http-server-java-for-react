@@ -1,6 +1,7 @@
 package httpServer.httpLogic.constants;
 
 public class HTTPHeaders {
-    public final static String Allow = "Allow";
-    public final static String ContentLength = "Content-Length";
+    public static final String Allow = "Allow";
+    public static final String ContentLength = "Content-Length";
+    public static final String ContentType = "Content-Type";
 }
