@@ -46,6 +46,15 @@ public class HTTPServerInitTests {
     }
 
     @Test
+    public void runInstantiatesARouter() throws IOException {
+        assertEquals(0, factory.callCountForCreateRouter);
+
+        httpServerInit.run();
+
+        assertEquals(1, factory.callCountForCreateRouter);
+    }
+
+    @Test
     public void runInstantiatesAHTTPServerListeningLoop() throws IOException {
         assertEquals(0, factory.callCountForCreateHTTPServerListeningLoop);
 
@@ -54,6 +63,7 @@ public class HTTPServerInitTests {
         assertEquals(1, factory.callCountForCreateHTTPServerListeningLoop);
 
     }
+
     @Test
     public void runRunsTheHTTPServerListeningLoop() throws IOException {
         assertEquals(0, serverListeningLoop.getCallCountForRun());
