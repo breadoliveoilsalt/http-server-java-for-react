@@ -1,5 +1,6 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
+import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.RequestValidator;
 import httpServer.httpLogic.requests.Request;
@@ -58,6 +59,28 @@ public class RequestValidatorTests {
         requestValidator.handle(request, response);
 
         assertTrue(nextMiddleware.handleWasCalled);
+    }
+
+    @Test
+    public void handleAddsANotFoundStatusCodeIfTheRequestAttemptsToUseTwoDotsToAccessAResourceAboveTheApp_sRootDirectory() {
+        request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/../index.html").build();
+
+        assertNull(response.statusCode);
+
+        requestValidator.handle(request, response);
+
+        assertEquals(HTTPStatusCodes.NotFound, response.statusCode);
+    }
+
+    @Test
+    public void handleAddsANotFoundStatusCodeIfTheRequestAttemptsToUseTwoDotsAnywhereInThePath() {
+        request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/subdirectory/../index.html").build();
+
+        assertNull(response.statusCode);
+
+        requestValidator.handle(request, response);
+
+        assertEquals(HTTPStatusCodes.NotFound, response.statusCode);
     }
 
 }
