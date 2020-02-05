@@ -1,11 +1,11 @@
-package httpServerTests.httpLogicTests.ioTests;
+package httpServerTests.httpLogicTests.requestsTests;
 
 import httpServer.httpLogic.constants.Whitespace;
 import org.junit.Before;
 import org.junit.Test;
 
 import httpServerTests.serverSocketLogicTests.mocks.MockSokket;
-import httpServer.httpLogic.io.RequestReader;
+import httpServer.httpLogic.requests.RequestReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
