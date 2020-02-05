@@ -20,18 +20,6 @@ public class ResponseParser {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private void writeBody() throws IOException {
-        if (response.stringBody != null) {
-            byteArrayOutputStream.write(response.stringBody.getBytes());
-        } else if (response.file != null) {
-            FileInputStream fileInputStream = new FileInputStream(response.file);
-            byte[] fileBuffer = new byte[Math.toIntExact(response.file.length())];
-            fileInputStream.read(fileBuffer);
-            byteArrayOutputStream.write(fileBuffer);
-            fileInputStream.close();
-        }
-    }
-
     private void writeMetaData() throws IOException {
         stringifyMetaData();
         byteArrayOutputStream.write(stringifiedMetaData.getBytes());
@@ -50,13 +38,33 @@ public class ResponseParser {
     private void stringifyHeaders() {
         if (response.getHeaders() != null) {
             response.getHeaders().forEach(
-                (key, value) -> stringifiedMetaData += key + ": " + value + Whitespace.CRLF
+                    (key, value) -> stringifiedMetaData += key + ": " + value + Whitespace.CRLF
             );
         }
     }
 
     private void stringifyEndOfMetaData() {
         stringifiedMetaData += Whitespace.CRLF;
+    }
+
+    private void writeBody() throws IOException {
+        if (response.stringBody != null) {
+            writeStringBodyToByteArray();
+        } else if (response.file != null) {
+            writeFileToByteArray();
+        }
+    }
+
+    private void writeStringBodyToByteArray() throws IOException {
+        byteArrayOutputStream.write(response.stringBody.getBytes());
+    }
+
+    private void writeFileToByteArray() throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(response.file);
+        byte[] fileBuffer = new byte[Math.toIntExact(response.file.length())];
+        fileInputStream.read(fileBuffer);
+        byteArrayOutputStream.write(fileBuffer);
+        fileInputStream.close();
     }
 
 }
