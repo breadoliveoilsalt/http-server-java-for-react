@@ -6,7 +6,7 @@ public class RequestParser {
 
     private final RequestBuilder requestBuilder;
     private String rawClientRequest;
-    private String[] parsedMetaDataAndBody;
+    private String[] parsedMetadataAndBody;
     private String[] parsedRequestLineAndHeaders;
     private String[] parsedRequestLine;
 
@@ -29,8 +29,8 @@ public class RequestParser {
     }
 
     private void parseRawRequestIntoSections() {
-        parsedMetaDataAndBody = rawClientRequest.split(Whitespace.CRLF + Whitespace.CRLF);
-        parsedRequestLineAndHeaders = parsedMetaDataAndBody[0].split(Whitespace.CRLF);
+        parsedMetadataAndBody = rawClientRequest.split(Whitespace.CRLF + Whitespace.CRLF);
+        parsedRequestLineAndHeaders = parsedMetadataAndBody[0].split(Whitespace.CRLF);
         parsedRequestLine = parsedRequestLineAndHeaders[0].split(" ");
     }
 
@@ -55,8 +55,8 @@ public class RequestParser {
     }
 
     private void extractBodyForRequest() {
-        if (parsedMetaDataAndBody.length > 1){
-            requestBuilder.addBody(parsedMetaDataAndBody[1]);
+        if (parsedMetadataAndBody.length > 1){
+            requestBuilder.addBody(parsedMetadataAndBody[1]);
         }
     }
 

@@ -41,7 +41,7 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void handleClientRequest() throws Exception {
-        String rawClientRequest = new RequestReader().readInputStream(sokket);
+        String rawClientRequest = new RequestReader(sokket).readInputStream();
         Request request = new RequestParser().parse(rawClientRequest);
         Response response = new Response();
         new ResponseBuildingMiddleware().runWithBasicConfig(router, request, response);

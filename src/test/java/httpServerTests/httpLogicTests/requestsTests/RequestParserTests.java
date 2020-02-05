@@ -101,7 +101,7 @@ public class RequestParserTests {
 
     @Test
     public void parseReturnsAResponseMarkedAsUnparsableIfTheRequestIsMalformed() {
-        rawClientRequest = "HTTP/1.1 /simple_get GET";
+        rawClientRequest = "HTTP/1.1 /simple_get GET" + Whitespace.CRLF + Whitespace.CRLF;
 
         Request request = requestParser.parse(rawClientRequest);
 

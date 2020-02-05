@@ -50,6 +50,14 @@ public class Request {
         return headers.get(key);
     }
 
+    public boolean hasHeaderValue(String key) {
+        if (headers == null) {
+            return false;
+        } else {
+            return headers.containsKey(key);
+        }
+    }
+
     public String getBody() {
         return body;
     }

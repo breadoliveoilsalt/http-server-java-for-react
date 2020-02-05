@@ -96,13 +96,13 @@ public class ResponseParserTests {
         File fileForTest = getFileForTest();
         buildResponseForFileTest(fileForTest);
 
-        String rawExpectedMetaData =
+        String rawExpectedMetadata =
                 "HTTP/1.1 200 OK" + Whitespace.CRLF +
                 "Content-Length: " + fileForTest.length() + Whitespace.CRLF +
                 Whitespace.CRLF;
 
         ByteArrayOutputStream tempExpectedResultBuffer = new ByteArrayOutputStream();
-        tempExpectedResultBuffer.write(rawExpectedMetaData.getBytes());
+        tempExpectedResultBuffer.write(rawExpectedMetadata.getBytes());
         tempExpectedResultBuffer.write(Files.readAllBytes(fileForTest.toPath()));
 
         byte[] expectedResult = tempExpectedResultBuffer.toByteArray();
