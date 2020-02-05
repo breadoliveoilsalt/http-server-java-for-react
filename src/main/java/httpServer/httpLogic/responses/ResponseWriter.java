@@ -1,4 +1,4 @@
-package httpServer.httpLogic.io;
+package httpServer.httpLogic.responses;
 
 import httpServer.serverSocketLogic.wrappers.Sokket;
 

@@ -3,7 +3,7 @@ package httpServer.httpLogic;
 import httpServer.httpLogic.middlewareConfig.ResponseBuildingMiddleware;
 import httpServer.router.Router;
 import httpServer.httpLogic.requests.RequestReader;
-import httpServer.httpLogic.io.ResponseWriter;
+import httpServer.httpLogic.responses.ResponseWriter;
 import httpServer.httpLogic.requests.RequestParser;
 import httpServer.httpLogic.responses.ResponseParser;
 import httpServer.httpLogic.requests.Request;
