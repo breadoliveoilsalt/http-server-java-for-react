@@ -3,6 +3,7 @@ package httpServerTests.serverSocketLogicTests;
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.serverSocketLogic.HTTPServerInit;
 import httpServer.serverLogger.ServerLogger;
+import httpServerTests.httpLogicTests.testRouterAndControllers.TestRouterFactory;
 import httpServerTests.serverSocketLogicTests.factoryForTests.MockAppFactory;
 import httpServerTests.serverSocketLogicTests.mocks.MockHTTPServerListeningLoop;
 import httpServerTests.serverSocketLogicTests.mocks.MockServerSokket;
@@ -12,7 +13,6 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class HTTPServerInitTests {
 
@@ -26,9 +26,12 @@ public class HTTPServerInitTests {
     @Before
     public void testInit() {
         serverSokket = new MockServerSokket();
-        OutputStream loggerOutputStream = new ByteArrayOutputStream();
-        logger = new ServerLogger(loggerOutputStream);
-        serverListeningLoop = new MockHTTPServerListeningLoop(serverSokket, factory, logger);
+        logger = new ServerLogger(new ByteArrayOutputStream());
+        serverListeningLoop = new MockHTTPServerListeningLoop(
+                serverSokket,
+                new TestRouterFactory().buildWithPathOneAndPathTwoTestControllers(),
+                factory,
+                logger);
         factory = new MockAppFactory()
             .setServerSokketToReturn(serverSokket)
             .setHTTPServerListeningLoopToReturn(serverListeningLoop);

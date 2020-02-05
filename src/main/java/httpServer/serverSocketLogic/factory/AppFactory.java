@@ -14,9 +14,9 @@ public interface AppFactory {
 
     Thread createThreadFor(Runnable runnable);
 
-    HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger);
+    HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, Router router, AppFactory factory, ServerLogger logger);
 
-    Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger);
+    Runnable createClientHandlerRunnable(Sokket sokket, Router router, ServerLogger logger);
 
     Router createRouter();
 

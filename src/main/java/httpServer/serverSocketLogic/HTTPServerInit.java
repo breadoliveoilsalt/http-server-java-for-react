@@ -48,7 +48,7 @@ public class HTTPServerInit implements HTTPServerLogicObject {
     }
 
     private void instantiateHTTPServerListeningLoop() {
-        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, factory, logger);
+        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, router, factory, logger);
     }
 
     private void runHTTPServerListeningLoop() throws IOException {

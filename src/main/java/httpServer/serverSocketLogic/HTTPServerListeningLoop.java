@@ -1,5 +1,6 @@
 package httpServer.serverSocketLogic;
 
+import httpServer.router.Router;
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
@@ -11,12 +12,14 @@ public class HTTPServerListeningLoop implements HTTPServerLogicObject {
 
     private final ServerSokket serverSokket;
     private final AppFactory factory;
+    private final Router router;
     private final ServerLogger logger;
     private Sokket connectedSokket;
     private Thread threadToStart;
 
-    public HTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) {
+    public HTTPServerListeningLoop(ServerSokket serverSokket, Router router, AppFactory factory, ServerLogger logger) {
         this.serverSokket = serverSokket;
+        this.router = router;
         this.factory = factory;
         this.logger = logger;
     }
@@ -34,7 +37,7 @@ public class HTTPServerListeningLoop implements HTTPServerLogicObject {
     }
 
     private void instantiateClientHandlerThread() {
-        Runnable clientHandler = factory.createClientHandlerRunnable(connectedSokket, logger);
+        Runnable clientHandler = factory.createClientHandlerRunnable(connectedSokket, router, logger);
         threadToStart = factory.createThreadFor(clientHandler);
     }
 

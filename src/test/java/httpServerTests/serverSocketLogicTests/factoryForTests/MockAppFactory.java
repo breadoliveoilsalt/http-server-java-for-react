@@ -31,7 +31,7 @@ public class MockAppFactory implements AppFactory {
     public int callCountForCreateHTTPServerListeningLoop = 0;
 
     @Override
-    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) {
+    public HTTPServerListeningLoop createHTTPServerListeningLoop(ServerSokket serverSokket, Router router, AppFactory factory, ServerLogger logger) {
         callCountForCreateHTTPServerListeningLoop += 1;
         return HTTPServerListeningLoop;
     }
@@ -44,7 +44,7 @@ public class MockAppFactory implements AppFactory {
     public int callCountForCreateClientHandlerRunnable = 0;
 
     @Override
-    public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
+    public Runnable createClientHandlerRunnable(Sokket sokket, Router router, ServerLogger logger) {
         callCountForCreateClientHandlerRunnable += 1;
         return clientHandlerRunnable;
     }

@@ -19,11 +19,11 @@ public class HTTPServerAppFactory implements AppFactory {
         return new Thread(runnable);
     }
 
-    public HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, AppFactory factory, ServerLogger logger) { return new HTTPServerListeningLoop(serverSokket, factory, logger);
+    public HTTPServerLogicObject createHTTPServerListeningLoop(ServerSokket serverSokket, Router router, AppFactory factory, ServerLogger logger) { return new HTTPServerListeningLoop(serverSokket, router, factory, logger);
     }
 
-    public Runnable createClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
-        return new ClientHandlerRunnable(sokket, logger);
+    public Runnable createClientHandlerRunnable(Sokket sokket, Router router, ServerLogger logger) {
+        return new ClientHandlerRunnable(sokket, router, logger);
     }
 
     public Router createRouter() {
