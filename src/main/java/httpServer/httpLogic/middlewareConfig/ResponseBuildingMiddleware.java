@@ -12,7 +12,7 @@ public class ResponseBuildingMiddleware {
         Middleware middlewareHead = new RequestValidator(router);
 
         middlewareHead
-            .setNext(new FileFinder())
+            .setNext(new PublicFileFinder())
             .setNext(new ResourcePathValidator(router))
             .setNext(new ControllerMapper(router))
             .setNext(new ResourceFoundValidator())

@@ -7,18 +7,18 @@ import httpServer.httpLogic.responses.Response;
 
 import java.io.File;
 
-public class FileFinder extends Middleware {
+public class PublicFileFinder extends Middleware {
 
     private final String publicFilesPath;
     private Request request;
     private Response response;
 
-    public FileFinder() {
+    public PublicFileFinder() {
         String rootDirectory = System.getProperty("user.dir");
         this.publicFilesPath = rootDirectory + "/public";
     }
 
-    public FileFinder(String publicFilesPath) {
+    public PublicFileFinder(String publicFilesPath) {
        this.publicFilesPath = publicFilesPath;
     }
 

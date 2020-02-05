@@ -2,7 +2,7 @@ package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
-import httpServer.httpLogic.middleware.FileFinder;
+import httpServer.httpLogic.middleware.PublicFileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
@@ -19,11 +19,11 @@ import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
-public class FileFinderTests {
+public class PublicFileFinderTests {
 
     private Request request;
     private Response response;
-    private FileFinder fileFinder;
+    private PublicFileFinder publicFileFinder;
 
     @Before
     public void testInit() {
@@ -40,8 +40,8 @@ public class FileFinderTests {
         String basePath = tempFolder.getRoot().getPath();
 
         assertNull(response.file);
-        fileFinder = new FileFinder(basePath);
-        fileFinder.handle(request, response);
+        publicFileFinder = new PublicFileFinder(basePath);
+        publicFileFinder.handle(request, response);
 
         assertEquals("index.html", response.file.getName());
     }
@@ -55,8 +55,8 @@ public class FileFinderTests {
 
         assertNull(response.file);
         String basePath = tempFolder.getRoot().getPath();
-        fileFinder = new FileFinder(basePath);
-        fileFinder.handle(request, response);
+        publicFileFinder = new PublicFileFinder(basePath);
+        publicFileFinder.handle(request, response);
 
         assertEquals("index.html", response.file.getName());
     }
@@ -68,17 +68,17 @@ public class FileFinderTests {
         String basePath = tempFolder.getRoot().getPath();
 
         assertNull(response.file);
-        fileFinder = new FileFinder(basePath);
-        fileFinder.handle(request, response);
+        publicFileFinder = new PublicFileFinder(basePath);
+        publicFileFinder.handle(request, response);
 
         assertNull(response.file);
     }
 
     @Test
     public void handle_sDefaultBasePathIsAPublicSubDirectoryInTheProjectRootDirectory() {
-        fileFinder = new FileFinder();
+        publicFileFinder = new PublicFileFinder();
 
-        assertEquals(System.getProperty("user.dir") + "/public", fileFinder.getPublicFilesPath());
+        assertEquals(System.getProperty("user.dir") + "/public", publicFileFinder.getPublicFilesPath());
     }
 
     @Test
@@ -87,8 +87,8 @@ public class FileFinderTests {
         String basePath = tempFolder.getRoot().getPath();
 
         assertNull(response.getStatusCode());
-        fileFinder = new FileFinder(basePath);
-        fileFinder.handle(request, response);
+        publicFileFinder = new PublicFileFinder(basePath);
+        publicFileFinder.handle(request, response);
 
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
@@ -99,8 +99,8 @@ public class FileFinderTests {
         String basePath = tempFolder.getRoot().getPath();
 
         assertNull(response.statusCode);
-        fileFinder = new FileFinder(basePath);
-        fileFinder.handle(request, response);
+        publicFileFinder = new PublicFileFinder(basePath);
+        publicFileFinder.handle(request, response);
 
         assertNull(response.statusCode);
     }
@@ -108,10 +108,10 @@ public class FileFinderTests {
     @Test
     public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
         MockMiddleware nextMiddleware = new MockMiddleware();
-        fileFinder = new FileFinder();
-        fileFinder.setNext(nextMiddleware);
+        publicFileFinder = new PublicFileFinder();
+        publicFileFinder.setNext(nextMiddleware);
 
-        fileFinder.handle(request, response);
+        publicFileFinder.handle(request, response);
 
         assertTrue(nextMiddleware.handleWasCalled);
     }
