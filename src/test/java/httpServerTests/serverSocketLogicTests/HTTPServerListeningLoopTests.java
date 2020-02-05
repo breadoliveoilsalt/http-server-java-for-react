@@ -1,7 +1,9 @@
 package httpServerTests.serverSocketLogicTests;
 
+import httpServer.router.Router;
 import httpServer.serverSocketLogic.HTTPServerListeningLoop;
 import httpServer.serverLogger.ServerLogger;
+import httpServerTests.httpLogicTests.testRouterAndControllers.TestRouterFactory;
 import httpServerTests.serverSocketLogicTests.factoryForTests.MockAppFactory;
 import httpServerTests.serverSocketLogicTests.mocks.*;
 
@@ -39,7 +41,10 @@ public class HTTPServerListeningLoopTests {
     }
 
     private void initFactory() {
-        clientInitRunnable = new MockClientHandlerRunnable(sokket, new ServerLogger(new ByteArrayOutputStream()));
+        clientInitRunnable = new MockClientHandlerRunnable(
+                sokket,
+                new TestRouterFactory().buildWithPathOneAndPathTwoTestControllers(),
+                new ServerLogger(new ByteArrayOutputStream()));
         thread = new TestableThread();
         factory = new MockAppFactory()
             .setTestableThreadToReturn(thread)
@@ -47,8 +52,9 @@ public class HTTPServerListeningLoopTests {
     }
 
     private void initHTTPServerListeningLoop() {
+        Router router = new TestRouterFactory().buildWithPathOneAndPathTwoTestControllers();
         ServerLogger logger = new ServerLogger(new ByteArrayOutputStream());
-        HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, factory, logger);
+        HTTPServerListeningLoop = new HTTPServerListeningLoop(serverSokket, router , factory, logger);
     }
 
     private void setLoopToRunOnce() {

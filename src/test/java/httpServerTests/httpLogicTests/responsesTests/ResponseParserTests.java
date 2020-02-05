@@ -1,8 +1,10 @@
 package httpServerTests.httpLogicTests.responsesTests;
 
+import httpServer.httpLogic.constants.HTTPStatusCodes;
+import httpServer.httpLogic.constants.HTTPStatusMessages;
+import httpServer.httpLogic.constants.HTTPVersions;
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.httpLogic.responses.ResponseParser;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ResponseParserTests {
 
-    Response responseObject;
+    Response response;
     ResponseParser responseParser;
 
     @Before
@@ -30,13 +32,13 @@ public class ResponseParserTests {
         buildResponseForBasicStringTest();
         String expectedResult = "HTTP/1.1 200 OK" + Whitespace.CRLF + Whitespace.CRLF;
 
-        byte[] result = responseParser.convertToByteArray(responseObject);
+        byte[] result = responseParser.convertToByteArray(response);
 
         assertEquals(expectedResult, new String(result));
     }
 
    private void buildResponseForBasicStringTest() {
-        responseObject = new Response(
+        response = new Response(
                "HTTP/1.1",
                "200",
                "OK",
@@ -53,18 +55,18 @@ public class ResponseParserTests {
                 "Date: Some Date" + Whitespace.CRLF +
                 Whitespace.CRLF;
 
-        byte[] result = responseParser.convertToByteArray(responseObject);
+        byte[] result = responseParser.convertToByteArray(response);
 
         assertEquals(expectedResult, new String(result));
     }
 
     private void buildResponseForHeadersTest() {
-        ResponseBuilder builder = new ResponseBuilder();
-        builder.addOKStatusLine()
-            .addHeader("Content-Length", "0")
-            .addHeader("Date", "Some Date");
-
-        responseObject = builder.build();
+        response = new Response();
+        response.statusCode = HTTPStatusCodes.OK;
+        response.statusMessage = HTTPStatusMessages.OK;
+        response.httpVersion = HTTPVersions.versionImplemented;
+        response.addHeader("Content-Length", "0");
+        response.addHeader("Date", "Some Date");
     }
 
     @Test public void convertToByteArrayAddsAResponse_sStringBody() throws IOException {
@@ -76,18 +78,18 @@ public class ResponseParserTests {
                         Whitespace.CRLF +
                 "Hello";
 
-        byte[] result = responseParser.convertToByteArray(responseObject);
+        byte[] result = responseParser.convertToByteArray(response);
 
         assertEquals(expectedResult, new String(result));
     }
 
     private void buildResponseForStringBodyTest() {
-        ResponseBuilder builder = new ResponseBuilder();
-        builder.addOKStatusLine()
-                .addHeader("Content-Length", "5")
-                .addBody("Hello");
-
-        responseObject = builder.build();
+        response = new Response();
+        response.statusCode = HTTPStatusCodes.OK;
+        response.statusMessage = HTTPStatusMessages.OK;
+        response.httpVersion = HTTPVersions.versionImplemented;
+        response.addHeader("Content-Length", "5");
+        response.stringBody = "Hello";
     }
 
     @Test public void convertToByteArrayOutputStreamAddsAResponse_sFile() throws IOException {
@@ -106,7 +108,7 @@ public class ResponseParserTests {
         byte[] expectedResult = tempExpectedResultBuffer.toByteArray();
         tempExpectedResultBuffer.close();
 
-        byte[] result = responseParser.convertToByteArray(responseObject);
+        byte[] result = responseParser.convertToByteArray(response);
 
         assertEquals(new String(expectedResult), new String(result));
     }
@@ -117,12 +119,12 @@ public class ResponseParserTests {
     }
 
     private void buildResponseForFileTest(File fileForTest) {
-        ResponseBuilder builder = new ResponseBuilder();
-        builder.addOKStatusLine()
-                .addHeader("Content-Length", Long.toString(fileForTest.length()));
-
-        responseObject = builder.build();
-        responseObject.file = fileForTest;
+        response = new Response();
+        response.statusCode = HTTPStatusCodes.OK;
+        response.statusMessage = HTTPStatusMessages.OK;
+        response.httpVersion = HTTPVersions.versionImplemented;
+        response.addHeader("Content-Length", Long.toString(fileForTest.length()));
+        response.file = fileForTest;
     }
 
 }

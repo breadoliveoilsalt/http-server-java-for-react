@@ -1,11 +1,11 @@
 package httpServerTests.loggerTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.serverLogger.ServerLogger;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,7 +74,8 @@ public class ServerLoggerTests {
     public void logRequestAndResponseLogsInformationAboutTheRequestAndResponse() {
         Request request  = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/simple_get").addHeader("Host", "000.000.000").build();
 
-        Response response = new ResponseBuilder().addStatusCode("200").build();
+        Response response = new Response();
+        response.statusCode = HTTPStatusCodes.OK;
 
         logger.logRequestAndResponse(request, response);
 

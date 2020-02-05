@@ -7,18 +7,19 @@ import httpServer.httpLogic.responses.Response;
 
 import java.io.File;
 
-public class FileFinder extends Middleware {
+public class PublicFileFinder extends Middleware {
 
-    private final String basePath;
+    private final String publicFilesPath;
     private Request request;
     private Response response;
 
-    public FileFinder() {
-        this.basePath = System.getProperty("user.dir");
+    public PublicFileFinder() {
+        String rootDirectory = System.getProperty("user.dir");
+        this.publicFilesPath = rootDirectory + "/public";
     }
 
-    public FileFinder(String basePath) {
-       this.basePath = basePath;
+    public PublicFileFinder(String publicFilesPath) {
+       this.publicFilesPath = publicFilesPath;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class FileFinder extends Middleware {
 
     private void checkForFile() {
         if (request.getHTTPMethod().equals(HTTPMethods.GET)) {
-            File file = new File(basePath + request.getPath());
+            File file = new File(publicFilesPath + request.getPath());
             if (file.exists() && file.isFile()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 response.file = file;
@@ -41,8 +42,8 @@ public class FileFinder extends Middleware {
         }
     }
 
-    public String getBasePath() {
-        return basePath;
+    public String getPublicFilesPath() {
+        return publicFilesPath;
     }
 
 }

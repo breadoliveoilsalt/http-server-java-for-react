@@ -1,5 +1,6 @@
 package httpServer.serverSocketLogic;
 
+import httpServer.router.Router;
 import httpServer.serverSocketLogic.factory.AppFactory;
 import httpServer.serverLogger.ServerLogger;
 import httpServer.serverSocketLogic.wrappers.ServerSokket;
@@ -11,6 +12,7 @@ public class HTTPServerInit implements HTTPServerLogicObject {
     private final int port;
     private HTTPServerLogicObject httpServerListeningLoop;
     private final AppFactory factory;
+    private Router router;
     private final ServerLogger logger;
     private ServerSokket serverSokket;
 
@@ -24,6 +26,7 @@ public class HTTPServerInit implements HTTPServerLogicObject {
 
         try {
             instantiateServerSokket();
+            instantiateRouter();
             instantiateHTTPServerListeningLoop();
             logger.logServerInit(port);
             runHTTPServerListeningLoop();
@@ -40,8 +43,12 @@ public class HTTPServerInit implements HTTPServerLogicObject {
         serverSokket = factory.createServerSokketListeningAtPort(port);
     }
 
+    private void instantiateRouter() {
+        router = factory.createRouter();
+    }
+
     private void instantiateHTTPServerListeningLoop() {
-        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, factory, logger);
+        httpServerListeningLoop = factory.createHTTPServerListeningLoop(serverSokket, router, factory, logger);
     }
 
     private void runHTTPServerListeningLoop() throws IOException {

@@ -9,29 +9,19 @@ import java.util.*;
 public class Router {
 
     private final Map<String, Class<Controller>> routeMap;
-    private Set<String> recognizedHTTPMethods;
+    private Set<String> allRecognizedHTTPMethods;
 
     public Router(Map<String, Class<Controller>> routeMap) {
         this.routeMap = Collections.unmodifiableMap(routeMap);
+        populateAllRecognizedHTTPMethods();
     }
 
-    public Class<Controller> getControllerFor(String path) {
-       return routeMap.get(path);
-    }
-
-    public Set<String> getAllRecognizedHTTPMethods() {
-        if (recognizedHTTPMethods == null) {
-            recognizedHTTPMethods = new HashSet<>();
-            populateRecognizedMethods();
-        }
-        return recognizedHTTPMethods;
-    }
-
-    private void populateRecognizedMethods() {
+    private void populateAllRecognizedHTTPMethods() {
+        allRecognizedHTTPMethods = new HashSet<>();
         routeMap.values().forEach( controllerClass -> {
             Method[] classMethods = controllerClass.getMethods();
             Set<String> parsedMethods = parseMethodsThatReturnResponseObjects(classMethods);
-            recognizedHTTPMethods.addAll(parsedMethods);
+            allRecognizedHTTPMethods.addAll(parsedMethods);
         });
     }
 
@@ -43,6 +33,14 @@ public class Router {
             }
         }
         return parsedMethods;
+    }
+
+    public Class<Controller> getControllerFor(String path) {
+       return routeMap.get(path);
+    }
+
+    public Set<String> getAllRecognizedHTTPMethods() {
+        return allRecognizedHTTPMethods;
     }
 
     public Set<String> getPaths() {

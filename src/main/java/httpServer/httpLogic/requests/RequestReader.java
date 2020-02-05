@@ -1,4 +1,4 @@
-package httpServer.httpLogic.io;
+package httpServer.httpLogic.requests;
 
 import httpServer.serverSocketLogic.wrappers.Sokket;
 

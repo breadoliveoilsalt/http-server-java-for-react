@@ -2,9 +2,8 @@ package httpServer.httpLogic;
 
 import httpServer.httpLogic.middlewareConfig.ResponseBuildingMiddleware;
 import httpServer.router.Router;
-import httpServer.router.RouterFactory;
-import httpServer.httpLogic.io.RequestReader;
-import httpServer.httpLogic.io.ResponseWriter;
+import httpServer.httpLogic.requests.RequestReader;
+import httpServer.httpLogic.responses.ResponseWriter;
 import httpServer.httpLogic.requests.RequestParser;
 import httpServer.httpLogic.responses.ResponseParser;
 import httpServer.httpLogic.requests.Request;
@@ -18,10 +17,12 @@ import java.io.IOException;
 public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
 
     private final Sokket sokket;
+    private final Router router;
     private final ServerLogger logger;
 
-    public ClientHandlerRunnable(Sokket sokket, ServerLogger logger) {
+    public ClientHandlerRunnable(Sokket sokket, Router router, ServerLogger logger) {
         this.sokket = sokket;
+        this.router = router;
         this.logger = logger;
     }
 
@@ -40,7 +41,6 @@ public class ClientHandlerRunnable implements Runnable, HTTPServerLogicObject {
     }
 
     private void handleClientRequest() throws Exception {
-        Router router = new RouterFactory().buildHTTPServerRouter();
         String rawClientRequest = new RequestReader().readInputStream(sokket);
         Request request = new RequestParser().parse(rawClientRequest);
         Response response = new Response();

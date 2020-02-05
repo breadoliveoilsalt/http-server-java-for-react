@@ -1,7 +1,6 @@
 package httpServerTests.routerTests;
 
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.responses.ResponseBuilder;
 import httpServer.router.Router;
 import httpServer.router.RouterBuilder;
 import org.junit.Before;
@@ -18,7 +17,7 @@ public class RouterTests {
 
     static class Path1Controller {
         public Response get() {
-            return new ResponseBuilder().build();
+            return new Response();
         }
 
         public void publicFunctionThatRouterWillNotConsideredAsARecognizedMethod() {
@@ -28,10 +27,10 @@ public class RouterTests {
 
     static class Path2Controller {
         public Response delete() {
-            return new ResponseBuilder().build();
+            return new Response();
         }
         public Response post() {
-            return new ResponseBuilder().build();
+            return new Response();
         }
     }
 

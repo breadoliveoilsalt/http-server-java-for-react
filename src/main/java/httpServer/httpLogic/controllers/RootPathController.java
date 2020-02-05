@@ -1,6 +1,6 @@
 package httpServer.httpLogic.controllers;
 
-import httpServer.httpLogic.middleware.FileFinder;
+import httpServer.httpLogic.middleware.PublicFileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 
@@ -12,7 +12,7 @@ public class RootPathController extends Controller {
 
     public Response get() {
         request.setPath("/index.html");
-        new FileFinder().handle(request, response);
+        new PublicFileFinder().handle(request, response);
         return response;
     }
 
