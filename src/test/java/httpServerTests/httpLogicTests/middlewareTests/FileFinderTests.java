@@ -75,10 +75,10 @@ public class FileFinderTests {
     }
 
     @Test
-    public void handle_sDefaultBasePathIsTheProjectRootDirectory() {
+    public void handle_sDefaultBasePathIsAPublicSubDirectoryInTheProjectRootDirectory() {
         fileFinder = new FileFinder();
 
-        assertEquals(System.getProperty("user.dir"), fileFinder.getBasePath());
+        assertEquals(System.getProperty("user.dir") + "/public", fileFinder.getPublicFilesPath());
     }
 
     @Test

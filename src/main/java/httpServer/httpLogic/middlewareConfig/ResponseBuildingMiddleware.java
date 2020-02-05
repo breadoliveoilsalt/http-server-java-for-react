@@ -8,6 +8,7 @@ import httpServer.router.Router;
 public class ResponseBuildingMiddleware {
 
     public void runWithBasicConfig(Router router, Request request, Response response) {
+
         Middleware middlewareHead = new RequestValidator(router);
 
         middlewareHead
