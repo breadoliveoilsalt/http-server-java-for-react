@@ -7,6 +7,7 @@ import httpServer.serverSocketLogic.wrappers.Sokket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.SocketException;
 
 public class RequestReader {
 
@@ -43,13 +44,17 @@ public class RequestReader {
     }
 
     private void getMetadata() throws IOException {
-        int defaultNumbersOfLinesToRead = 100;
-        String currentLine;
-        while ((currentLine = reader.readLine()) != null) {
-            rawRequestBuilder.append(currentLine + Whitespace.CRLF);
-            if (endOfMetadataReached(currentLine)) {
-                break;
+        try {
+            sokket.setSoTimeout(5 * 1000);
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                rawRequestBuilder.append(currentLine + Whitespace.CRLF);
+                if (endOfMetadataReached(currentLine)) {
+                    break;
+                }
             }
+        } catch (SocketException e) {
+            e.printStackTrace();
         }
     }
 
