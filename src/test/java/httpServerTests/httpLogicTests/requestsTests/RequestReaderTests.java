@@ -68,25 +68,25 @@ public class RequestReaderTests {
     }
 
 
-//    @Test
-//    public void readInputStreamReturnsAStringWithARequestTimeoutStringIfReadingTheRequestLastsMoreThanFiveSeconds() throws IOException {
-//        class DelayedInputStream extends InputStream {
-//            @Override
-//            public int read() {
-//                try {
-//                    TimeUnit.SECONDS.sleep(10);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                return -1;
-//            }
-//        }
-//
-//        InputStream inputStreamFromClient = new DelayedInputStream();
-//        sokket.setInputStream(inputStreamFromClient);
-//
-//        String requestReadFromClient = requestReader.readInputStream();
-//
-//        assertEquals(HTTPStatusMessages.RequestTimeout, requestReadFromClient);
-//    }
+    @Test
+    public void readInputStreamReturnsAStringWithARequestTimeoutStringIfReadingTheRequestLastsMoreThanFiveSeconds() throws IOException {
+        class DelayedInputStream extends InputStream {
+            @Override
+            public int read() {
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+            }
+        }
+
+        InputStream inputStreamFromClient = new DelayedInputStream();
+        sokket.setInputStream(inputStreamFromClient);
+
+        String requestReadFromClient = requestReader.readInputStream();
+
+        assertEquals(HTTPStatusMessages.RequestTimeout, requestReadFromClient);
+    }
 }

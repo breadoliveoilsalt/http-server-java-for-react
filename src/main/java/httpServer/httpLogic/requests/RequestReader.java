@@ -8,7 +8,7 @@ import httpServer.serverSocketLogic.wrappers.Sokket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class RequestReader {
 
@@ -29,12 +29,12 @@ public class RequestReader {
             getMetadata();
             parseMetadata();
             checkForContentLength();
-        } catch (SocketException e) {
-            e.printStackTrace();
-            rawRequestBuilder.delete(0, rawRequestBuilder.length() - 1);
+        } catch (SocketTimeoutException e) {
+            rawRequestBuilder.delete(0, rawRequestBuilder.length());
             rawRequestBuilder.append(HTTPStatusMessages.RequestTimeout);
+        } finally {
+            return rawRequestBuilder.toString();
         }
-        return rawRequestBuilder.toString();
     }
 
     private void getReader() throws IOException {

@@ -21,7 +21,7 @@ public class ResourceFoundValidator extends Middleware {
     }
 
     private boolean getRequestMade() {
-        return request.getHTTPMethod().equals(HTTPMethods.GET);
+        return request.getHTTPMethod() != null && request.getHTTPMethod().equals(HTTPMethods.GET);
     }
 
     private boolean controllerAcceptedRequestWithoutAssigningAResource() {

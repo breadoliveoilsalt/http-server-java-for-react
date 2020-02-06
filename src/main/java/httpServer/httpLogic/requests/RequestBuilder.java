@@ -11,6 +11,7 @@ public class RequestBuilder {
     private Map<String, String> headers;
     private String body;
     private boolean wasParsable = true;
+    private boolean timelyCompleted = true;
 
     public RequestBuilder addMethod(String method) {
         this.method = method;
@@ -53,8 +54,13 @@ public class RequestBuilder {
         return this;
     }
 
+    public RequestBuilder flagAsTimedOut() {
+        timelyCompleted = false;
+        return this;
+    }
+
     public Request build() {
-        return new Request(method, path, httpVersion, headers, body, wasParsable);
+        return new Request(method, path, httpVersion, headers, body, wasParsable, timelyCompleted);
     }
 
 }

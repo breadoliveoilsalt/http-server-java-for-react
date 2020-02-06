@@ -1,5 +1,6 @@
 package httpServer.httpLogic.requests;
 
+import httpServer.httpLogic.constants.HTTPStatusMessages;
 import httpServer.httpLogic.constants.Whitespace;
 
 public class RequestParser {
@@ -15,8 +16,17 @@ public class RequestParser {
     }
 
     public Request parse(String rawClientRequest) {
+        this.rawClientRequest = rawClientRequest;
+        if (rawClientRequest.equals(HTTPStatusMessages.RequestTimeout)) {
+            requestBuilder.flagAsTimedOut();
+        } else {
+            attemptToParseRequest();
+        }
+        return requestBuilder.build();
+    }
+
+    private void attemptToParseRequest() {
         try {
-            this.rawClientRequest = rawClientRequest;
             parseRawRequestIntoSections();
             extractRequestLineForRequest();
             extractHeadersForRequest();
@@ -24,8 +34,6 @@ public class RequestParser {
         } catch (Exception e) {
             requestBuilder.flagAsUnparsable();
         }
-
-        return requestBuilder.build();
     }
 
     private void parseRawRequestIntoSections() {
