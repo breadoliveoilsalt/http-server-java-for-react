@@ -9,42 +9,42 @@ import java.io.IOException;
 public class ResponseParser {
 
     private Response response;
-    private String stringifiedMetaData;
+    private String stringifiedMetadata;
 
     private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
     public byte[] convertToByteArray(Response response) throws IOException {
         this.response = response;
-        writeMetaData();
+        writeMetadata();
         writeBody();
         return byteArrayOutputStream.toByteArray();
     }
 
-    private void writeMetaData() throws IOException {
-        stringifyMetaData();
-        byteArrayOutputStream.write(stringifiedMetaData.getBytes());
+    private void writeMetadata() throws IOException {
+        stringifyMetadata();
+        byteArrayOutputStream.write(stringifiedMetadata.getBytes());
     }
 
-    private void stringifyMetaData() {
+    private void stringifyMetadata() {
         stringifyStatusLine();
         stringifyHeaders();
-        stringifyEndOfMetaData();
+        stringifyEndOfMetadata();
     }
 
     private void stringifyStatusLine() {
-        stringifiedMetaData = response.httpVersion + Whitespace.SPACE + response.statusCode + Whitespace.SPACE + response.statusMessage + Whitespace.CRLF;
+        stringifiedMetadata = response.httpVersion + Whitespace.SPACE + response.statusCode + Whitespace.SPACE + response.statusMessage + Whitespace.CRLF;
     }
 
     private void stringifyHeaders() {
         if (response.getHeaders() != null) {
             response.getHeaders().forEach(
-                    (key, value) -> stringifiedMetaData += key + ": " + value + Whitespace.CRLF
+                    (key, value) -> stringifiedMetadata += key + ": " + value + Whitespace.CRLF
             );
         }
     }
 
-    private void stringifyEndOfMetaData() {
-        stringifiedMetaData += Whitespace.CRLF;
+    private void stringifyEndOfMetadata() {
+        stringifiedMetadata += Whitespace.CRLF;
     }
 
     private void writeBody() throws IOException {

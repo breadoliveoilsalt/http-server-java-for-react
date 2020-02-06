@@ -2,6 +2,7 @@ package httpServer.serverSocketLogic.wrappers;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class JavaSocketWrapper implements Sokket {
 
@@ -11,14 +12,16 @@ public class JavaSocketWrapper implements Sokket {
         this.socket = socket;
     }
 
-    @Override
     public InputStream getInputStream() throws IOException {
         return socket.getInputStream();
     }
 
-    @Override
     public OutputStream getOutputStream() throws IOException {
         return socket.getOutputStream();
+    }
+
+    public void setSoTimeout(int milliseconds) throws SocketException {
+        socket.setSoTimeout(milliseconds);
     }
 
     public void close() throws IOException {

@@ -2,11 +2,11 @@ require 'socket'
 
 class Spinach::Features::ReturningABadRequestResponse < Spinach::FeatureSteps
   step 'I make a nonsensical request to the server' do
-    @response = Requests.bad_request("jibberish-ladskfjh")
+    @response = Requests.bad_request("jibberish-ladskfjh\r\n\r\n")
   end
 
   step 'I make a request with a misordered status line' do
-    @response = Requests.bad_request("HTTP/1.1 GET /simple_get")
+    @response = Requests.bad_request("HTTP/1.1 GET /simple_get\r\n\r\n")
   end
 
   step 'my response should have a status code of 400' do

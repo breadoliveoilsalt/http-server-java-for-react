@@ -10,6 +10,7 @@ public class Request {
     private final Map<String, String> headers;
     private final String body;
     private final boolean wasParsable;
+    private final boolean timelyCompleted;
 
     public Request(
             String httpMethod,
@@ -17,13 +18,15 @@ public class Request {
             float httpVersion,
             Map<String, String> headers,
             String body,
-            boolean wasParsable) {
+            boolean wasParsable,
+            boolean timelyCompleted) {
         this.httpMethod = httpMethod;
         this.path = path;
         this.httpVersion = httpVersion;
         this.headers = headers;
         this.body = body;
         this.wasParsable = wasParsable;
+        this.timelyCompleted = timelyCompleted;
     }
 
     public String getHTTPMethod() {
@@ -50,12 +53,24 @@ public class Request {
         return headers.get(key);
     }
 
+    public boolean hasHeaderValue(String key) {
+        if (headers == null) {
+            return false;
+        } else {
+            return headers.containsKey(key);
+        }
+    }
+
     public String getBody() {
         return body;
     }
 
     public boolean wasUnparsable() {
         return !wasParsable;
+    }
+
+    public boolean timedOut() {
+        return !timelyCompleted;
     }
 
 }

@@ -7,4 +7,5 @@ public class HTTPStatusCodes {
     public static final String NotImplemented = "501";
     public static final String MethodNotAllowed = "405";
     public static final String NotFound = "404";
+    public static final String RequestTimeout = "408";
 }

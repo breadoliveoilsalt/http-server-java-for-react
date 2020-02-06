@@ -36,7 +36,9 @@ public class HTTPStatusMessageInserter extends Middleware {
             case HTTPStatusCodes.NotImplemented:
                 response.statusMessage = HTTPStatusMessages.NotImplemented;
                 break;
+            case HTTPStatusCodes.RequestTimeout:
+                response.statusMessage = HTTPStatusMessages.RequestTimeout;
+                break;
         }
-
     }
 }

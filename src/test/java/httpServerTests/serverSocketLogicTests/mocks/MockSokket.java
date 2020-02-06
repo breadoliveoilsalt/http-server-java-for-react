@@ -33,6 +33,10 @@ public class MockSokket implements Sokket {
         this.outputStream = outputStream;
     }
 
+    public void setSoTimeout(int milliseconds) {
+
+    }
+
     @Override
     public void close() {
         closed = true;

@@ -1,21 +1,85 @@
 package httpServer.httpLogic.requests;
 
+import httpServer.httpLogic.constants.HTTPHeaders;
+import httpServer.httpLogic.constants.HTTPStatusMessages;
+import httpServer.httpLogic.constants.Whitespace;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.net.SocketTimeoutException;
 
 public class RequestReader {
 
-    private final static int defaultBufferSize = 8192;
+    private final StringBuilder rawRequestBuilder;
+    private final Sokket sokket;
+    private BufferedReader reader;
+    private Request tempRequest;
 
-    public String readInputStream(Sokket sokket) throws IOException {
-        char[] readerBuffer = new char[defaultBufferSize];
-        Reader reader = new BufferedReader(new InputStreamReader(sokket.getInputStream()));
-        reader.read(readerBuffer, 0, defaultBufferSize);
-        return new String(readerBuffer).trim();
+    public RequestReader(Sokket sokket) {
+        this.sokket = sokket;
+        this.rawRequestBuilder = new StringBuilder();
     }
 
+    public String readInputStream() throws IOException {
+        try {
+            readRequestWithinTimeLimit();
+        } catch (SocketTimeoutException e) {
+            replaceRawRequestWithTimedOutMessage();
+        }
+        return buildRawString();
+    }
+
+    private void readRequestWithinTimeLimit() throws IOException {
+        sokket.setSoTimeout(5 * 1000);
+        getReader();
+        getMetadata();
+        parseMetadata();
+        checkForContentLength();
+    }
+
+    private void getReader() throws IOException {
+        this.reader = new BufferedReader(new InputStreamReader(sokket.getInputStream()));
+    }
+
+    private void getMetadata() throws IOException {
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            rawRequestBuilder.append(currentLine + Whitespace.CRLF);
+            if (endOfMetadataReached(currentLine)) {
+                break;
+            }
+        }
+    }
+
+    private boolean endOfMetadataReached(String currentLine) {
+        return currentLine.equals("");
+    }
+
+    private void parseMetadata() {
+        tempRequest = new RequestParser().parse(buildRawString());
+    }
+
+    private void checkForContentLength() throws IOException {
+        if (tempRequest.hasHeaderValue(HTTPHeaders.ContentLength)) {
+            int contentLength = Integer.parseInt(tempRequest.getHeaderValue(HTTPHeaders.ContentLength));
+            continueToRead(contentLength);
+        }
+    }
+
+    private void continueToRead(int contentLength) throws IOException {
+        char[] characterBuffer = new char[contentLength];
+        reader.read(characterBuffer, 0 , contentLength);
+        rawRequestBuilder.append(new String(characterBuffer));
+    }
+
+    private void replaceRawRequestWithTimedOutMessage() {
+        rawRequestBuilder.delete(0, rawRequestBuilder.length());
+        rawRequestBuilder.append(HTTPStatusMessages.RequestTimeout);
+    }
+
+    private String buildRawString() {
+        return rawRequestBuilder.toString();
+    }
 }

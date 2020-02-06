@@ -1,12 +1,13 @@
 package httpServer.httpLogic.requests;
 
+import httpServer.httpLogic.constants.HTTPStatusMessages;
 import httpServer.httpLogic.constants.Whitespace;
 
 public class RequestParser {
 
     private final RequestBuilder requestBuilder;
     private String rawClientRequest;
-    private String[] parsedMetaDataAndBody;
+    private String[] parsedMetadataAndBody;
     private String[] parsedRequestLineAndHeaders;
     private String[] parsedRequestLine;
 
@@ -15,8 +16,17 @@ public class RequestParser {
     }
 
     public Request parse(String rawClientRequest) {
+        this.rawClientRequest = rawClientRequest;
+        if (rawClientRequest.equals(HTTPStatusMessages.RequestTimeout)) {
+            requestBuilder.flagAsTimedOut();
+        } else {
+            attemptToParseRequest();
+        }
+        return requestBuilder.build();
+    }
+
+    private void attemptToParseRequest() {
         try {
-            this.rawClientRequest = rawClientRequest;
             parseRawRequestIntoSections();
             extractRequestLineForRequest();
             extractHeadersForRequest();
@@ -24,13 +34,11 @@ public class RequestParser {
         } catch (Exception e) {
             requestBuilder.flagAsUnparsable();
         }
-
-        return requestBuilder.build();
     }
 
     private void parseRawRequestIntoSections() {
-        parsedMetaDataAndBody = rawClientRequest.split(Whitespace.CRLF + Whitespace.CRLF);
-        parsedRequestLineAndHeaders = parsedMetaDataAndBody[0].split(Whitespace.CRLF);
+        parsedMetadataAndBody = rawClientRequest.split(Whitespace.CRLF + Whitespace.CRLF);
+        parsedRequestLineAndHeaders = parsedMetadataAndBody[0].split(Whitespace.CRLF);
         parsedRequestLine = parsedRequestLineAndHeaders[0].split(" ");
     }
 
@@ -55,8 +63,8 @@ public class RequestParser {
     }
 
     private void extractBodyForRequest() {
-        if (parsedMetaDataAndBody.length > 1){
-            requestBuilder.addBody(parsedMetaDataAndBody[1]);
+        if (parsedMetadataAndBody.length > 1){
+            requestBuilder.addBody(parsedMetadataAndBody[1]);
         }
     }
 
