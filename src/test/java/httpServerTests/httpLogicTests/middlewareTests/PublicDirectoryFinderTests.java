@@ -14,8 +14,7 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class PublicDirectoryFinderTests {
 
@@ -25,12 +24,23 @@ public class PublicDirectoryFinderTests {
 
     @Before
     public void testInit() {
-//        request = new RequestBuilder().addPath("/index.html").addMethod(HTTPMethods.GET).build();
         response = new Response();
     }
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
+
+    @Test
+    public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
+        request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
+        MockMiddleware nextMiddleware = new MockMiddleware();
+        publicDirectoryFinder = new PublicDirectoryFinder();
+        publicDirectoryFinder.setNext(nextMiddleware);
+
+        publicDirectoryFinder.handle(request, response);
+
+        assertTrue(nextMiddleware.handleWasCalled);
+    }
 
     @Test
     public void handleAssignsAnIndexDotHTMLFileToTheResponseIfAnIndexDotHTMLFileIsInThePathOfAGETRequest() throws IOException {
