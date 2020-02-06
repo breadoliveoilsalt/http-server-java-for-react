@@ -1,6 +1,7 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.PublicDirectoryFinder;
 import httpServer.httpLogic.middleware.PublicFileFinder;
 import httpServer.httpLogic.requests.Request;
@@ -42,6 +43,19 @@ public class PublicDirectoryFinderTests {
         publicDirectoryFinder.handle(request, response);
 
         assertEquals("index.html", response.file.getName());
+    }
+
+    @Test
+    public void handleAssignsAnOKStatusCodeToTheResponseIfAnIndexDotHTMLFileIsInThePathOfAGETRequest() throws IOException {
+        request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
+        tempFolder.newFile("index.html");
+        String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
+
+        assertNull(response.statusCode);
+        publicDirectoryFinder.handle(request, response);
+
+        assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
 
     // Add test on 200 status code
