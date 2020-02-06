@@ -23,8 +23,8 @@ public class RequestReader {
     }
 
     public String readInputStream() throws IOException {
-        sokket.setSoTimeout(5 * 1000);
         try {
+            sokket.setSoTimeout(5 * 1000);
             getReader();
             getMetadata();
             parseMetadata();
