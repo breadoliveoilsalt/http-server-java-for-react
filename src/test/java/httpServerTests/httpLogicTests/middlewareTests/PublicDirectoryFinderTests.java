@@ -32,6 +32,13 @@ public class PublicDirectoryFinderTests {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
+    public void handle_sDefaultPublicRootPathIsAPublicSubDirectoryInTheProjectRootDirectory() {
+        publicDirectoryFinder = new PublicDirectoryFinder();
+
+        assertEquals(System.getProperty("user.dir") + "/public", publicDirectoryFinder.getPublicRootPath());
+    }
+
+    @Test
     public void handleCallsTheNextMiddlewareInTheChainIfOneExists() {
         request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
         MockMiddleware nextMiddleware = new MockMiddleware();
@@ -71,8 +78,7 @@ public class PublicDirectoryFinderTests {
 
         @Test
     public void handleAssignsAnOKStatusCodeToTheResponseIfThePathRequestedMatchesAPublicFolder() throws IOException {
-        File tempSubDirectory = tempFolder.newFolder("tempSubDirectory");
-        String requestPath = tempSubDirectory.getPath();
+        tempFolder.newFolder("tempSubDirectory");
         request = new RequestBuilder().addPath("/tempSubDirectory").addMethod(HTTPMethods.GET).build();
         String basePath = tempFolder.getRoot().getPath();
         publicDirectoryFinder = new PublicDirectoryFinder(basePath);
@@ -83,5 +89,4 @@ public class PublicDirectoryFinderTests {
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
 
-    // Add test on default folder
 }
