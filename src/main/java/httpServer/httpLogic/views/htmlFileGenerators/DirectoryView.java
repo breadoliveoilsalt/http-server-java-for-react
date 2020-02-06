@@ -21,16 +21,33 @@ public class DirectoryView implements HTMLFileGenerator {
     }
 
     public File generateHTMLFile() {
+        addInitialHTML();
+        addHTMLForFilesInDirectory();
+        addClosingHTML();
+        // FIX:
+        return filesInCurrentRootDirectory[0];
+    }
+
+    private void addHTMLForFilesInDirectory() {
         File[] filesInCurrentRootDirectory = currentRootDirectory.listFiles();
         for (File file : filesInCurrentRootDirectory) {
             if (blacklistedFiles.contains(file.getName())) {
                 continue;
             } else if (file.isFile()) {
                 htmlBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
-            }
+            } else if (file.isDirectory()) {
+                htmlBuilder.append(new LinkBuilder().buildLinkToDirectory(request, file));
         }
-        // FIX:
-        return filesInCurrentRootDirectory[0];
+        return filesInCurrentRootDirectory;
+    }
+
+    private void addInitialHTML() {
+        htmlBuilder.append("<ul>");
+    }
+
+    private void addClosingHTML() {
+        htmlBuilder.append("</ul>");
+
     }
 
     private void populateBlacklistedFiles() {
