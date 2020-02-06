@@ -1,6 +1,7 @@
 package httpServer.httpLogic.requests;
 
 import httpServer.httpLogic.constants.HTTPHeaders;
+import httpServer.httpLogic.constants.HTTPStatusMessages;
 import httpServer.httpLogic.constants.Whitespace;
 import httpServer.serverSocketLogic.wrappers.Sokket;
 
@@ -10,16 +11,6 @@ import java.io.InputStreamReader;
 import java.net.SocketException;
 
 public class RequestReader {
-
-
-//    private final static int defaultBufferSize = 8192;
-
-//    public String readInputStream(Sokket sokket) throws IOException {
-//        char[] readerBuffer = new char[defaultBufferSize];
-//        Reader reader = new BufferedReader(new InputStreamReader(sokket.getInputStream()));
-//        reader.read(readerBuffer, 0, defaultBufferSize);
-//        return new String(readerBuffer).trim();
-//    }
 
     private StringBuilder rawRequestBuilder;
     private Sokket sokket;
@@ -32,10 +23,17 @@ public class RequestReader {
     }
 
     public String readInputStream() throws IOException {
-        getReader();
-        getMetadata();
-        parseMetadata();
-        checkForContentLength();
+        sokket.setSoTimeout(5 * 1000);
+        try {
+            getReader();
+            getMetadata();
+            parseMetadata();
+            checkForContentLength();
+        } catch (SocketException e) {
+            e.printStackTrace();
+            rawRequestBuilder.delete(0, rawRequestBuilder.length() - 1);
+            rawRequestBuilder.append(HTTPStatusMessages.RequestTimeout);
+        }
         return rawRequestBuilder.toString();
     }
 
@@ -44,17 +42,12 @@ public class RequestReader {
     }
 
     private void getMetadata() throws IOException {
-        try {
-            sokket.setSoTimeout(5 * 1000);
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                rawRequestBuilder.append(currentLine + Whitespace.CRLF);
-                if (endOfMetadataReached(currentLine)) {
-                    break;
-                }
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            rawRequestBuilder.append(currentLine + Whitespace.CRLF);
+            if (endOfMetadataReached(currentLine)) {
+                break;
             }
-        } catch (SocketException e) {
-            e.printStackTrace();
         }
     }
 

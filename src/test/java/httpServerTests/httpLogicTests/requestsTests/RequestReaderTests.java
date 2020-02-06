@@ -36,17 +36,6 @@ public class RequestReaderTests {
         assertEquals(requestSentFromClient, requestReadFromClient);
     }
 
-//    @Test
-//    public void readInputStreamRemovesAnyTrailingCRLFs() throws IOException {
-//        String requestSentFromClient = "GET /simple_get HTTP/1.1" + Whitespace.CRLF + Whitespace.CRLF;
-//        InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
-//        sokket.setInputStream(inputStreamFromClient);
-//
-//        String requestReadFromClient = requestReader.readInputStream();
-//
-//        assertEquals("GET /simple_get HTTP/1.1", requestReadFromClient);
-//    }
-
     @Test
     public void readInputStreamDoesNotRemoveIntermediaryCRLF() throws IOException {
         String requestBody = "Body of request";
@@ -63,4 +52,16 @@ public class RequestReaderTests {
         assertEquals(requestSentFromClient, requestReadFromClient);
     }
 
+    @Test
+    public void readInputStreamOnlyReadsMetadataIfNoContentLengthIsSpecified() throws IOException {
+        String requestSentFromClient = "GET /simple_get HTTP/1.1" + Whitespace.CRLF + Whitespace.CRLF + "Some string body";
+        InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
+        sokket.setInputStream(inputStreamFromClient);
+
+        String requestReadFromClient = requestReader.readInputStream();
+
+        String expectedString = "GET /simple_get HTTP/1.1" + Whitespace.CRLF + Whitespace.CRLF;
+
+        assertEquals(expectedString, requestReadFromClient);
+    }
 }
