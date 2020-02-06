@@ -12,6 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -68,7 +69,19 @@ public class PublicDirectoryFinderTests {
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
 
-    // Add test on 200 status code
-    // Add test on calling next middleware
+        @Test
+    public void handleAssignsAnOKStatusCodeToTheResponseIfThePathRequestedMatchesAPublicFolder() throws IOException {
+        File tempSubDirectory = tempFolder.newFolder("tempSubDirectory");
+        String requestPath = tempSubDirectory.getPath();
+        request = new RequestBuilder().addPath("/tempSubDirectory").addMethod(HTTPMethods.GET).build();
+        String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
 
+        assertNull(response.statusCode);
+        publicDirectoryFinder.handle(request, response);
+
+        assertEquals(HTTPStatusCodes.OK, response.statusCode);
+    }
+
+    // Add test on default folder
 }

@@ -39,6 +39,7 @@ public class PublicDirectoryFinder extends Middleware {
             if (file.exists() && file.isDirectory()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 lookForIndexDotHTMLFile(potentialPath);
+                // do more stuff - render directory listing
             }
         }
     }
