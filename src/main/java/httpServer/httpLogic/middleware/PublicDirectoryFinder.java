@@ -54,7 +54,9 @@ public class PublicDirectoryFinder extends Middleware {
 
     private void generateFileListing(File directoryFile) {
         System.out.println("Listings:");
-        System.out.println(directoryFile.list());
+        for (String fileName : directoryFile.list()) {
+            System.out.println(fileName);
+        }
     }
 
     public String getPublicRootPath() {
