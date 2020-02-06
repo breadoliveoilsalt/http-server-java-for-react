@@ -26,11 +26,11 @@ public class DirectoryView implements HTMLFileGenerator {
             if (blacklistedFiles.contains(file.getName())) {
                 continue;
             } else if (file.isFile()) {
-                htmlBuilder.append(new LinkBuilder().buildLinkTofile(request, file));
-
+                htmlBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
             }
         }
-
+        // FIX:
+        return filesInCurrentRootDirectory[0];
     }
 
     private void populateBlacklistedFiles() {

@@ -1,6 +1,9 @@
 package httpServerTests.httpLogicTests.viewsTests.htmlFileGeneratorsTests;
 
 import httpServer.httpLogic.constants.HTTPContentTypes;
+import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.requests.Request;
+import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.views.htmlFileGenerators.DirectoryView;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,11 +22,12 @@ public class DirectoryViewTests {
 
     @Test
     public void generateHTMLFileGeneratesAnHTMLFile() throws IOException {
-       File directoryFile = tempFolder.newFolder("tempDirectory");
+        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
+        File directoryFile = tempFolder.newFolder("tempDirectory");
 
-       File result = new DirectoryView(directoryFile).generateHTMLFile();
+        File result = new DirectoryView(request, directoryFile).generateHTMLFile();
 
-       assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
+        assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
     }
 
 }

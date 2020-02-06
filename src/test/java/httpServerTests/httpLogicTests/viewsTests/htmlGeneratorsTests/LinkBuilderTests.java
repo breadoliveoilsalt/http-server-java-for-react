@@ -26,12 +26,12 @@ public class LinkBuilderTests {
         String result = new LinkBuilder().buildLinkToFile(request, file);
 
         String expectedResult =
-                "<a src=\"" +
+                "<li> File: <a src=\"" +
                 request.getPath() +
                 "/" + file.getName() +
                 "\" >" +
                 file.getName() +
-                "</a>";
+                "</a> </li>";
 
         assertEquals(expectedResult, result);
     }
