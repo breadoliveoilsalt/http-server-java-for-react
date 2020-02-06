@@ -1,7 +1,6 @@
 package httpServerTests.httpLogicTests.requestsTests;
 
 import httpServer.httpLogic.constants.HTTPHeaders;
-import httpServer.httpLogic.constants.HTTPStatusMessages;
 import httpServer.httpLogic.constants.Whitespace;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,6 @@ import httpServer.httpLogic.requests.RequestReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
@@ -66,5 +64,5 @@ public class RequestReaderTests {
 
         assertEquals(expectedString, requestReadFromClient);
     }
-    
+
 }

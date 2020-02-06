@@ -27,9 +27,8 @@ public class RequestReader {
             readRequestWithinTimeLimit();
         } catch (SocketTimeoutException e) {
             replaceRawRequestWithTimedOutMessage();
-        } finally {
-            return buildRawString();
         }
+        return buildRawString();
     }
 
     private void readRequestWithinTimeLimit() throws IOException {
