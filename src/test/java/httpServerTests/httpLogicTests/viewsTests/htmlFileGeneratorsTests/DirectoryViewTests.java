@@ -1,7 +1,7 @@
-package httpServerTests.httpLogicTests.viewsTests;
+package httpServerTests.httpLogicTests.viewsTests.htmlFileGeneratorsTests;
 
 import httpServer.httpLogic.constants.HTTPContentTypes;
-import httpServer.httpLogic.views.DirectoryView;
+import httpServer.httpLogic.views.htmlFileGenerators.DirectoryView;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;

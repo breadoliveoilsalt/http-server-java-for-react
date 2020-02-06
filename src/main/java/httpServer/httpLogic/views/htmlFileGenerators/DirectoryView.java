@@ -1,4 +1,4 @@
-package httpServer.httpLogic.views;
+package httpServer.httpLogic.views.htmlFileGenerators;
 
 import java.io.File;
 import java.util.HashSet;
