@@ -53,6 +53,7 @@ public class PublicDirectoryFinder extends Middleware {
     }
 
     private void generateFileListing(File directoryFile) {
+        response.file = new DirectoryView(directoryFile).generateHTMLFile();
         System.out.println("Listings:");
         for (String fileName : directoryFile.list()) {
             System.out.println(fileName);
