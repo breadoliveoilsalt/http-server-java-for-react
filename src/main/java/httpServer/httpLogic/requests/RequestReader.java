@@ -24,17 +24,20 @@ public class RequestReader {
 
     public String readInputStream() throws IOException {
         try {
-            sokket.setSoTimeout(5 * 1000);
-            getReader();
-            getMetadata();
-            parseMetadata();
-            checkForContentLength();
+            readRequestWithinTimeLimit();
         } catch (SocketTimeoutException e) {
-            rawRequestBuilder.delete(0, rawRequestBuilder.length());
-            rawRequestBuilder.append(HTTPStatusMessages.RequestTimeout);
+            replaceRawRequestWithTimedOutMessage();
         } finally {
-            return rawRequestBuilder.toString();
+            return buildRawString();
         }
+    }
+
+    private void readRequestWithinTimeLimit() throws IOException {
+        sokket.setSoTimeout(5 * 1000);
+        getReader();
+        getMetadata();
+        parseMetadata();
+        checkForContentLength();
     }
 
     private void getReader() throws IOException {
@@ -56,7 +59,7 @@ public class RequestReader {
     }
 
     private void parseMetadata() {
-        tempRequest = new RequestParser().parse(rawRequestBuilder.toString());
+        tempRequest = new RequestParser().parse(buildRawString());
     }
 
     private void checkForContentLength() throws IOException {
@@ -72,4 +75,12 @@ public class RequestReader {
         rawRequestBuilder.append(new String(characterBuffer));
     }
 
+    private void replaceRawRequestWithTimedOutMessage() {
+        rawRequestBuilder.delete(0, rawRequestBuilder.length());
+        rawRequestBuilder.append(HTTPStatusMessages.RequestTimeout);
+    }
+
+    private String buildRawString() {
+        return rawRequestBuilder.toString();
+    }
 }
