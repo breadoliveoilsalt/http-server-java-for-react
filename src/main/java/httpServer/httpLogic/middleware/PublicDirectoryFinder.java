@@ -35,20 +35,26 @@ public class PublicDirectoryFinder extends Middleware {
     private void checkForDirectory() {
         if (request.getHTTPMethod().equals(HTTPMethods.GET)) {
             String potentialPath = publicRootPath + request.getPath();
-            File file = new File(potentialPath);
-            if (file.exists() && file.isDirectory()) {
+            File directoryFile = new File(potentialPath);
+            if (directoryFile.exists() && directoryFile.isDirectory()) {
                 response.statusCode = HTTPStatusCodes.OK;
-                lookForIndexDotHTMLFile(potentialPath);
-                // do more stuff - render directory listing
+                generateResponseBodyFor(directoryFile);
             }
         }
     }
 
-    private void lookForIndexDotHTMLFile(String potentialPath) {
-        File file = new File(potentialPath + "/index.html");
-        if (file.exists() && file.isFile()) {
-            response.file = file;
+    private void generateResponseBodyFor(File directoryFile) {
+        File indexDotHtmlFile = new File(directoryFile.getPath() + "/index.html");
+        if (indexDotHtmlFile.exists() && indexDotHtmlFile.isFile()) {
+            response.file = indexDotHtmlFile;
+        } else {
+            generateFileListing(directoryFile);
         }
+    }
+
+    private void generateFileListing(File directoryFile) {
+        System.out.println("Listings:");
+        System.out.println(directoryFile.list());
     }
 
     public String getPublicRootPath() {
