@@ -1,15 +1,20 @@
 package httpServer.httpLogic.views.htmlFileGenerators;
 
+import httpServer.httpLogic.requests.Request;
+import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
+
 import java.io.File;
 import java.util.HashSet;
 
 public class DirectoryView implements HTMLFileGenerator {
 
     File currentRootDirectory;
+    Request request;
     StringBuilder htmlBuilder;
     HashSet<String> blacklistedFiles;
 
-    public DirectoryView(File currentRootDirectory) {
+    public DirectoryView(Request request, File currentRootDirectory) {
+        this.request = request;
         this.currentRootDirectory = currentRootDirectory;
         this.htmlBuilder = new StringBuilder();
         populateBlacklistedFiles();
@@ -21,7 +26,8 @@ public class DirectoryView implements HTMLFileGenerator {
             if (blacklistedFiles.contains(file.getName())) {
                 continue;
             } else if (file.isFile()) {
-                htmlBuilder.append(new LinkBuilder().buildFileLink(file.getName()));
+                htmlBuilder.append(new LinkBuilder().buildLinkTofile(request, file));
+
             }
         }
 

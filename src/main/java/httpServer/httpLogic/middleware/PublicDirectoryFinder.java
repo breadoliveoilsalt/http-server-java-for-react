@@ -4,6 +4,7 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
+import httpServer.httpLogic.views.htmlFileGenerators.DirectoryView;
 
 import java.io.File;
 
@@ -53,7 +54,7 @@ public class PublicDirectoryFinder extends Middleware {
     }
 
     private void generateFileListing(File directoryFile) {
-        response.file = new DirectoryView(directoryFile).generateHTMLFile();
+        response.file = new DirectoryView(request, directoryFile).generateHTMLFile();
         System.out.println("Listings:");
         for (String fileName : directoryFile.list()) {
             System.out.println(fileName);

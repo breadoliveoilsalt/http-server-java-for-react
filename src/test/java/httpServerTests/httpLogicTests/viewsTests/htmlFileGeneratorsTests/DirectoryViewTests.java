@@ -25,4 +25,5 @@ public class DirectoryViewTests {
 
        assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
     }
+
 }
