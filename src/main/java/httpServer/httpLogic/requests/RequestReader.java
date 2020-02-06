@@ -45,8 +45,7 @@ public class RequestReader {
     private void getMetadata() throws IOException {
         int defaultNumbersOfLinesToRead = 100;
         String currentLine;
-        for (int i = 0; i < defaultNumbersOfLinesToRead; i++) {
-            currentLine = reader.readLine();
+        while ((currentLine = reader.readLine()) != null) {
             rawRequestBuilder.append(currentLine + Whitespace.CRLF);
             if (endOfMetadataReached(currentLine)) {
                 break;
