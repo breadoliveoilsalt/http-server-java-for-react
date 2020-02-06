@@ -1,7 +1,5 @@
 package httpServer.httpLogic.responses;
 
-import httpServer.httpLogic.controllers.Controller;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +12,6 @@ public class Response {
     public Map<String, String> headers;
     public String stringBody;
     public File file;
-    public Controller controller;
 
     public Response() {}
 
@@ -30,16 +27,8 @@ public class Response {
         this.stringBody = stringBody;
     }
 
-    public String getHttpVersion() {
-        return httpVersion;
-    }
-
     public String getStatusCode() {
         return statusCode;
-    }
-
-    public String getStatusMessage() {
-        return statusMessage;
     }
 
     public Map<String, String> getHeaders() {
@@ -48,10 +37,6 @@ public class Response {
 
     public boolean hasHeader(String key, String value) {
         return headers.get(key).equals(value);
-    }
-
-    public String getStringBody() {
-        return stringBody;
     }
 
     public void addHeader(String key, String value) {

@@ -12,12 +12,12 @@ import java.net.SocketException;
 
 public class RequestReader {
 
-    private StringBuilder rawRequestBuilder;
-    private Sokket sokket;
+    private final StringBuilder rawRequestBuilder;
+    private final Sokket sokket;
     private BufferedReader reader;
     private Request tempRequest;
 
-    public RequestReader(Sokket sokket) throws IOException {
+    public RequestReader(Sokket sokket) {
         this.sokket = sokket;
         this.rawRequestBuilder = new StringBuilder();
     }

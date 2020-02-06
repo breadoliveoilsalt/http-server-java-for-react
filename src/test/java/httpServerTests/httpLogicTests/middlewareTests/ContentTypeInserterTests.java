@@ -12,7 +12,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -56,8 +55,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsTextPlainContentTypeToAnOKResponseIfTheResponseIsAssociatedWithATxtFile() throws IOException {
         String textFileName = "textFile.txt";
-        File textFile = tempFolder.newFile(textFileName);
-        response.file = textFile;
+        response.file = tempFolder.newFile(textFileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -67,8 +65,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAnHTMLFile() throws IOException {
         String fileName = "htmlFile.html";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -78,8 +75,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsTextHTMLContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAnHTMFile() throws IOException {
         String fileName = "htmFile.htm";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -89,8 +85,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsTextCSSContentTypeToAnOKResponseIfTheResponseIsAssociatedWithACSSFile() throws IOException {
         String fileName = "cssFile.css";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -100,8 +95,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsTextJavaScriptContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJSFile() throws IOException {
         String fileName = "javaScriptFile.js";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -111,8 +105,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsApplicationJSONContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJSONFile() throws IOException {
         String fileName = "jsonFile.json";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -122,8 +115,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsApplicationPDFContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAPDFFile() throws IOException {
         String fileName = "pdfFile.pdf";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -133,8 +125,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsImageJPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJPGFile() throws IOException {
         String fileName = "jpgFile.jpg";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -144,8 +135,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsImageJPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAJPEGFile() throws IOException {
         String fileName = "jpegFile.jpeg";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -155,8 +145,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsImagePNGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAPNGFile() throws IOException {
         String fileName = "pngFile.png";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -166,8 +155,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsImageGIFContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAGIFFile() throws IOException {
         String fileName = "gifFile.gif";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -177,8 +165,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsAudioWAVContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAWAVFile() throws IOException {
         String fileName = "wavFile.wav";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -188,8 +175,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsAudioMPEGContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAMP3File() throws IOException {
         String fileName = "mp3File.mp3";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -199,8 +185,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsVideoMP4ContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAMP4File() throws IOException {
         String fileName = "mp4File.mp4";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 
@@ -210,8 +195,7 @@ public class ContentTypeInserterTests {
     @Test
     public void handleAddsVideoQuickTimeContentTypeToAnOKResponseIfTheResponseIsAssociatedWithAMOVFile() throws IOException {
         String fileName = "movFile.mov";
-        File file = tempFolder.newFile(fileName);
-        response.file = file;
+        response.file = tempFolder.newFile(fileName);
 
         contentTypeInserter.handle(request, response);
 

@@ -20,7 +20,7 @@ public class RequestReaderTests {
     private RequestReader requestReader;
 
     @Before
-    public void testInit() throws IOException {
+    public void testInit() {
         this.sokket = new MockSokket();
         this.requestReader = new RequestReader(sokket);
     }
@@ -41,7 +41,7 @@ public class RequestReaderTests {
         String requestBody = "Body of request";
         String requestSentFromClient =
                 "GET /simple_get HTTP/1.1" + Whitespace.CRLF +
-                HTTPHeaders.ContentLength + ": " + Integer.toString(requestBody.getBytes().length) + Whitespace.CRLF +
+                HTTPHeaders.ContentLength + ": " + requestBody.getBytes().length + Whitespace.CRLF +
                 Whitespace.CRLF +
                 "Body of request";
         InputStream inputStreamFromClient = new ByteArrayInputStream(requestSentFromClient.getBytes());
