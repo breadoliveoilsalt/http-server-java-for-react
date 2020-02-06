@@ -1,6 +1,7 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
 import httpServer.httpLogic.constants.HTTPMethods;
+import httpServer.httpLogic.middleware.PublicDirectoryFinder;
 import httpServer.httpLogic.middleware.PublicFileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
@@ -25,7 +26,6 @@ public class PublicDirectoryFinderTests {
     public void testInit() {
 //        request = new RequestBuilder().addPath("/index.html").addMethod(HTTPMethods.GET).build();
         response = new Response();
-        publicDirectoryFinder = new PublicDirectoryFinder();
     }
 
     @Rule
@@ -33,10 +33,10 @@ public class PublicDirectoryFinderTests {
 
     @Test
     public void handleAssignsAnIndexDotHTMLFileToTheResponseIfAnIndexDotHTMLFileIsInThePathOfAGETRequest() throws IOException {
-        request = new RequestBuilder().addPath("/index.html").addMethod(HTTPMethods.GET).build();
-
+        request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
         tempFolder.newFile("index.html");
         String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
 
         assertNull(response.file);
         publicDirectoryFinder.handle(request, response);
@@ -44,5 +44,7 @@ public class PublicDirectoryFinderTests {
         assertEquals("index.html", response.file.getName());
     }
 
+    // Add test on 200 status code
+    // Add test on calling next middleware
 
 }
