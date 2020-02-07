@@ -89,12 +89,16 @@ public class PublicDirectoryFinderTests {
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
     }
 
+    private void setUpForSubdirectoryTests() throws IOException {
+        tempFolder.newFolder("subdirectory");
+        request =new RequestBuilder().addPath("/subdirectory").addMethod(HTTPMethods.GET).build();
+        String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder =new PublicDirectoryFinder(basePath);
+    }
+
     @Test
     public void handleAssignsAnOKStatusCodeToTheResponseIfThePathRequestedMatchesAPublicFolder() throws IOException {
-        tempFolder.newFolder("tempSubDirectory");
-        request = new RequestBuilder().addPath("/tempSubDirectory").addMethod(HTTPMethods.GET).build();
-        String basePath = tempFolder.getRoot().getPath();
-        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
+        setUpForSubdirectoryTests();
 
         assertNull(response.statusCode);
         publicDirectoryFinder.handle(request, response);
@@ -102,7 +106,15 @@ public class PublicDirectoryFinderTests {
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
 
-    // Add test that content type added when string body attached
+    @Test
+    public void handleAssignsAnHTMLContentTypeHeaderToTheResponseIfThePathRequestedMatchesAPublicFolder() throws IOException {
+        setUpForSubdirectoryTests();
+
+        assertFalse(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
+        publicDirectoryFinder.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
+    }
 
     // Add tests about calling render on a viewer, and then one about the default view
 }
