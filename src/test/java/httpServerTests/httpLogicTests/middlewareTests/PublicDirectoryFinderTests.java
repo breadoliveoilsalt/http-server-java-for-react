@@ -8,6 +8,7 @@ import httpServer.httpLogic.middleware.PublicDirectoryFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
+import httpServer.httpLogic.views.viewGenerators.DirectoryView;
 import httpServer.httpLogic.views.viewGenerators.ViewGenerator;
 import org.junit.Before;
 import org.junit.Rule;
@@ -116,7 +117,7 @@ public class PublicDirectoryFinderTests {
     }
 
     @Test
-    public void handleCallsOnAViewGeneratorToRenderAStringThatIsAssignedAsAResponse_sStringBodyIfThePathRequestedMatchesAPublicFolder() throws IOException {
+    public void handleCallsRenderOnAViewGeneratorToRenderAStringThatIsAssignedAsAResponse_sStringBodyIfThePathRequestedMatchesAPublicFolder() throws IOException {
         setUpMockViewGeneratorWithViewString("View");
 
         assertNull(response.stringBody);
@@ -136,5 +137,13 @@ public class PublicDirectoryFinderTests {
         publicDirectoryFinder = new PublicDirectoryFinder(basePath, new MockViewGenerator());
     }
 
-    // Add tests about calling render on a viewer, and then one about the default view
+    @Test
+    public void theDefaultViewGeneratorIsADirectoryView() throws IOException {
+        setUpForSubdirectoryTests();
+
+        publicDirectoryFinder.handle(request, response);
+
+        ViewGenerator viewGenerator = publicDirectoryFinder.getViewGenerator();
+        assertTrue(viewGenerator instanceof DirectoryView);
+    }
 }
