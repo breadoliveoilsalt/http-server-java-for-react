@@ -73,5 +73,5 @@ public class PublicDirectoryFinder extends Middleware {
     public String getPublicRootPath() {
         return publicRootPath;
     }
-    
+
 }

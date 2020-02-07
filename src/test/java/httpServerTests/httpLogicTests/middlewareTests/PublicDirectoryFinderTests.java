@@ -1,5 +1,7 @@
 package httpServerTests.httpLogicTests.middlewareTests;
 
+import httpServer.httpLogic.constants.HTTPContentTypes;
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.PublicDirectoryFinder;
@@ -74,6 +76,19 @@ public class PublicDirectoryFinderTests {
         publicDirectoryFinder.handle(request, response);
 
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
+    }
+
+    @Test
+    public void handleAssignsAnHTMLContentTypeHeaderToTheResponseIfAnIndexDotHTMLFileIsAssignedToTheResponse() throws IOException {
+        request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
+        tempFolder.newFile("index.html");
+        String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
+
+        assertFalse(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
+        publicDirectoryFinder.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
     }
 
         @Test

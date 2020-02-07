@@ -36,7 +36,10 @@ public class Response {
     }
 
     public boolean hasHeader(String key, String value) {
-        return headers.get(key).equals(value);
+        if (headers != null) {
+            return headers.get(key).equals(value);
+        }
+        return false;
     }
 
     public boolean hasHeaderValue(String key) {
@@ -45,6 +48,7 @@ public class Response {
         }
         return false;
     }
+    
     public void addHeader(String key, String value) {
         if (headers == null) {
             headers = new HashMap<>();

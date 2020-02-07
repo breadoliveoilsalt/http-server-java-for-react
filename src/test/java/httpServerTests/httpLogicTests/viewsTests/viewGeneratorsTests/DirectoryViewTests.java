@@ -30,6 +30,4 @@ public class DirectoryViewTests {
 //        assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
 //    }
 
-    @Test
-    public void renderAddsAContentTypeHTMLHeaderToTheResponse
 }
