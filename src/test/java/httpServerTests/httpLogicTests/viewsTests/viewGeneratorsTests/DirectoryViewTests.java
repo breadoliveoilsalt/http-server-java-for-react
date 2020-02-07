@@ -1,10 +1,10 @@
-package httpServerTests.httpLogicTests.viewsTests.htmlFileGeneratorsTests;
+package httpServerTests.httpLogicTests.viewsTests.viewGeneratorsTests;
 
 import httpServer.httpLogic.constants.HTTPContentTypes;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
-import httpServer.httpLogic.views.htmlFileGenerators.DirectoryView;
+import httpServer.httpLogic.views.viewGenerators.DirectoryView;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -21,7 +21,7 @@ public class DirectoryViewTests {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
-    public void generateHTMLFileGeneratesAnHTMLFile() throws IOException {
+    public void renderGeneratesAString() throws IOException {
         Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
         File directoryFile = tempFolder.newFolder("tempDirectory");
 

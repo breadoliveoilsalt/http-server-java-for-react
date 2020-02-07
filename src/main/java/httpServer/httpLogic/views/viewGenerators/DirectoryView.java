@@ -1,4 +1,4 @@
-package httpServer.httpLogic.views.htmlFileGenerators;
+package httpServer.httpLogic.views.viewGenerators;
 
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
@@ -6,7 +6,7 @@ import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
 import java.io.File;
 import java.util.HashSet;
 
-public class DirectoryView implements HTMLFileGenerator {
+public class DirectoryView implements ViewGenerator {
 
     File currentRootDirectory;
     Request request;
@@ -22,13 +22,13 @@ public class DirectoryView implements HTMLFileGenerator {
 
     // Why am I not writing to a file?
     // update to return a file
-    public File generateHTMLFile() {
+    public String render() {
         addInitialHTML();
         addHTMLForFilesInDirectory();
         addClosingHTML();
         // FIX:
 //        return filesInCurrentRootDirectory[0];
-        return new File("something");
+        return "hey";
     }
 
     private void addHTMLForFilesInDirectory() {

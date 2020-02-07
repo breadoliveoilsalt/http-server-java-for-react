@@ -4,7 +4,7 @@ import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
-import httpServer.httpLogic.views.htmlFileGenerators.DirectoryView;
+import httpServer.httpLogic.views.viewGenerators.DirectoryView;
 
 import java.io.File;
 
