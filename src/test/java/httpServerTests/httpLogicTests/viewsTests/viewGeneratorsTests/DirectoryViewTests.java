@@ -9,24 +9,27 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-// up to refactoring test here to display what i want
 public class DirectoryViewTests {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
-//    @Test
-//    public void renderGeneratesAStringWithAnUnorderedList() throws IOException {
-//        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
-//        File directoryFile = tempFolder.newFolder("tempDirectory");
-//
-//        File result = new DirectoryView(request, directoryFile).generateHTMLFile();
-//
-//        assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
-//    }
-//
+    @Test
+    public void renderGeneratesAStringWithAnUnorderedList() throws IOException {
+        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
+        File directoryFile = tempFolder.newFolder("tempDirectory");
+
+        String result = new DirectoryView(request, directoryFile).render();
+
+        String expectedResult =
+                "<ul></ul>";
+
+        assertEquals(expectedResult, result);
+    }
+
 }
