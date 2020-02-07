@@ -19,6 +19,22 @@ public class LinkBuilderTests {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
+    public void buildLinkToParentDirectoryReturnsAnHTMLStringWithAnATagToTheParentDirectoryOfTheFilePassedIn() throws IOException {
+//        Request request = new RequestBuilder().addPath("/docs/project").addMethod(HTTPMethods.GET).build();
+//        File projectDocs = tempFolder.newFile("project");
+        // up to here -- test that my server is actually working and 
+        Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
+        File projectDocs = tempFolder.newFile("docs");
+
+        String result = new LinkBuilder().buildLinkToParentDirectory(request, projectDocs);
+
+        String expectedResult =
+                "<li> Parent Directory: <a href=\"/docs\">..</a></li>";
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
     public void buildLinkToFileReturnsAnHTMLStringWithAnATag() throws IOException {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");

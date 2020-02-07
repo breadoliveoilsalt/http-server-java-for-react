@@ -10,21 +10,27 @@ public class DirectoryView implements ViewGenerator {
 
     File currentRootDirectory;
     Request request;
-    StringBuilder htmlBuilder;
+    StringBuilder stringBuilder;
     HashSet<String> blacklistedFiles;
 
     public DirectoryView(Request request, File currentRootDirectory) {
         this.request = request;
         this.currentRootDirectory = currentRootDirectory;
-        this.htmlBuilder = new StringBuilder();
+        this.stringBuilder = new StringBuilder();
         populateBlacklistedFiles();
     }
 
     public String render() {
         addInitialHTML();
+        addHTMLForParentDirectory();
         addHTMLForFilesInDirectory();
         addClosingHTML();
-        return htmlBuilder.toString();
+        return stringBuilder.toString();
+    }
+
+
+    private void addHTMLForParentDirectory() {
+        stringBuilder.append(new LinkBuilder().buildLinkToParentDirectory(request, currentRootDirectory));
     }
 
     private void addHTMLForFilesInDirectory() {
@@ -33,19 +39,19 @@ public class DirectoryView implements ViewGenerator {
             if (blacklistedFiles.contains(file.getName())) {
                 continue;
             } else if (file.isFile()) {
-                htmlBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
+                stringBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
             } else if (file.isDirectory()) {
-                htmlBuilder.append(new LinkBuilder().buildLinkToSubdirectory(request, file));
+                stringBuilder.append(new LinkBuilder().buildLinkToSubdirectory(request, file));
             }
         }
     }
 
     private void addInitialHTML() {
-        htmlBuilder.append("<ul>");
+        stringBuilder.append("<ul>");
     }
 
     private void addClosingHTML() {
-        htmlBuilder.append("</ul>");
+        stringBuilder.append("</ul>");
 
     }
 
