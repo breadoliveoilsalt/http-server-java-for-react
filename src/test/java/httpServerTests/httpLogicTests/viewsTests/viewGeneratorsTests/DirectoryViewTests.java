@@ -20,14 +20,16 @@ public class DirectoryViewTests {
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
+//    @Test
+//    public void renderGeneratesAString() throws IOException {
+//        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
+//        File directoryFile = tempFolder.newFolder("tempDirectory");
+//
+//        File result = new DirectoryView(request, directoryFile).generateHTMLFile();
+//
+//        assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
+//    }
+
     @Test
-    public void renderGeneratesAString() throws IOException {
-        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
-        File directoryFile = tempFolder.newFolder("tempDirectory");
-
-        File result = new DirectoryView(request, directoryFile).generateHTMLFile();
-
-        assertEquals(HTTPContentTypes.TextHTML, Files.probeContentType(result.toPath()));
-    }
-
+    public void renderAddsAContentTypeHTMLHeaderToTheResponse
 }

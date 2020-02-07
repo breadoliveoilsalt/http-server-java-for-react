@@ -39,22 +39,31 @@ public class PublicDirectoryFinder extends Middleware {
             File directoryFile = new File(potentialPath);
             if (directoryFile.exists() && directoryFile.isDirectory()) {
                 response.statusCode = HTTPStatusCodes.OK;
-                generateResponseBodyFor(directoryFile);
+                getResponseBodyFor(directoryFile);
             }
         }
     }
 
-    private void generateResponseBodyFor(File directoryFile) {
-        File indexDotHtmlFile = new File(directoryFile.getPath() + "/index.html");
-        if (indexDotHtmlFile.exists() && indexDotHtmlFile.isFile()) {
-            response.file = indexDotHtmlFile;
-        } else {
+    private void getResponseBodyFor(File directoryFile) {
+        tryToAssignIndexDotHTMLFileToResponse(directoryFile);
+        if (fileNotAssigned()) {
             generateFileListing(directoryFile);
         }
     }
 
+    public void tryToAssignIndexDotHTMLFileToResponse(File directoryFile) {
+        File indexDotHtmlFile = new File(directoryFile.getPath() + "/index.html");
+        if (indexDotHtmlFile.exists() && indexDotHtmlFile.isFile()) {
+            response.file = indexDotHtmlFile;
+        }
+    }
+
+    private boolean fileNotAssigned() {
+        return response.file == null;
+    }
+
     private void generateFileListing(File directoryFile) {
-        response.file = new DirectoryView(request, directoryFile).generateHTMLFile();
+        response.stringBody = new DirectoryView(request, directoryFile).render();
         System.out.println("Listings:");
         for (String fileName : directoryFile.list()) {
             System.out.println(fileName);
@@ -64,4 +73,5 @@ public class PublicDirectoryFinder extends Middleware {
     public String getPublicRootPath() {
         return publicRootPath;
     }
+    
 }
