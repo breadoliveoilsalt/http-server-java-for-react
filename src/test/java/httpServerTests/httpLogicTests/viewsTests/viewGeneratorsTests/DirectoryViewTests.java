@@ -1,9 +1,9 @@
 package httpServerTests.httpLogicTests.viewsTests.viewGeneratorsTests;
 
-import httpServer.httpLogic.constants.HTTPContentTypes;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
+import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
 import httpServer.httpLogic.views.viewGenerators.DirectoryView;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,34 +36,23 @@ public class DirectoryViewTests {
     }
 
     @Test
-    public void render_sUnorderedListListsFilesInTheDirectoryFilePassedIn() throws IOException {
-        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath(tempFolder.getRoot().getPath()).build();
-        File directoryFile = tempFolder.newFolder("tempDirectory");
-        createTempFilesFor(directoryFile);
-//        File directoryFile = tempFolder.newFolder("tempDirectory");
-//        Files.createFile(Paths.get(directoryFile.getPath() + "/doc.pdf"));
-//        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/sampleDirectoryForTests").build();
-//        ClassLoader classLoader = getClass().getClassLoader();
-//        String currentPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-//        File directoryFileToTest = new File(currentPath + "/sampleDirectoryForTests");
-////        String currentTestFilePath = Paths.get("").toAbsolutePath().toString();
-////        File directoryFile = new File(currentTestFilePath + "/sampleDirectoryForTests");
-////        File directoryFile = tempFolder.newFolder("tempDirectory");
-////        Path pathToNewPDFFile = Paths.get(tempFolder.getRoot().getPath() + "/doc.pdf");
-////        Files.createFile(pathToNewPDFFile);
-////
-        String result = new DirectoryView(request, directoryFile).render();
+    public void renderUsesAppropriateLinkBuilderMethodsForFilesAndDirectoriesToPopulateTheUnorderedListWithTheContentsOfTheDirectoryPassedIn() throws IOException {
+        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/path_to_parent_directory").build();
+        File parentDirectory = tempFolder.newFolder("tempParentDirectory");
+        Path pdfFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/doc.pdf"));
+        Path htmlFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/page.html"));
+        Path subDirectory = Files.createDirectory(Paths.get(parentDirectory.getPath() + "/subDirectory"));
+
+        String result = new DirectoryView(request, parentDirectory).render();
 
         String expectedResult =
-                "<ul></ul>";
+                "<ul>" +
+                new LinkBuilder().buildLinkToFile(request, new File(htmlFile.toString())) +
+                new LinkBuilder().buildLinkToDirectory(request, new File(subDirectory.toString())) +
+                new LinkBuilder().buildLinkToFile(request, new File(pdfFile.toString())) +
+                "</ul>";
 
         assertEquals(expectedResult, result);
-
     }
 
-    private void createTempFilesFor(File directoryFile) throws IOException {
-        Files.createFile(Paths.get(directoryFile.getPath() + "/doc.pdf"));
-        Files.createFile(Paths.get(directoryFile.getPath() + "/page.html"));
-        Files.createDirectory(Paths.get(directoryFile.getPath() + "/subDirectory"));
-    }
 }
