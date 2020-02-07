@@ -89,7 +89,7 @@ public class PublicDirectoryFinderTests {
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
     }
 
-        @Test
+    @Test
     public void handleAssignsAnOKStatusCodeToTheResponseIfThePathRequestedMatchesAPublicFolder() throws IOException {
         tempFolder.newFolder("tempSubDirectory");
         request = new RequestBuilder().addPath("/tempSubDirectory").addMethod(HTTPMethods.GET).build();
@@ -103,6 +103,6 @@ public class PublicDirectoryFinderTests {
     }
 
     // Add test that content type added when string body attached
-    // Refactor to delete the repetition in start above     .
 
+    // Add tests about calling render on a viewer, and then one about the default view
 }

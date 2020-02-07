@@ -7,21 +7,21 @@ import java.io.File;
 public class LinkBuilder {
 
     public String buildLinkToFile(Request request, File file) {
-        return "<li> File: <a src=\"" +
+        return "<li> File: <a href=\"" +
                 request.getPath() +
                 "/" + file.getName() +
-                "\" >" +
+                "\">" +
                 file.getName() +
-                "</a> </li>";
+                "</a></li>";
     }
 
     public String buildLinkToDirectory(Request request, File file) {
-        return "<li> Directory: <a src=\"" +
+        return "<li> Directory: <a href=\"" +
                 request.getPath() +
                 "/" + file.getName() +
-                "\" >" +
+                "\">" +
                 file.getName() +
-                "</a> </li>";
+                "</a></li>";
     }
 
 }

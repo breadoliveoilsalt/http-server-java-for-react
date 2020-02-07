@@ -26,12 +26,12 @@ public class LinkBuilderTests {
         String result = new LinkBuilder().buildLinkToFile(request, file);
 
         String expectedResult =
-            "<li> File: <a src=\"" +
+            "<li> File: <a href=\"" +
             request.getPath() +
             "/" + file.getName() +
-            "\" >" +
+            "\">" +
             file.getName() +
-            "</a> </li>";
+            "</a></li>";
 
         assertEquals(expectedResult, result);
     }
@@ -44,12 +44,12 @@ public class LinkBuilderTests {
         String result = new LinkBuilder().buildLinkToDirectory(request, file);
 
         String expectedResult =
-            "<li> Directory: <a src=\"" +
+            "<li> Directory: <a href=\"" +
             request.getPath() +
             "/" + file.getName() +
-            "\" >" +
+            "\">" +
             file.getName() +
-            "</a> </li>";
+            "</a></li>";
 
         assertEquals(expectedResult, result);
     }
