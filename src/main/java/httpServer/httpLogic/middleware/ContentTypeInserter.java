@@ -33,10 +33,15 @@ public class ContentTypeInserter extends Middleware {
     }
 
     private void examineStringBodyOrFileForContentType() {
-        if (response.stringBody != null || response.file != null) {
+        if (contentTypeNeedsIdentification()) {
             assignDefaultContentType();
             checkForFileToUpdateContentType();
         }
+    }
+
+    private boolean contentTypeNeedsIdentification() {
+        return !response.hasHeaderValue(HTTPHeaders.ContentType) &&
+                (response.stringBody != null || response.file != null);
     }
 
     private void assignDefaultContentType() {

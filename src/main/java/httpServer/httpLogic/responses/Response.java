@@ -39,6 +39,12 @@ public class Response {
         return headers.get(key).equals(value);
     }
 
+    public boolean hasHeaderValue(String key) {
+        if (headers != null) {
+            return headers.containsKey(key);
+        }
+        return false;
+    }
     public void addHeader(String key, String value) {
         if (headers == null) {
             headers = new HashMap<>();

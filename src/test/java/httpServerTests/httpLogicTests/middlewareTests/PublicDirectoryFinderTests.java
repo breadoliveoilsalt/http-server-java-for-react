@@ -89,4 +89,6 @@ public class PublicDirectoryFinderTests {
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
 
+    // Add Test that file is attached
+
 }

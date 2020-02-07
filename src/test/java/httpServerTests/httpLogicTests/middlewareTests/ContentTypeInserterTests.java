@@ -44,6 +44,15 @@ public class ContentTypeInserterTests {
     }
 
     @Test
+    public void handleDoesNotAddAContentTypeIfItHasAlreadyBeenSupplied() {
+        response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextCSS);
+
+        contentTypeInserter.handle(request, response);
+
+        assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextCSS));
+    }
+
+    @Test
     public void handleAddsTextPlainContentTypeToAnOKResponseIfThereIsAStringBody() {
         response.stringBody = "Some text";
 
