@@ -20,12 +20,15 @@ public class DirectoryView implements HTMLFileGenerator {
         populateBlacklistedFiles();
     }
 
+    // Why am I not writing to a file?
+    // update to return a file
     public File generateHTMLFile() {
         addInitialHTML();
         addHTMLForFilesInDirectory();
         addClosingHTML();
         // FIX:
-        return filesInCurrentRootDirectory[0];
+//        return filesInCurrentRootDirectory[0];
+        return new File("something");
     }
 
     private void addHTMLForFilesInDirectory() {
@@ -37,8 +40,8 @@ public class DirectoryView implements HTMLFileGenerator {
                 htmlBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
             } else if (file.isDirectory()) {
                 htmlBuilder.append(new LinkBuilder().buildLinkToDirectory(request, file));
+            }
         }
-        return filesInCurrentRootDirectory;
     }
 
     private void addInitialHTML() {

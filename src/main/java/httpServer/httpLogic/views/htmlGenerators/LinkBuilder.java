@@ -14,4 +14,14 @@ public class LinkBuilder {
                 file.getName() +
                 "</a> </li>";
     }
+
+    public String buildLinkToDirectory(Request request, File file) {
+        return "<li> Directory: <a src=\"" +
+                request.getPath() +
+                "/" + file.getName() +
+                "\" >" +
+                file.getName() +
+                "</a> </li>";
+    }
+
 }

@@ -41,7 +41,7 @@ public class LinkBuilderTests {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");
 
-        String result = new LinkBuilder().buildLinkToFile(request, file);
+        String result = new LinkBuilder().buildLinkToDirectory(request, file);
 
         String expectedResult =
             "<li> Directory: <a src=\"" +
