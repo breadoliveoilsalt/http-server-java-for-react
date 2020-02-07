@@ -52,12 +52,16 @@ public class PublicDirectoryFinderTests {
         assertTrue(nextMiddleware.handleWasCalled);
     }
 
-    @Test
-    public void handleAssignsAnIndexDotHTMLFileToTheResponseIfAnIndexDotHTMLFileIsInThePathOfAGETRequest() throws IOException {
+    private void setUpForIndexDotHTMLTests() throws IOException {
         request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
         tempFolder.newFile("index.html");
         String basePath = tempFolder.getRoot().getPath();
         publicDirectoryFinder = new PublicDirectoryFinder(basePath);
+    }
+
+    @Test
+    public void handleAssignsAnIndexDotHTMLFileToTheResponseIfAnIndexDotHTMLFileIsInThePathOfAGETRequest() throws IOException {
+        setUpForIndexDotHTMLTests();
 
         assertNull(response.file);
         publicDirectoryFinder.handle(request, response);
@@ -67,10 +71,7 @@ public class PublicDirectoryFinderTests {
 
     @Test
     public void handleAssignsAnOKStatusCodeToTheResponseIfAnIndexDotHTMLFileIsInThePathOfAGETRequest() throws IOException {
-        request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
-        tempFolder.newFile("index.html");
-        String basePath = tempFolder.getRoot().getPath();
-        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
+        setUpForIndexDotHTMLTests();
 
         assertNull(response.statusCode);
         publicDirectoryFinder.handle(request, response);
@@ -80,10 +81,7 @@ public class PublicDirectoryFinderTests {
 
     @Test
     public void handleAssignsAnHTMLContentTypeHeaderToTheResponseIfAnIndexDotHTMLFileIsAssignedToTheResponse() throws IOException {
-        request = new RequestBuilder().addPath("/").addMethod(HTTPMethods.GET).build();
-        tempFolder.newFile("index.html");
-        String basePath = tempFolder.getRoot().getPath();
-        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
+        setUpForIndexDotHTMLTests();
 
         assertFalse(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
         publicDirectoryFinder.handle(request, response);
@@ -105,6 +103,6 @@ public class PublicDirectoryFinderTests {
     }
 
     // Add test that content type added when string body attached
-    // Refactor to delete the repetition in start above.
+    // Refactor to delete the repetition in start above     .
 
 }

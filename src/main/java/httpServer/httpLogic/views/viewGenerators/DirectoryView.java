@@ -20,15 +20,11 @@ public class DirectoryView implements ViewGenerator {
         populateBlacklistedFiles();
     }
 
-    // Why am I not writing to a file?
-    // update to return a file
     public String render() {
         addInitialHTML();
         addHTMLForFilesInDirectory();
         addClosingHTML();
-        // FIX:
-//        return filesInCurrentRootDirectory[0];
-        return "hey";
+        return htmlBuilder.toString();
     }
 
     private void addHTMLForFilesInDirectory() {
