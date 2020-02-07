@@ -7,6 +7,7 @@ import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 import httpServer.httpLogic.views.viewGenerators.DirectoryView;
+import httpServer.httpLogic.views.viewGenerators.ViewGenerator;
 
 import java.io.File;
 
@@ -15,6 +16,7 @@ public class PublicDirectoryFinder extends Middleware {
     private Request request;
     private Response response;
     private final String publicRootPath;
+    private ViewGenerator viewGenerator;
 
     public PublicDirectoryFinder() {
         String rootDirectory = System.getProperty("user.dir");
@@ -23,6 +25,11 @@ public class PublicDirectoryFinder extends Middleware {
 
     public PublicDirectoryFinder(String publicFilesPath) {
         this.publicRootPath = publicFilesPath;
+    }
+
+    public PublicDirectoryFinder(String publicFilesPath, ViewGenerator viewGenerator) {
+        this.publicRootPath = publicFilesPath;
+        this.viewGenerator = viewGenerator;
     }
 
     @Override
@@ -66,12 +73,23 @@ public class PublicDirectoryFinder extends Middleware {
     }
 
     private void generateFileListing(File directoryFile) {
-        response.stringBody = new DirectoryView(request, directoryFile).render();
+        assignDefaultViewGeneratorIfNeeded(directoryFile);
+        response.stringBody = viewGenerator.render();
         response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML);
+    }
+
+    private void assignDefaultViewGeneratorIfNeeded(File directoryFile) {
+        if (viewGenerator == null) {
+            viewGenerator = new DirectoryView(request, directoryFile);
+        }
     }
 
     public String getPublicRootPath() {
         return publicRootPath;
+    }
+
+    public ViewGenerator getViewGenerator() {
+        return viewGenerator;
     }
 
 }

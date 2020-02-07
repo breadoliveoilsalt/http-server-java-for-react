@@ -5,16 +5,15 @@ import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.middleware.PublicDirectoryFinder;
-import httpServer.httpLogic.middleware.PublicFileFinder;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
 import httpServer.httpLogic.responses.Response;
+import httpServer.httpLogic.views.viewGenerators.ViewGenerator;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -93,7 +92,7 @@ public class PublicDirectoryFinderTests {
         tempFolder.newFolder("subdirectory");
         request =new RequestBuilder().addPath("/subdirectory").addMethod(HTTPMethods.GET).build();
         String basePath = tempFolder.getRoot().getPath();
-        publicDirectoryFinder =new PublicDirectoryFinder(basePath);
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath);
     }
 
     @Test
@@ -114,6 +113,28 @@ public class PublicDirectoryFinderTests {
         publicDirectoryFinder.handle(request, response);
 
         assertTrue(response.hasHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML));
+    }
+
+    @Test
+    public void handleCallsOnAViewGeneratorToRenderAStringThatIsAssignedAsAResponse_sStringBodyIfThePathRequestedMatchesAPublicFolder() throws IOException {
+        class MockViewGenerator implements ViewGenerator {
+            public boolean renderWasCalled = false;
+            public String render() {
+                renderWasCalled = true;
+                return "View";
+            }
+        }
+
+        MockViewGenerator viewGenerator = new MockViewGenerator();
+        tempFolder.newFolder("subdirectory");
+        request = new RequestBuilder().addPath("/subdirectory").addMethod(HTTPMethods.GET).build();
+        String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath, viewGenerator);
+
+        assertNull(response.stringBody);
+        publicDirectoryFinder.handle(request, response);
+
+        assertEquals("View", response.stringBody);
     }
 
     // Add tests about calling render on a viewer, and then one about the default view
