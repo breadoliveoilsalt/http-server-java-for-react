@@ -68,10 +68,6 @@ public class PublicDirectoryFinder extends Middleware {
     private void generateFileListing(File directoryFile) {
         response.stringBody = new DirectoryView(request, directoryFile).render();
         response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML);
-        System.out.println("Listings:");
-        for (String fileName : directoryFile.list()) {
-            System.out.println(fileName);
-        }
     }
 
     public String getPublicRootPath() {

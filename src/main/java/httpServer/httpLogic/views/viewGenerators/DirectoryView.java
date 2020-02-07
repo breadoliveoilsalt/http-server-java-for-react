@@ -35,7 +35,7 @@ public class DirectoryView implements ViewGenerator {
             } else if (file.isFile()) {
                 htmlBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
             } else if (file.isDirectory()) {
-                htmlBuilder.append(new LinkBuilder().buildLinkToDirectory(request, file));
+                htmlBuilder.append(new LinkBuilder().buildLinkToSubdirectory(request, file));
             }
         }
     }

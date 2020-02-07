@@ -37,14 +37,14 @@ public class LinkBuilderTests {
     }
 
     @Test
-    public void buildLinkToDirectoryReturnsAStringWithAnATag() throws IOException {
+    public void buildLinkToSubdirectoryReturnsAStringWithAnATag() throws IOException {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");
 
-        String result = new LinkBuilder().buildLinkToDirectory(request, file);
+        String result = new LinkBuilder().buildLinkToSubdirectory(request, file);
 
         String expectedResult =
-            "<li> Directory: <a href=\"" +
+            "<li> Subdirectory: <a href=\"" +
             request.getPath() +
             "/" + file.getName() +
             "\">" +

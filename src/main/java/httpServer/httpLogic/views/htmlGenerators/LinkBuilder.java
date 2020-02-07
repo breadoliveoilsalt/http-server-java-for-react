@@ -15,8 +15,8 @@ public class LinkBuilder {
                 "</a></li>";
     }
 
-    public String buildLinkToDirectory(Request request, File file) {
-        return "<li> Directory: <a href=\"" +
+    public String buildLinkToSubdirectory(Request request, File file) {
+        return "<li> Subdirectory: <a href=\"" +
                 request.getPath() +
                 "/" + file.getName() +
                 "\">" +

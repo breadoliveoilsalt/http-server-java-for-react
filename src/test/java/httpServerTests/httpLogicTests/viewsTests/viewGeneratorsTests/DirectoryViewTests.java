@@ -48,7 +48,7 @@ public class DirectoryViewTests {
         String expectedResult =
                 "<ul>" +
                 new LinkBuilder().buildLinkToFile(request, new File(htmlFile.toString())) +
-                new LinkBuilder().buildLinkToDirectory(request, new File(subDirectory.toString())) +
+                new LinkBuilder().buildLinkToSubdirectory(request, new File(subDirectory.toString())) +
                 new LinkBuilder().buildLinkToFile(request, new File(pdfFile.toString())) +
                 "</ul>";
 
