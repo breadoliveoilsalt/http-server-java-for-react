@@ -1,5 +1,7 @@
 package httpServer.httpLogic.middleware;
 
+import httpServer.httpLogic.constants.HTTPContentTypes;
+import httpServer.httpLogic.constants.HTTPHeaders;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
@@ -55,6 +57,7 @@ public class PublicDirectoryFinder extends Middleware {
         File indexDotHtmlFile = new File(directoryFile.getPath() + "/index.html");
         if (indexDotHtmlFile.exists() && indexDotHtmlFile.isFile()) {
             response.file = indexDotHtmlFile;
+            response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML);
         }
     }
 

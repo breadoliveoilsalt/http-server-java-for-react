@@ -104,6 +104,7 @@ public class PublicDirectoryFinderTests {
         assertEquals(HTTPStatusCodes.OK, response.statusCode);
     }
 
-    // Add Test that file is attached
+    // Add test that content type added when string body attached
+    // Refactor to delete the repetition in start above.
 
 }

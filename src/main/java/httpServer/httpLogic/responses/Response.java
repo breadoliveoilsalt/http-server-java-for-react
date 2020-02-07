@@ -48,7 +48,7 @@ public class Response {
         }
         return false;
     }
-    
+
     public void addHeader(String key, String value) {
         if (headers == null) {
             headers = new HashMap<>();
