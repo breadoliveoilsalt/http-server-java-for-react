@@ -117,24 +117,23 @@ public class PublicDirectoryFinderTests {
 
     @Test
     public void handleCallsOnAViewGeneratorToRenderAStringThatIsAssignedAsAResponse_sStringBodyIfThePathRequestedMatchesAPublicFolder() throws IOException {
-        class MockViewGenerator implements ViewGenerator {
-            public boolean renderWasCalled = false;
-            public String render() {
-                renderWasCalled = true;
-                return "View";
-            }
-        }
-
-        MockViewGenerator viewGenerator = new MockViewGenerator();
-        tempFolder.newFolder("subdirectory");
-        request = new RequestBuilder().addPath("/subdirectory").addMethod(HTTPMethods.GET).build();
-        String basePath = tempFolder.getRoot().getPath();
-        publicDirectoryFinder = new PublicDirectoryFinder(basePath, viewGenerator);
+        setUpMockViewGeneratorWithViewString("View");
 
         assertNull(response.stringBody);
         publicDirectoryFinder.handle(request, response);
 
         assertEquals("View", response.stringBody);
+    }
+
+    private void setUpMockViewGeneratorWithViewString(String view) throws IOException {
+        class MockViewGenerator implements ViewGenerator {
+            public String render() { return view; }
+        }
+
+        tempFolder.newFolder("subdirectory");
+        request = new RequestBuilder().addPath("/subdirectory").addMethod(HTTPMethods.GET).build();
+        String basePath = tempFolder.getRoot().getPath();
+        publicDirectoryFinder = new PublicDirectoryFinder(basePath, new MockViewGenerator());
     }
 
     // Add tests about calling render on a viewer, and then one about the default view
