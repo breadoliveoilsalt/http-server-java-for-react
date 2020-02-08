@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DirectoryViewTests {
 
@@ -29,15 +30,13 @@ public class DirectoryViewTests {
 
         String result = new DirectoryView(request, directoryFile).render();
 
-        String expectedResult =
-                "<ul></ul>";
-
-        assertEquals(expectedResult, result);
+        assertTrue(result.contains("<ul>"));
+        assertTrue(result.contains("</ul>"));
     }
 
     @Test
     public void renderUsesAppropriateLinkBuilderMethodsForFilesAndDirectoriesToPopulateTheUnorderedListWithTheContentsOfTheDirectoryPassedIn() throws IOException {
-        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/path_to_parent_directory").build();
+        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/tempParentDirectory").build();
         File parentDirectory = tempFolder.newFolder("tempParentDirectory");
         Path pdfFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/doc.pdf"));
         Path htmlFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/page.html"));
@@ -47,6 +46,7 @@ public class DirectoryViewTests {
 
         String expectedResult =
                 "<ul>" +
+                new LinkBuilder().buildLinkToParentDirectory(request, parentDirectory) +
                 new LinkBuilder().buildLinkToFile(request, new File(htmlFile.toString())) +
                 new LinkBuilder().buildLinkToSubdirectory(request, new File(subDirectory.toString())) +
                 new LinkBuilder().buildLinkToFile(request, new File(pdfFile.toString())) +

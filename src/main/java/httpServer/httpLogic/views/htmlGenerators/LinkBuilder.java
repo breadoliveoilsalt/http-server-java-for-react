@@ -16,7 +16,7 @@ public class LinkBuilder {
 
         return "<li> Parent Directory: <a href=\"" +
                 pathToParent +
-                "\">.." +
+                "\">../" +
                 "</a></li>";
     }
 
@@ -34,7 +34,7 @@ public class LinkBuilder {
                 request.getPath() +
                 "/" + file.getName() +
                 "\">" +
-                file.getName() +
+                file.getName() + "/" +
                 "</a></li>";
     }
 
