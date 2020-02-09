@@ -4,7 +4,7 @@ import httpServer.httpLogic.requests.Request;
 
 import java.io.File;
 
-public class LinkBuilder {
+public class DirectoryLinkRenderer {
 
     public String buildLinkToParentDirectory(Request request, File file) {
         if (request.getPath().equals("/")) {
@@ -54,4 +54,11 @@ public class LinkBuilder {
                 "</a></li>";
     }
 
+    public String openUnorderedList() {
+        return "<ul>";
+    }
+
+    public String closeUnorderedList() {
+        return "</ul>";
+    }
 }

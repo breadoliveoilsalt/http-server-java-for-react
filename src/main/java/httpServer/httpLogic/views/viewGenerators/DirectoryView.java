@@ -1,7 +1,7 @@
 package httpServer.httpLogic.views.viewGenerators;
 
 import httpServer.httpLogic.requests.Request;
-import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
+import httpServer.httpLogic.views.htmlGenerators.DirectoryLinkRenderer;
 
 import java.io.File;
 import java.util.HashSet;
@@ -11,12 +11,14 @@ public class DirectoryView implements ViewGenerator {
     File currentRootDirectory;
     Request request;
     StringBuilder stringBuilder;
+    DirectoryLinkRenderer renderer;
     HashSet<String> blacklistedFiles;
 
     public DirectoryView(Request request, File currentRootDirectory) {
         this.request = request;
         this.currentRootDirectory = currentRootDirectory;
         this.stringBuilder = new StringBuilder();
+        this.renderer = new DirectoryLinkRenderer();
         populateBlacklistedFiles();
     }
 
@@ -30,11 +32,11 @@ public class DirectoryView implements ViewGenerator {
 
 
     private void addInitialHTML() {
-        stringBuilder.append("<ul>");
+        stringBuilder.append(renderer.openUnorderedList());
     }
 
     private void addHTMLForParentDirectory() {
-        stringBuilder.append(new LinkBuilder().buildLinkToParentDirectory(request, currentRootDirectory));
+        stringBuilder.append(new DirectoryLinkRenderer().buildLinkToParentDirectory(request, currentRootDirectory));
     }
 
     private void addHTMLForFilesInDirectory() {
@@ -43,16 +45,15 @@ public class DirectoryView implements ViewGenerator {
             if (blacklistedFiles.contains(file.getName())) {
                 continue;
             } else if (file.isFile()) {
-                stringBuilder.append(new LinkBuilder().buildLinkToFile(request, file));
+                stringBuilder.append(new DirectoryLinkRenderer().buildLinkToFile(request, file));
             } else if (file.isDirectory()) {
-                stringBuilder.append(new LinkBuilder().buildLinkToSubdirectory(request, file));
+                stringBuilder.append(new DirectoryLinkRenderer().buildLinkToSubdirectory(request, file));
             }
         }
     }
 
     private void addClosingHTML() {
-        stringBuilder.append("</ul>");
-
+        stringBuilder.append(renderer.closeUnorderedList());
     }
 
     private void populateBlacklistedFiles() {

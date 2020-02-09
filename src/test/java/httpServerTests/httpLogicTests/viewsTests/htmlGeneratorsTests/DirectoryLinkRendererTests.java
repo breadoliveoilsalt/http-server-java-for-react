@@ -3,7 +3,7 @@ package httpServerTests.httpLogicTests.viewsTests.htmlGeneratorsTests;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
-import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
+import httpServer.httpLogic.views.htmlGenerators.DirectoryLinkRenderer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class LinkBuilderTests {
+public class DirectoryLinkRendererTests {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
@@ -23,7 +23,7 @@ public class LinkBuilderTests {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File docsDirectory = tempFolder.newFile("docs");
 
-        String result = new LinkBuilder().buildLinkToParentDirectory(request, docsDirectory);
+        String result = new DirectoryLinkRenderer().buildLinkToParentDirectory(request, docsDirectory);
 
         String expectedResult =
                 "<li> Parent Directory: <a href=\"/\">../</a></li>";
@@ -37,7 +37,7 @@ public class LinkBuilderTests {
         File docsDirectory = tempFolder.newFile("docs");
         File projectDirectory = new File(docsDirectory.getPath() + "/sample_project");
         projectDirectory.mkdir();
-        String result = new LinkBuilder().buildLinkToParentDirectory(request, projectDirectory);
+        String result = new DirectoryLinkRenderer().buildLinkToParentDirectory(request, projectDirectory);
 
         String expectedResult =
                 "<li> Parent Directory: <a href=\"/docs\">../</a></li>";
@@ -50,7 +50,7 @@ public class LinkBuilderTests {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");
 
-        String result = new LinkBuilder().buildLinkToFile(request, file);
+        String result = new DirectoryLinkRenderer().buildLinkToFile(request, file);
 
         String expectedResult =
             "<li> File: <a href=\"" +
@@ -68,7 +68,7 @@ public class LinkBuilderTests {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");
 
-        String result = new LinkBuilder().buildLinkToSubdirectory(request, file);
+        String result = new DirectoryLinkRenderer().buildLinkToSubdirectory(request, file);
 
         String expectedResult =
             "<li> Subdirectory: <a href=\"" +

@@ -3,7 +3,7 @@ package httpServerTests.httpLogicTests.viewsTests.viewGeneratorsTests;
 import httpServer.httpLogic.constants.HTTPMethods;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.requests.RequestBuilder;
-import httpServer.httpLogic.views.htmlGenerators.LinkBuilder;
+import httpServer.httpLogic.views.htmlGenerators.DirectoryLinkRenderer;
 import httpServer.httpLogic.views.viewGenerators.DirectoryView;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class DirectoryViewTests {
     }
 
     @Test
-    public void renderUsesAppropriateLinkBuilderMethodsForFilesAndDirectoriesToPopulateTheUnorderedListWithTheContentsOfTheDirectoryPassedIn() throws IOException {
+    public void renderUsesAppropriateMethodsOfDirectoryLinkRendererToBuildTheStringRepresentingTheDirectoryPassedIn() throws IOException {
         Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/tempParentDirectory").build();
         File parentDirectory = tempFolder.newFolder("tempParentDirectory");
         Path pdfFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/doc.pdf"));
@@ -45,12 +45,12 @@ public class DirectoryViewTests {
         String result = new DirectoryView(request, parentDirectory).render();
 
         String expectedResult =
-                "<ul>" +
-                new LinkBuilder().buildLinkToParentDirectory(request, parentDirectory) +
-                new LinkBuilder().buildLinkToFile(request, new File(htmlFile.toString())) +
-                new LinkBuilder().buildLinkToSubdirectory(request, new File(subDirectory.toString())) +
-                new LinkBuilder().buildLinkToFile(request, new File(pdfFile.toString())) +
-                "</ul>";
+                new DirectoryLinkRenderer().openUnorderedList() +
+                new DirectoryLinkRenderer().buildLinkToParentDirectory(request, parentDirectory) +
+                new DirectoryLinkRenderer().buildLinkToFile(request, new File(htmlFile.toString())) +
+                new DirectoryLinkRenderer().buildLinkToSubdirectory(request, new File(subDirectory.toString())) +
+                new DirectoryLinkRenderer().buildLinkToFile(request, new File(pdfFile.toString())) +
+                new DirectoryLinkRenderer().closeUnorderedList();
 
         assertEquals(expectedResult, result);
     }
