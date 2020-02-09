@@ -53,6 +53,7 @@ public class ContentTypeInserter extends Middleware {
             try {
                 assignContentTypeBasedOnFileExtension();
             } catch (Exception e) {
+                assignDefaultContentType();
                 e.printStackTrace();
             }
         }
@@ -60,8 +61,10 @@ public class ContentTypeInserter extends Middleware {
 
     private void assignContentTypeBasedOnFileExtension() {
         String fileExtension = getFileExtension();
-        String contentType = fileExtensionToContentTypeMap.get(fileExtension);
-        addContentTypeHeader(contentType);
+        if (fileExtensionToContentTypeMap.containsKey(fileExtension)) {
+            String contentType = fileExtensionToContentTypeMap.get(fileExtension);
+            addContentTypeHeader(contentType);
+        }
     }
 
     private String getFileExtension() {
