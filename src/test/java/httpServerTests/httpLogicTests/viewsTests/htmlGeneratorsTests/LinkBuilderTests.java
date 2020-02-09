@@ -19,11 +19,11 @@ public class LinkBuilderTests {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
-    public void buildLinkToParentDirectoryReturnsAnHTMLStringWithAnATagToTheParentDirectoryOfTheFilePassedIn() throws IOException {
+    public void buildLinkToParentDirectoryReturnsAnHTMLStringWithAnATagLinkingToTheParentDirectoryOfTheFilePassedIn() throws IOException {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
-        File projectDocs = tempFolder.newFile("docs");
+        File docsDirectory = tempFolder.newFile("docs");
 
-        String result = new LinkBuilder().buildLinkToParentDirectory(request, projectDocs);
+        String result = new LinkBuilder().buildLinkToParentDirectory(request, docsDirectory);
 
         String expectedResult =
                 "<li> Parent Directory: <a href=\"/\">../</a></li>";
@@ -32,7 +32,21 @@ public class LinkBuilderTests {
     }
 
     @Test
-    public void buildLinkToFileReturnsAnHTMLStringWithAnATag() throws IOException {
+    public void buildLinkToParentDirectoryWorksForNestedPaths() throws IOException {
+        Request request = new RequestBuilder().addPath("/docs/sample_project").addMethod(HTTPMethods.GET).build();
+        File docsDirectory = tempFolder.newFile("docs");
+        File projectDirectory = new File(docsDirectory.getPath() + "/sample_project");
+        projectDirectory.mkdir();
+        String result = new LinkBuilder().buildLinkToParentDirectory(request, projectDirectory);
+
+        String expectedResult =
+                "<li> Parent Directory: <a href=\"/docs\">../</a></li>";
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void buildLinkToFileReturnsAnHTMLStringWithAnATagLinkingToTheFile() throws IOException {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");
 
@@ -50,7 +64,7 @@ public class LinkBuilderTests {
     }
 
     @Test
-    public void buildLinkToSubdirectoryReturnsAStringWithAnATag() throws IOException {
+    public void buildLinkToSubdirectoryReturnsAStringWithAnATagLinkingToTheSubdirectory() throws IOException {
         Request request = new RequestBuilder().addPath("/docs").addMethod(HTTPMethods.GET).build();
         File file = tempFolder.newFile("doc.pdf");
 
