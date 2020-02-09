@@ -29,6 +29,10 @@ public class DirectoryView implements ViewGenerator {
     }
 
 
+    private void addInitialHTML() {
+        stringBuilder.append("<ul>");
+    }
+
     private void addHTMLForParentDirectory() {
         stringBuilder.append(new LinkBuilder().buildLinkToParentDirectory(request, currentRootDirectory));
     }
@@ -44,10 +48,6 @@ public class DirectoryView implements ViewGenerator {
                 stringBuilder.append(new LinkBuilder().buildLinkToSubdirectory(request, file));
             }
         }
-    }
-
-    private void addInitialHTML() {
-        stringBuilder.append("<ul>");
     }
 
     private void addClosingHTML() {

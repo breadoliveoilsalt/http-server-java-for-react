@@ -44,12 +44,20 @@ public class PublicDirectoryFinder extends Middleware {
 
     private void checkForDirectory() {
         if (request.getHTTPMethod().equals(HTTPMethods.GET)) {
-            String potentialPath = publicRootPath + request.getPath();
+            String potentialPath = determinePotentialPath();
             File directoryFile = new File(potentialPath);
             if (directoryFile.exists() && directoryFile.isDirectory()) {
                 response.statusCode = HTTPStatusCodes.OK;
                 getResponseBodyFor(directoryFile);
             }
+        }
+    }
+
+    private String determinePotentialPath() {
+        if (request.getPath().equals("/")) {
+            return publicRootPath;
+        } else {
+            return publicRootPath + request.getPath();
         }
     }
 

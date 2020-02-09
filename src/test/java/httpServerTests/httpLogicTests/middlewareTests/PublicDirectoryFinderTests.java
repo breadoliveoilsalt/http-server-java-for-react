@@ -117,7 +117,7 @@ public class PublicDirectoryFinderTests {
     }
 
     @Test
-    public void handleCallsRenderOnAViewGeneratorToRenderAStringThatIsAssignedAsAResponse_sStringBodyIfThePathRequestedMatchesAPublicFolder() throws IOException {
+    public void handleCallsRenderOnAViewGeneratorToRenderAStringIfThePathRequestedMatchesAPublicFolder() throws IOException {
         setUpMockViewGeneratorWithViewString("View");
 
         assertNull(response.stringBody);
