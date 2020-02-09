@@ -8,10 +8,10 @@ import java.util.HashSet;
 
 public class DirectoryView implements ViewGenerator {
 
-    File currentRootDirectory;
-    Request request;
-    StringBuilder stringBuilder;
-    DirectoryLinkRenderer renderer;
+    private final File currentRootDirectory;
+    private final Request request;
+    private final StringBuilder stringBuilder;
+    private final DirectoryLinkRenderer renderer;
     HashSet<String> blacklistedFiles;
 
     public DirectoryView(Request request, File currentRootDirectory) {
