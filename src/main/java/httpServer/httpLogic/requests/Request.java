@@ -37,10 +37,6 @@ public class Request {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public float getHTTPVersion() {
         return httpVersion;
     }

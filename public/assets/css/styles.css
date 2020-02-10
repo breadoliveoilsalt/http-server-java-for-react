@@ -1,0 +1,13 @@
+h1 {
+    border: 0.1em solid red;
+}
+
+#link {
+    padding: 1em;
+    margin: 1em 0;
+    border: 0.1em solid blue;
+}
+
+img {
+    margin: 1em 0;
+}

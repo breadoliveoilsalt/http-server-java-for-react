@@ -36,7 +36,17 @@ public class Response {
     }
 
     public boolean hasHeader(String key, String value) {
-        return headers.get(key).equals(value);
+        if (headers != null) {
+            return headers.get(key).equals(value);
+        }
+        return false;
+    }
+
+    public boolean hasHeaderValue(String key) {
+        if (headers != null) {
+            return headers.containsKey(key);
+        }
+        return false;
     }
 
     public void addHeader(String key, String value) {

@@ -33,10 +33,15 @@ public class ContentTypeInserter extends Middleware {
     }
 
     private void examineStringBodyOrFileForContentType() {
-        if (response.stringBody != null || response.file != null) {
+        if (contentTypeNeedsIdentification()) {
             assignDefaultContentType();
             checkForFileToUpdateContentType();
         }
+    }
+
+    private boolean contentTypeNeedsIdentification() {
+        return !response.hasHeaderValue(HTTPHeaders.ContentType) &&
+                (response.stringBody != null || response.file != null);
     }
 
     private void assignDefaultContentType() {
@@ -48,6 +53,7 @@ public class ContentTypeInserter extends Middleware {
             try {
                 assignContentTypeBasedOnFileExtension();
             } catch (Exception e) {
+                assignDefaultContentType();
                 e.printStackTrace();
             }
         }
@@ -55,8 +61,10 @@ public class ContentTypeInserter extends Middleware {
 
     private void assignContentTypeBasedOnFileExtension() {
         String fileExtension = getFileExtension();
-        String contentType = fileExtensionToContentTypeMap.get(fileExtension);
-        addContentTypeHeader(contentType);
+        if (fileExtensionToContentTypeMap.containsKey(fileExtension)) {
+            String contentType = fileExtensionToContentTypeMap.get(fileExtension);
+            addContentTypeHeader(contentType);
+        }
     }
 
     private String getFileExtension() {

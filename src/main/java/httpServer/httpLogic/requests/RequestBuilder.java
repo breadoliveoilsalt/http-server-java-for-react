@@ -36,11 +36,6 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder setHeaders(Map<String, String> headerMap) {
-        headers = headerMap;
-        return this;
-    }
-
     public RequestBuilder addBody(String body) {
         if (this.body == null) {
             this.body = "";

@@ -13,6 +13,7 @@ public class ResponseBuildingMiddleware {
 
         middlewareHead
             .setNext(new PublicFileFinder())
+            .setNext(new PublicDirectoryFinder())
             .setNext(new ResourcePathValidator(router))
             .setNext(new ControllerMapper(router))
             .setNext(new ResourceFoundValidator())
