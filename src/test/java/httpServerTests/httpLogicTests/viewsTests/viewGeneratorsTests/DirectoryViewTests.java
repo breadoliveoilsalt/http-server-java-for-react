@@ -52,6 +52,8 @@ public class DirectoryViewTests {
                 new DirectoryLinkRenderer().buildLinkToFile(request, new File(pdfFile.toString())) +
                 new DirectoryLinkRenderer().closeUnorderedList();
 
+        System.out.println(expectedResult);
+        System.out.println(result);
         assertEquals(expectedResult, result);
     }
 
