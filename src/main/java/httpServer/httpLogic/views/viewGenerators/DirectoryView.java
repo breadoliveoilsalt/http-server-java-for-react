@@ -4,6 +4,8 @@ import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.views.htmlGenerators.DirectoryLinkRenderer;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 
 public class DirectoryView implements ViewGenerator {
@@ -11,6 +13,7 @@ public class DirectoryView implements ViewGenerator {
     private final File currentRootDirectory;
     private final Request request;
     private final StringBuilder stringBuilder;
+    private File[] filesInCurrentRootDirectory;
     private final DirectoryLinkRenderer renderer;
     HashSet<String> blacklistedFiles;
 
@@ -40,7 +43,16 @@ public class DirectoryView implements ViewGenerator {
     }
 
     private void addHTMLForFilesInDirectory() {
-        File[] filesInCurrentRootDirectory = currentRootDirectory.listFiles();
+        sortFilesInDirectory();
+        addFilesInDirectoryToStringBuilder();
+    }
+
+    private void sortFilesInDirectory() {
+        filesInCurrentRootDirectory = currentRootDirectory.listFiles();
+        Arrays.sort(filesInCurrentRootDirectory, Comparator.comparing(File::getName));
+    }
+
+    private void addFilesInDirectoryToStringBuilder() {
         for (File file : filesInCurrentRootDirectory) {
             if (blacklistedFiles.contains(file.getName())) {
                 continue;
@@ -60,4 +72,5 @@ public class DirectoryView implements ViewGenerator {
         blacklistedFiles = new HashSet<>();
         blacklistedFiles.add(".DS_Store");
     }
+
 }

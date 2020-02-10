@@ -38,23 +38,43 @@ public class DirectoryViewTests {
     public void renderUsesAppropriateMethodsOfDirectoryLinkRendererToBuildTheStringRepresentingTheDirectoryPassedIn() throws IOException {
         Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/tempParentDirectory").build();
         File parentDirectory = tempFolder.newFolder("tempParentDirectory");
-        Path pdfFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/doc.pdf"));
-        Path htmlFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/page.html"));
+        Path docFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/doc.pdf"));
+        Path pageFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/page.html"));
         Path subDirectory = Files.createDirectory(Paths.get(parentDirectory.getPath() + "/subDirectory"));
 
         String result = new DirectoryView(request, parentDirectory).render();
 
         String expectedResult =
                 new DirectoryLinkRenderer().openUnorderedList() +
-                new DirectoryLinkRenderer().buildLinkToParentDirectory(request, parentDirectory) +
-                new DirectoryLinkRenderer().buildLinkToFile(request, new File(htmlFile.toString())) +
-                new DirectoryLinkRenderer().buildLinkToSubdirectory(request, new File(subDirectory.toString())) +
-                new DirectoryLinkRenderer().buildLinkToFile(request, new File(pdfFile.toString())) +
-                new DirectoryLinkRenderer().closeUnorderedList();
+                        new DirectoryLinkRenderer().buildLinkToParentDirectory(request, parentDirectory) +
+                        new DirectoryLinkRenderer().buildLinkToFile(request, new File(docFile.toString())) +
+                        new DirectoryLinkRenderer().buildLinkToFile(request, new File(pageFile.toString())) +
+                        new DirectoryLinkRenderer().buildLinkToSubdirectory(request, new File(subDirectory.toString())) +
+                        new DirectoryLinkRenderer().closeUnorderedList();
 
-        System.out.println(expectedResult);
-        System.out.println(result);
         assertEquals(expectedResult, result);
     }
+
+    @Test
+    public void renderListsADirectory_sFilesInAlphabeticalOrder() throws IOException {
+        Request request = new RequestBuilder().addMethod(HTTPMethods.GET).addPath("/tempParentDirectory").build();
+        File parentDirectory = tempFolder.newFolder("tempParentDirectory");
+        Path zubDirectory = Files.createDirectory(Paths.get(parentDirectory.getPath() + "/zubDirectory"));
+        Path appleFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/apple.pdf"));
+        Path windowsFile = Files.createFile(Paths.get(parentDirectory.getPath() + "/windows.pdf"));
+
+        String result = new DirectoryView(request, parentDirectory).render();
+
+        String expectedResult =
+                new DirectoryLinkRenderer().openUnorderedList() +
+                new DirectoryLinkRenderer().buildLinkToParentDirectory(request, parentDirectory) +
+                new DirectoryLinkRenderer().buildLinkToFile(request, new File(appleFile.toString())) +
+                new DirectoryLinkRenderer().buildLinkToFile(request, new File(windowsFile.toString())) +
+                new DirectoryLinkRenderer().buildLinkToSubdirectory(request, new File(zubDirectory.toString())) +
+                new DirectoryLinkRenderer().closeUnorderedList();
+
+        assertEquals(expectedResult, result);
+    }
+
 
 }
