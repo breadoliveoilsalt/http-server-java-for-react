@@ -2,6 +2,7 @@ package httpServer.httpLogic.middleware;
 
 import httpServer.httpLogic.constants.HTTPContentTypes;
 import httpServer.httpLogic.constants.HTTPHeaders;
+import httpServer.httpLogic.constants.HTTPStatusCodes;
 import httpServer.httpLogic.requests.Request;
 import httpServer.httpLogic.responses.Response;
 
@@ -35,6 +36,7 @@ public class AssignIndexDotHTMLAsDefault extends Middleware {
     public void assignIndexDotHTMLFileToResponse() {
         File indexDotHtmlFile = new File(publicRootPath + "/index.html");
         response.file = indexDotHtmlFile;
+        response.statusCode = HTTPStatusCodes.OK;
         response.addHeader(HTTPHeaders.ContentType, HTTPContentTypes.TextHTML);
     }
 }
