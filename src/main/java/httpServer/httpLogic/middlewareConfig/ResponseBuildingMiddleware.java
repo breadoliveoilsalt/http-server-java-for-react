@@ -13,10 +13,11 @@ public class ResponseBuildingMiddleware {
 
         middlewareHead
             .setNext(new PublicFileFinder())
-            .setNext(new PublicDirectoryFinder())
-            .setNext(new ResourcePathValidator(router))
-            .setNext(new ControllerMapper(router))
-            .setNext(new ResourceFoundValidator())
+            .setNext(new AssignIndexDotHTMLAsDefault())
+//            .setNext(new PublicDirectoryFinder())
+//            .setNext(new ResourcePathValidator(router))
+//            .setNext(new ControllerMapper(router))
+//            .setNext(new ResourceFoundValidator())
             .setNext(new HTTPVersionInserter())
             .setNext(new HTTPStatusMessageInserter())
             .setNext(new ContentLengthInserter())
