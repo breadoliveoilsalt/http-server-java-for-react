@@ -5,10 +5,12 @@ import httpServer.serverLogger.ServerLogger;
 
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 class App {
 
     public static void main(String[] args) throws IOException {
-        int port = 5000;
+        int port = parseInt(args[0]);
         AppFactory factory = new HTTPServerAppFactory();
         ServerLogger logger = new ServerLogger(System.out);
 
